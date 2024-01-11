@@ -195,14 +195,14 @@
                             href="{{ url('/index/outgoing/arisa') }}"><i class="fa fa-book"></i> <span
                                 class="hide-menu">VFI ARISA</span></a>
                         </li>
-                        @if (isset($page) && $page == 'FMEA ARISA')
+                        <!-- @if (isset($page) && $page == 'FMEA ARISA')
                             <li class="sidebar-item active">
                             @else
                             <li class="sidebar-item">
                         @endif
                         <a class="sidebar-link waves-effect waves-dark sidebar-link"
                             href="{{ url('/index/qa/document/arisa') }}"><i class="fa fa-book"></i> <span
-                                class="hide-menu">Document Control</span></a>
+                                class="hide-menu">Document Control</span></a> -->
                         </li>
                     @endif
                     @if (Auth::user()->role_code == 'CRESTEC' || Auth::user()->role_code == 'MIS')
