@@ -509,3 +509,9 @@ Route::get('reminder_invoice', function () {
 
     var_dump("Command is running");
 });
+
+Route::get('index/qa/document/{vendor}', 'QualityAssuranceController@indexDocumentControl');
+Route::get('fetch/qa/document', 'QualityAssuranceController@fetchDocumentControl');
+Route::post('input/qa/document', 'QualityAssuranceController@inputDocumentControl');
+Route::post('update/qa/document', 'QualityAssuranceController@updateDocumentControl');
+Route::get('delete/qa/document', 'QualityAssuranceController@deleteDocumentControl');

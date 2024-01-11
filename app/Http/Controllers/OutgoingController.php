@@ -531,7 +531,7 @@ class OutgoingController extends Controller
 		          //   	array_push($mail_to, 'true.indonesia@yahoo.com');
 		          //   	array_push($mail_to, 'truejhbyun@naver.com');
 		          //   	array_push($mail_to, 'agustina.hayati@music.yamaha.com');
-		            	array_push($mail_to, 'ratri.sulistyorini@music.yamaha.com');
+		            	// array_push($mail_to, 'ratri.sulistyorini@music.yamaha.com');
 		          //   	array_push($mail_to, 'abdissalam.saidi@music.yamaha.com');
 		          //   	array_push($mail_to, 'noviera.prasetyarini@music.yamaha.com');
 
@@ -574,7 +574,7 @@ class OutgoingController extends Controller
 		    //         	array_push($mail_to, 'true.indonesia@yahoo.com');
 		    //         	array_push($mail_to, 'truejhbyun@naver.com');
 		    //         	array_push($mail_to, 'agustina.hayati@music.yamaha.com');
-		            	array_push($mail_to, 'ratri.sulistyorini@music.yamaha.com');
+		            	// array_push($mail_to, 'ratri.sulistyorini@music.yamaha.com');
 		    //         	array_push($mail_to, 'abdissalam.saidi@music.yamaha.com');
 		    //         	array_push($mail_to, 'noviera.prasetyarini@music.yamaha.com');
 
