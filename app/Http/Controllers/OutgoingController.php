@@ -2382,6 +2382,7 @@ class OutgoingController extends Controller
 		if (count($request->file('newAttachment')) > 0) {
 			try{
 				$errors = [];
+				$error_part_names = [];
 				$file = $request->file('newAttachment');
 				$filename = 'serial_number_kbi_'.date('YmdHisa').'.'.$request->input('extension');
 				$file->move($file_destination, $filename);
@@ -2398,43 +2399,53 @@ class OutgoingController extends Controller
 				for ($i=0; $i < count($rows); $i++) {
 					$cek_sernum = QaOutgoingSerialNumber::where('serial_number',$rows[$i][0])->first();
 					$part_names = QaMaterial::where('material_number',$rows[$i][1])->first();
+					$error_part_name = 0;
 					if (count($part_names) > 0) {
 						$part_name = $part_names->material_description;
 					}else{
-						$part_name = $rows[$i][2];
+						$error_part_name++;
 						$errorlog = new ErrorLog([
 							'error_message' => 'ERROR_KBI_'.$rows[$i][1],
 							'created_by' => Auth::user()->id,
 			            ]);
-
 			            $errorlog->save();
+			            array_push($error_part_names, $rows[$i][1]);
 					}
 					if (count($cek_sernum) > 0) {
+						$errorlog = new ErrorLog([
+							'error_message' => 'ERROR_KBI_'.$rows[$i][0],
+							'created_by' => Auth::user()->id,
+			            ]);
+			            $errorlog->save();
 						array_push($errors, $cek_sernum->serial_number);
 					}
-					$menu = QaOutgoingSerialNumber::updateOrCreate(
-						[
-							'date' => date('Y-m-d'),
-							'serial_number' => $rows[$i][0],
-						],
-						[
-							'date' => date('Y-m-d'),
-							'serial_number' => $rows[$i][0],
-							'material_number' => $rows[$i][1],
-							'part_name' => $part_name,
-							'qty' => $rows[$i][3],
-							'vendor' => 'KYORAKU BLOWMOLDING INDONESIA',
-							'vendor_shortname' => 'KYORAKU',
-							'created_by' => Auth::id()
-						]
-					);
-					$menu->save();
+
+					if ($error_part_name == 0 && count($cek_sernum) == 0) {
+						$menu = QaOutgoingSerialNumber::updateOrCreate(
+							[
+								'date' => date('Y-m-d'),
+								'serial_number' => $rows[$i][0],
+							],
+							[
+								'date' => date('Y-m-d'),
+								'serial_number' => $rows[$i][0],
+								'material_number' => $rows[$i][1],
+								'part_name' => $part_name,
+								'qty' => $rows[$i][3],
+								'vendor' => 'KYORAKU BLOWMOLDING INDONESIA',
+								'vendor_shortname' => 'KYORAKU',
+								'created_by' => Auth::id()
+							]
+						);
+						$menu->save();
+					}
 				}
 
 				$response = array(
 					'status' => true,
 					'message' => 'Serial Number succesfully uploaded',
-					'qty_error' => count($errors)
+					'errors' => $errors,
+					'error_part_name' => $error_part_names,
 				);
 				return Response::json($response);
 			}

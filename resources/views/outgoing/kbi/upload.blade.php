@@ -278,10 +278,18 @@
             success:function(data)
             {
                 if (data.status) {
-                    if (parseInt(data.qty_error) > 0) {
-                        openErrorGritter('Success!',data.message+' With '+data.qty_error+' Error(s)');
+                    if (parseInt(data.errors) > 0) {
+                        var error_part_name = '';
+                        if (data.error_part_name.length > 0) {
+                            error_part_name = '<br>And '+data.error_part_name.length+ ' Part Number Not Found';
+                        }
+                        openErrorGritter('Success!',data.message+' With '+data.errors.length+' Double Serial Number'+error_part_name);
                     }else{
-                        openSuccessGritter('Success!',data.message+' With '+data.qty_error+' Error(s)');
+                        var error_part_name = '';
+                        if (data.error_part_name.length > 0) {
+                            error_part_name = '<br>And '+data.error_part_name.length+ ' Part Number Not Found';
+                        }
+                        openSuccessGritter('Success!',data.message+' With '+data.errors.length+' Double Serial Number'+error_part_name);
                     }
                     $('#serialNumberFile').val("");
                     $('#modalUploadSerialNumber').modal('hide');
