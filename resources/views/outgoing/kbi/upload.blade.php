@@ -283,7 +283,7 @@
                         if (data.error_part_name.length > 0) {
                             error_part_name = '<br>And '+data.error_part_name.length+ ' Part Number Not Found';
                         }
-                        openErrorGritter('Success!',data.message+' With '+data.errors.length+' Double Serial Number'+error_part_name);
+                        openErrorGritter('Error!',data.message+' With '+data.errors.length+' Double Serial Number'+error_part_name);
                     }else{
                         var error_part_name = '';
                         if (data.error_part_name.length > 0) {
