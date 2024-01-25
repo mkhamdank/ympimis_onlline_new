@@ -91,6 +91,12 @@
 	.page-wrapper{
 		padding-top: 0px;
 	}
+	#bodyTableDetail > tr > td{
+		border:1px solid grey;
+	}
+	#tableDetail > thead > tr > th{
+		border:1px solid grey;
+	}
 </style>
 @stop
 @section('header')
@@ -146,7 +152,7 @@
 </div>
 
 <div class="modal fade" id="modalDetail">
-	<div class="modal-dialog modal-xl" style="width: 1140px">
+	<div class="modal-dialog modal-lg" style="width: 90%">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="modalDetailTitle"></h4>

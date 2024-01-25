@@ -64,7 +64,7 @@
         <div class="row align-items-center">
             <div class="col-md-12 col-12 align-self-center">
                 <h3 class="page-title mb-0 p-0">{{$title}}<span class="text-purple"> {{$title_jp}}</span>
-                    <button class="btn btn-info pull-right" style="margin-left: 5px; width: 10%;color: white" onclick="modalUploadSerialNumber();"><i class="fa fa-upload"></i> Upload SN</button>
+                    <!-- <button class="btn btn-info pull-right" style="margin-left: 5px; width: 10%;color: white" onclick="modalUploadSerialNumber();"><i class="fa fa-upload"></i> Upload SN</button> -->
                 </h3>
             </div>
         </div>
@@ -87,12 +87,12 @@
                             <table class="table user-table no-wrap" id="tableUpload">
                                 <thead>
                                     <tr>
-                                        <th style="background-color: #3f50b5;color: white !important;color: black">Date</th>
-                                        <th style="background-color: #3f50b5;color: white !important;color: black">Serial Number</th>
+                                        <!-- <th style="background-color: #3f50b5;color: white !important;color: black">Date</th> -->
+                                        <th style="background-color: #3f50b5;color: white !important;color: black">Inventory ID</th>
                                         <th style="background-color: #3f50b5;color: white !important;color: black">Part No.</th>
                                         <th style="background-color: #3f50b5;color: white !important;color: black">Part Name</th>
                                         <th style="background-color: #3f50b5;color: white !important;color: black">Quantity</th>
-                                        <th style="background-color: #3f50b5;color: white !important;color: black">Status</th>
+                                        <!-- <th style="background-color: #3f50b5;color: white !important;color: black">Status</th> -->
                                     </tr>
                                 </thead>
                                 <tbody id="bodyTableUpload">
@@ -176,12 +176,12 @@
                 var bodyTable = '';
                 for (var i = 0; i < result.serial_number.length; i++) {
                     bodyTable += '<tr>';
-                    bodyTable += '<td>'+result.serial_number[i].date+'</td>';
+                    // bodyTable += '<td>'+result.serial_number[i].date+'</td>';
                     bodyTable += '<td>'+result.serial_number[i].serial_number+'</td>';
                     bodyTable += '<td>'+result.serial_number[i].material_number+'</td>';
                     bodyTable += '<td>'+result.serial_number[i].part_name+'</td>';
                     bodyTable += '<td>'+result.serial_number[i].qty+'</td>';
-                    bodyTable += '<td>'+(result.serial_number[i].status || '')+'</td>';
+                    // bodyTable += '<td>'+(result.serial_number[i].status || '')+'</td>';
                     bodyTable += '</tr>';
                 }
                 $('#bodyTableUpload').append(bodyTable);

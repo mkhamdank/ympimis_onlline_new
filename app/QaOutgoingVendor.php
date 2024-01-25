@@ -25,6 +25,7 @@ class QaOutgoingVendor extends Model
 		'ng_qty_side_a',
 		'ng_qty_side_b',
 		'qa_final_status',
+		'qc_sampling_status',
 		'product_index',
 		'product_result',
 		'lot_status',

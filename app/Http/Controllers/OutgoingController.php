@@ -1314,11 +1314,23 @@ class OutgoingController extends Controller
 	public function scanKensaKbi(Request $request)
 	{
 		try {
-			$serial_number = QaOutgoingSerialNumber::where('vendor_shortname','KYORAKU')->where('serial_number',$request->get('serial_number'))->where('status',null)->first();
-			if (count($serial_number) > 0) {
+			$sernum = $request->get('serial_number');
+			$id_num6 = substr($sernum, 0, 6);
+			$id_num5 = substr($sernum, 0, 5);
+			$length_id_num = 6;
+			$serial_number = QaOutgoingSerialNumber::where('vendor_shortname','KYORAKU')->where('serial_number',$id_num6)->first();
+			if (!$serial_number) {
+				$length_id_num = 5;
+				$serial_number = QaOutgoingSerialNumber::where('vendor_shortname','KYORAKU')->where('serial_number',$id_num5)->first();
+			}
+			if ($serial_number) {
 				$response = array(
 			        'status' => true,
 			        'serial_number' => $serial_number,
+			        'length_id_num' => $length_id_num,
+			        'invent_id' => substr($sernum, 0, $length_id_num),
+			        'tgl' => substr($sernum, $length_id_num, 6),
+			        'sequence' => substr($sernum, ($length_id_num+6), strlen($sernum))
 			    );
 			    return Response::json($response);
 			}else{
@@ -1352,6 +1364,7 @@ class OutgoingController extends Controller
 			$serial_number = $request->get('serial_number');
 			$ng_qty = $request->get('ng_qty');
 			$jumlah_ng = $request->get('jumlah_ng');
+			$qa_sampling_status = $request->get('qa_sampling_status');
 			$material = QaMaterial::where('material_number',$material_number)->first();
 			$outgoings = [];
 			$outgoings_critical = [];
@@ -1369,6 +1382,7 @@ class OutgoingController extends Controller
 					'total_ok' => $total_ok,
 					'total_ng' => $total_ng,
 					'ng_ratio' => $ng_ratio,
+					'qc_sampling_status' => $qa_sampling_status,
 					'ng_name' => '-',
 					'ng_qty' => '0',
 					'lot_status' => 'LOT OK',
@@ -1390,6 +1404,7 @@ class OutgoingController extends Controller
 						'total_ok' => $total_ok,
 						'total_ng' => $total_ng,
 						'ng_ratio' => $ng_ratio,
+						'qc_sampling_status' => $qa_sampling_status,
 						'ng_name' => $ng_name[$i],
 						'ng_qty' => $ng_qty[$i],
 		                'created_by' => Auth::user()->id
@@ -1472,9 +1487,9 @@ class OutgoingController extends Controller
 				}
 			}
 
-			$updateSernum = QaOutgoingSerialNumber::where('serial_number',$serial_number)->where('material_number',$material_number)->first();
-			$updateSernum->status = 'Used';
-			$updateSernum->save();
+			// $updateSernum = QaOutgoingSerialNumber::where('serial_number',$serial_number)->where('material_number',$material_number)->first();
+			// $updateSernum->status = 'Used';
+			// $updateSernum->save();
 			
 			$response = array(
 		        'status' => true,

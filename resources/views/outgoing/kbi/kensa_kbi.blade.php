@@ -107,27 +107,41 @@
 			<table class="table table-bordered" style="width: 100%; margin-bottom: 2px;" border="1">
 				<tbody>
 					<tr>
-						<th style=" background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 14px;width: 1%;">Date</th>
-						<th style=" background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 14px;width: 1%">Inspector</th>
-						<th colspan="2" style=" background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 14px;width: 3%">Serial Number</th>
+						<th style="vertical-align:middle;background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 14px;width: 1%;">Date</th>
+						<th style="vertical-align:middle;background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 14px;width: 1%">Inspector</th>
+						<th colspan="2" style="vertical-align:middle;background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 14px;width: 3%">Scan QR Code</th>
 						<td style="background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 14px;font-weight: bold;width: 2%">
-							PART NO.
+							Invent. ID
 						</td>
 						<td style="background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 14px;font-weight: bold;width: 2%">
-							PART NAME
+							Tgl
+						</td>
+						<td style="background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 14px;font-weight: bold;width: 2%">
+							Sequence
+						</td>
+						<td style="background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 14px;font-weight: bold;width: 2%">
+							Part No.
+						</td>
+						<td style="background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 14px;font-weight: bold;width: 2%">
+							Part Name
 						</td>
 						<td colspan="3" style="background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 12px;font-weight: bold;width: 3%">
-							TAMBAHAN CEK MATERIAL PENGGANTI NG
+							Tambahan Cek Material 
 						</td>
 						<td style="background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 14px;font-weight: bold;width: 1%">
-							ACTION
+							Selesai Proses
 						</td>
-						
 					</tr>
 					<tr>
 						<td style="background-color: #fca311; color: #14213d; text-align: center; font-size:12px;padding-left: 2px;padding-right: 2px" id="date">{{date("Y-m-d")}}</td>
 						<td style="background-color: #14213d; color: #fff; text-align: center; font-size:12px;" id="op">{{$inspector}}</td>
-						<td colspan="2" style="background-color: #fca311; color: #14213d; text-align: center; font-size:15px;"><input type="text" id="serial_number" placeholder="Scan Serial Number Here . . ." style="width: 100%;text-align: center;font-size: 15px;padding: 5px"></td>
+						<td colspan="2" style="background-color: #fca311; color: #14213d; text-align: center; font-size:15px;"><input type="text" id="serial_number" placeholder="Scan QR Code Here . . ." style="width: 100%;text-align: center;font-size: 15px;padding: 5px"></td>
+						<td id="invent_id" style="background-color: #fca311; text-align: center; color: #14213d; font-size: 15px;">-
+						</td>
+						<td id="tgl" style="background-color: #fca311; text-align: center; color: #14213d; font-size: 15px;">-
+						</td>
+						<td id="sequence" style="background-color: #fca311; text-align: center; color: #14213d; font-size: 15px;">-
+						</td>
 						<td id="material_number" style="background-color: #fca311; text-align: center; color: #14213d; font-size: 15px;">-
 						</td>
 						<td id="material_description" style="background-color: #fca311; text-align: center; color: #14213d; font-size: 15px;">-
@@ -601,6 +615,9 @@
 	});
 
 	function cancelAll() {
+		$('#invent_id').html('-');
+		$('#tgl').html('-');
+		$('#sequence').html('-');
 		$('#material_number').html('-');
 		$('#material_description').html('-');
 		$('#qty_check').val('');
@@ -632,6 +649,9 @@
 					$('#material_description').html(result.serial_number.part_name);
 					$('#qty_check').val(result.serial_number.qty);
 					$('#total_ok').val(result.serial_number.qty);
+					$('#invent_id').html(result.invent_id);
+					$('#tgl').html(result.tgl);
+					$('#sequence').html(result.sequence);
 				}else{
 					openErrorGritter('Error!','Serial Number Invalid');
 					audio_error.play();
@@ -790,6 +810,9 @@
 			var ng_ratio = $('#ng_ratio').val();
 			var serial_number = $('#serial_number').val();
 			var inspector = $('#op').text();
+			var invent_id = $('#invent_id').text();
+			var tgl = $('#tgl').text();
+			var sequence = $('#sequence').text();
 			$('#btn_confirm').prop('disabled',true);
 
 			var ng_name = [];
@@ -814,6 +837,7 @@
 				ng_name:ng_name,
 				ng_qty:ng_qty,
 				jumlah_ng:jumlah_ng,
+				qa_sampling_status:invent_id+'_'+tgl+'_'+sequence
 			}
 
 			$.post('{{ url("index/kensa/kbi/confirm") }}', data, function(result, status, xhr){

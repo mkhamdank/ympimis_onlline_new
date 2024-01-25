@@ -30,7 +30,7 @@
                                 <a href="{{ url('/index/outgoing/arisa/input') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #0e691e;background-color: white;color: #094a05">QC Final Check ARISA</a>
                             <?php endif ?>
                             <?php if (Auth::user()->role_code == 'KBI' || Auth::user()->role_code == 'MIS'): ?>
-                                <a href="{{ url('/index/serial_number/kbi') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #0e691e;background-color: white;color: #094a05">Upload Serial Number PT. KBI</a>
+                                <a href="{{ url('/index/serial_number/kbi') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #0e691e;background-color: white;color: #094a05">Inventory ID PT. KBI</a>
                                 <a href="{{ url('/index/kensa/kbi') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #0e691e;background-color: white;color: #094a05">Production Check KBI</a>
                                 <!-- <a href="{{ url('/index/outgoing/arisa/input') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: green;background-color: green">QC Final Check ARISA</a> -->
                             <?php endif ?>

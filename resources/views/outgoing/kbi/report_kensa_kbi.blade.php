@@ -68,6 +68,14 @@
     .loading{
         display: none;
     }
+
+    #bodyTableKensa > tr > td{
+        border:1px solid darkgrey;
+    }
+
+    #tableKensa > thead > tr > th{
+        border:1px solid darkgrey;
+    }
 </style>
 @stop
 @section('header')
@@ -136,11 +144,14 @@
             <div class="col-sm-12 col-xs-12" style="text-align: center;">
                 <div class="card">
                     <div class="card-body" style="padding: 0px">
-                        <div class="col-md-12" style="padding: 10px">
+                        <div class="col-md-12" style="padding: 10px;overflow-x:scroll;">
                             <table class="table user-table no-wrap" id="tableKensa">
                                 <thead>
                                     <tr>
-                                        <th style="background-color: #3f50b5;color: white !important;color: black">SN</th>
+                                        <th style="background-color: #3f50b5;color: white !important;color: black">Serial Number</th>
+                                        <th style="background-color: #3f50b5;color: white !important;color: black">Invent ID</th>
+                                        <th style="background-color: #3f50b5;color: white !important;color: black">Tgl Invent ID</th>
+                                        <th style="background-color: #3f50b5;color: white !important;color: black">Sequence</th>
                                         <th style="background-color: #3f50b5;color: white !important;color: black">Date</th>
                                         <th style="background-color: #3f50b5;color: white !important;color: black">Material</th>
                                         <th style="background-color: #3f50b5;color: white !important;color: black">Inspector</th>
@@ -150,7 +161,6 @@
                                         <th style="background-color: #3f50b5;color: white !important;color: black">NG Ratio (%)</th>
                                         <th style="background-color: #3f50b5;color: white !important;color: black">NG Name</th>
                                         <th style="background-color: #3f50b5;color: white !important;color: black">NG Qty</th>
-                                        <th style="background-color: #3f50b5;color: white !important;color: black">QC Final Check</th>
                                     </tr>
                                 </thead>
                                 <tbody id="bodyTableKensa">
@@ -214,6 +224,15 @@
                 for (var i = 0; i < result.outgoing.length; i++) {
                     bodyTable += '<tr>';
                     bodyTable += '<td>'+result.outgoing[i].serial_number+'</td>';
+                    if (result.outgoing[i].qc_sampling_status == null) {
+                        bodyTable += '<td></td>';
+                        bodyTable += '<td></td>';
+                        bodyTable += '<td></td>';
+                    }else{
+                        bodyTable += '<td>'+result.outgoing[i].qc_sampling_status.split('_')[0]+'</td>';
+                        bodyTable += '<td>'+result.outgoing[i].qc_sampling_status.split('_')[1]+'</td>';
+                        bodyTable += '<td>'+result.outgoing[i].qc_sampling_status.split('_')[2]+'</td>';
+                    }
                     bodyTable += '<td>'+getFormattedDateTime(new Date(result.outgoing[i].created_at))+'</td>';
                     bodyTable += '<td>'+result.outgoing[i].material_number+'<br>'+result.outgoing[i].material_description+'</td>';
                     bodyTable += '<td>'+result.outgoing[i].inspector+'</td>';
@@ -223,7 +242,6 @@
                     bodyTable += '<td>'+result.outgoing[i].ng_ratio+'</td>';
                     bodyTable += '<td>'+result.outgoing[i].ng_name+'</td>';
                     bodyTable += '<td>'+result.outgoing[i].ng_qty+'</td>';
-                    bodyTable += '<td>'+(result.outgoing[i].qa_final_status || 'Not Checked')+'</td>';
                     bodyTable += '</tr>';
                 }
                 $('#bodyTableKensa').append(bodyTable);
