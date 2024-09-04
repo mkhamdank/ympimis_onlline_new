@@ -638,14 +638,17 @@ class OutgoingController extends Controller
 		$title_jp = '';
 
 		$product = DB::SELECT("SELECT DISTINCT
-			( material_number ),
-			material_description,
-			material_alias,
-			hexa_button,
-			part 
-		FROM
-			qa_outgoing_point_checks
-			order by material_alias");
+			  ( material_number ),
+			  material_description,
+			  material_alias,
+			  hexa_button,
+			  part 
+			FROM
+			  qa_outgoing_point_checks 
+			WHERE
+			  vendor_shortname = 'ARISA' 
+			ORDER BY
+			  material_alias");
 
 		return view('outgoing.arisa.index', array(
 			'title' => $title,
