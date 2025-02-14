@@ -1183,10 +1183,10 @@ class OutgoingController extends Controller
 	        $date_to = $request->get('date_to');
 	        if ($date_from == "") {
 	             if ($date_to == "") {
-	                  $first = date('Y-m-d',strtotime('-2 months'));
+	                  $first = date('Y-m-01');
 	                  $last = date('Y-m-d');
 	             }else{
-	                  $first = date('Y-m-d',strtotime('-2 months'));
+	                  $first = date('Y-m-01');
 	                  $last = $date_to;
 	             }
 	        }else{
