@@ -500,6 +500,34 @@
                         </tr>
                         <?php } ?>
 
+						<?php
+                        if($data['data_before']->surat_jalan == $data['surat_jalan']){ ?>
+                        <tr>
+							<th style="border:1px solid black;font-weight: bold;background-color: rgb(126,86,134);text-align: left;color: white; width: 1%;">Surat Jalan</th>
+							<td colspan="2" style="border:1px solid black;text-align: left; width: 10%;">
+								<?php echo $data['surat_jalan'] ?>
+							</td>
+						</tr>
+                        <?php } else{ ?>
+                            <tr>
+							<th rowspan="2" style="border:1px solid black;font-weight: bold;background-color: rgb(126,86,134);text-align: left;color: white; width: 1%;">Surat Jalan</th>
+                            <td style="border:1px solid black;text-align: left; background-color: lightpink; width: 1%;">
+								Before
+							</td>
+							<td style="border:1px solid black;text-align: left; width: 10%;">
+								<?php echo $data['data_before']->surat_jalan ?>
+							</td>
+						</tr>
+                        <tr>
+                            <td style="border:1px solid black;text-align: left; background-color: lightgreen; width: 1%;">
+								After
+							</td>
+                            <td style="border:1px solid black;text-align: left; width: 10%;">
+								<?php echo $data['surat_jalan'] ?>
+							</td>
+                        </tr>
+                        <?php } ?>
+
                         
                     </thead>
                 </table>

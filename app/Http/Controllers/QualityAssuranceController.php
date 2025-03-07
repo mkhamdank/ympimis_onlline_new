@@ -336,6 +336,7 @@ class QualityAssuranceController extends Controller
             $effect = $request->get('effect');
             $handling = $request->get('handling');
             $results = $request->get('results');
+            $surat_jalan = $request->get('surat_jalan');
 
             $handling_choice = $request->get('handling_choice');
             $qty_wip = $request->get('qty_wip');
@@ -361,6 +362,7 @@ class QualityAssuranceController extends Controller
                 'effect' => $effect,
                 'handling' => $handling,
                 'results' => $results,
+                'surat_jalan' => $surat_jalan,
                 'created_by' => Auth::user()->id,
                 'created_at' => $this->timestamp,
                 'updated_at' => $this->timestamp,
@@ -387,6 +389,7 @@ class QualityAssuranceController extends Controller
                 'qty_ok' => $qty_ok,
                 'handling' => $handling,
                 'results' => $results,
+                'surat_jalan' => $surat_jalan,
             );
             
             array_push($cc,'silvy.firliani@music.yamaha.com');
@@ -451,6 +454,7 @@ class QualityAssuranceController extends Controller
             $effect = $request->get('effect');
             $handling = $request->get('handling');
             $results = $request->get('results');
+            $surat_jalan = $request->get('surat_jalan');
 
             $handling_choice = $request->get('handling_choice');
             $qty_wip = $request->get('qty_wip');
@@ -477,6 +481,7 @@ class QualityAssuranceController extends Controller
                 'qty_ok' => $qty_ok,
                 'handling' => $handling,
                 'results' => $results,
+                'surat_jalan' => $surat_jalan,
                 'created_by' => Auth::user()->id,
                 'updated_at' => $this->timestamp,
             ]);
@@ -502,6 +507,7 @@ class QualityAssuranceController extends Controller
                 'qty_ok' => $qty_ok,
                 'handling' => $handling,
                 'results' => $results,
+                'surat_jalan' => $surat_jalan,
                 'data_before' => $data_before,
             );
 

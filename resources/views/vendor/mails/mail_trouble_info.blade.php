@@ -147,6 +147,12 @@
 								<?php echo $data['results'] ?>
 							</td>
 						</tr>
+						<tr>
+							<th style="border:1px solid black;font-weight: bold;background-color: rgb(126,86,134);text-align: left;color: white; width: 1%;">Surat Jalan</th>
+							<td style="border:1px solid black;text-align: left; width: 10%;">
+								<?php echo $data['surat_jalan'] ?>
+							</td>
+						</tr>
 					</thead>
 				</table>
 

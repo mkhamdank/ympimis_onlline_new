@@ -205,6 +205,7 @@
                                         <th style="background-color: #3f50b5;color: white !important;width: 1%">Qty OK</th>
                                         <th style="background-color: #3f50b5;color: white !important;width: 1%">Qty NG</th>
                                         <th style="background-color: #3f50b5;color: white !important;width: 10%">Results</th>
+                                        <th style="background-color: #3f50b5;color: white !important;width: 10%">Surat Jalan</th>
                                         <th style="background-color: #3f50b5;color: white !important;width: 2%">Action</th>
                                     </tr>
                                 </thead>
@@ -232,7 +233,7 @@
                 <div class="modal-body" style="min-height: 100px">
                     <div class="form-group row">
                         <div class="col-md-3" align="right">
-                            Category
+                            Category <span class="text-red">*</span>
                         </div>
                         <div class="col-md-8">
                             <select class="form-control select2" data-placeholder="Select Category" id="category" style="width:100%" onchange="changeCategory(this.value)">
@@ -247,7 +248,7 @@
                     </div>
                     <div class="form-group row" id="divMaterial">
                         <div class="col-md-3" align="right">
-                            Material
+                            Material <span class="text-red">*</span>
                         </div>
                         <div class="col-md-8">
                             <select class="form-control select2" data-placeholder="Select Material" id="material" style="width:100%">
@@ -260,7 +261,7 @@
                     </div>
                     <div class="form-group row" id="divProcess">
                         <div class="col-md-3" align="right">
-                            Process
+                            Process <span class="text-red">*</span>
                         </div>
                         <div class="col-md-8">
                             <input type="text" class="form-control" placeholder="Input Process" name="process" id="process" style="width:100%; border: 1px solid darkgrey;">
@@ -268,7 +269,7 @@
                     </div>
                     <div class="form-group row" id="divMachine">
                         <div class="col-md-3" align="right">
-                            Machine / Tools
+                            Machine / Tools <span class="text-red">*</span>
                         </div>
                         <div class="col-md-8">
                             <input type="text" class="form-control" placeholder="Input Machine / Tools" name="machine" id="machine" style="width:100%; border: 1px solid darkgrey;">
@@ -276,7 +277,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-3" align="right">
-                            Date From
+                            Date From <span class="text-red">*</span>
                         </div>
                         <div class="col-md-8">
                             <input type="text" class="form-control datepicker" placeholder="Date From" name="date_from" id="date_from" style="width: 100%; background-color: white; border: 1px solid darkgrey;" readonly>
@@ -292,7 +293,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-3" align="right">
-                            Trouble
+                            Trouble <span class="text-red">*</span>
                         </div>
                         <div class="col-md-8">
                             <textarea class="form-control" placeholder="Trouble" name="trouble" id="trouble" style="width:100%"></textarea>
@@ -300,7 +301,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-3" align="right">
-                            Effect
+                            Effect <span class="text-red">*</span>
                         </div>
                         <div class="col-md-8">
                             <textarea class="form-control" placeholder="Effect" name="Effect" id="effect" style="width:100%"></textarea>
@@ -310,7 +311,7 @@
                         <div class="col-md-3">
                         </div>
                         <div class="col-md-9">
-                            Apakah sudah dilakukan penanganan ke semua produk lain di tengah proses dan siap kirim?<br><i>Have all other products been handled in the middle of the process and are they ready to be shipped??</i>
+                            Apakah sudah dilakukan penanganan ke semua produk lain di tengah proses dan siap kirim?<br><i>Have all other products been handled in the middle of the process and are they ready to be shipped??</i>  <span class="text-red">*</span>
                         </div>
                         <div class="col-md-3">
                         </div>
@@ -327,13 +328,13 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-3" align="right">
-                            Quantity Material
+                            Quantity Material <span class="text-red">*</span>
                         </div>
                         <div class="col-md-4">
-                            <b>Quantity Tengah Proses</b>
+                            <b>Quantity Tengah Proses</b> <span class="text-red">*</span>
                         </div>
                         <div class="col-md-4">
-                            <b>Quantity Siap Kirim</b>
+                            <b>Quantity Siap Kirim</b> <span class="text-red">*</span>
                         </div>
                         <div class="col-md-3">
                         </div>
@@ -346,13 +347,13 @@
                         <div class="col-md-3">
                         </div>
                         <div class="col-md-3">
-                            <b>Quantity Check</b>
+                            <b>Quantity Check</b> <span class="text-red">*</span>
                         </div>
                         <div class="col-md-3">
-                            <b>Quantity OK</b>
+                            <b>Quantity OK</b> <span class="text-red">*</span>
                         </div>
                         <div class="col-md-3">
-                            <b>Quantity NG</b>
+                            <b>Quantity NG</b> <span class="text-red">*</span>
                         </div>
                         <div class="col-md-3">
                         </div>
@@ -368,7 +369,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-3" align="right">
-                            Handling
+                            Handling <span class="text-red">*</span>
                         </div>
                         <div class="col-md-8">
                             <textarea class="form-control" placeholder="Handling" name="Handling" id="handling" style="width:100%"></textarea>
@@ -376,10 +377,18 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-3" align="right">
-                            Results
+                            Results <span class="text-red">*</span>
                         </div>
                         <div class="col-md-8">
                             <textarea class="form-control" placeholder="Results" name="Results" id="results" style="width:100%"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3" align="right">
+                            Surat Jalan <span class="text-red">*</span>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" placeholder="Surat Jalan (Inputkan lebih dari 1 jika ada)" name="surat_jalan" id="surat_jalan" style="width: 100%; background-color: white; border: 1px solid darkgrey;">
                         </div>
                     </div>
                 </div>
@@ -401,7 +410,7 @@
                     <input type="hidden" id="edit_trouble_id">
                     <div class="form-group row">
                         <div class="col-md-3" align="right">
-                            Category
+                            Category <span class="text-red">*</span>
                         </div>
                         <div class="col-md-8">
                             <select class="form-control select2" data-placeholder="Select Category" id="edit_category" style="width:100%" onchange="changeCategoryEdit(this.value)">
@@ -416,7 +425,7 @@
                     </div>
                     <div class="form-group row" id="divEditMaterial">
                         <div class="col-md-3" align="right">
-                            Material
+                            Material <span class="text-red">*</span>
                         </div>
                         <div class="col-md-8">
                             <select class="form-control select2" data-placeholder="Select Material" id="edit_material" style="width:100%">
@@ -429,7 +438,7 @@
                     </div>
                     <div class="form-group row" id="divEditProcess">
                         <div class="col-md-3" align="right">
-                            Process
+                            Process <span class="text-red">*</span>
                         </div>
                         <div class="col-md-8">
                             <input type="text" class="form-control" placeholder="Input Process" name="process" id="edit_process" style="width:100%; border: 1px solid darkgrey;">
@@ -437,7 +446,7 @@
                     </div>
                     <div class="form-group row" id="divEditMachine">
                         <div class="col-md-3" align="right">
-                            Machine / Tools
+                            Machine / Tools <span class="text-red">*</span>
                         </div>
                         <div class="col-md-8">
                             <input type="text" class="form-control" placeholder="Input Machine / Tools" name="machine" id="edit_machine" style="width:100%; border: 1px solid darkgrey;">
@@ -445,7 +454,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-3" align="right">
-                            Date From
+                            Date From <span class="text-red">*</span>
                         </div>
                         <div class="col-md-8">
                             <input type="text" class="form-control datepicker" placeholder="Date From" name="date_from" id="edit_date_from" style="width:100%" readonly>
@@ -453,7 +462,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-3" align="right">
-                            Date To
+                            Date To <span class="text-red">*</span>
                         </div>
                         <div class="col-md-8">
                             <input type="text" class="form-control datepicker" placeholder="Date To" name="date_to" id="edit_date_to" style="width:100%" readonly>
@@ -461,7 +470,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-3" align="right">
-                            Trouble
+                            Trouble <span class="text-red">*</span>
                         </div>
                         <div class="col-md-8">
                             <textarea class="form-control" placeholder="Trouble" name="trouble" id="edit_trouble" style="width:100%"></textarea>
@@ -469,7 +478,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-3" align="right">
-                            Effect
+                            Effect <span class="text-red">*</span>
                         </div>
                         <div class="col-md-8">
                             <textarea class="form-control" placeholder="Effect" name="Effect" id="edit_effect" style="width:100%"></textarea>
@@ -479,7 +488,7 @@
                         <div class="col-md-3">
                         </div>
                         <div class="col-md-9">
-                            Apakah sudah dilakukan penanganan ke semua produk lain di tengah proses dan siap kirim?<br><i>Have all other products been handled in the middle of the process and are they ready to be shipped??</i>
+                            Apakah sudah dilakukan penanganan ke semua produk lain di tengah proses dan siap kirim?<br><i>Have all other products been handled in the middle of the process and are they ready to be shipped??</i> <span class="text-red">*</span>
                         </div>
                         <div class="col-md-3">
                         </div>
@@ -488,21 +497,21 @@
                                 <input type="radio" checked="checked" name="edit_handling_choice" value="Ya">
                                 <span class="checkmark"></span>
                             </label>
-                            <label class="containers">Tidak
+                            {{-- <label class="containers">Tidak
                                 <input type="radio" name="edit_handling_choice" value="Tidak">
                                 <span class="checkmark"></span>
-                            </label>
+                            </label> --}}
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-3" align="right">
-                            Quantity Material
+                            Quantity Material <span class="text-red">*</span>
                         </div>
                         <div class="col-md-4">
-                            <b>Quantity Tengah Proses</b>
+                            <b>Quantity Tengah Proses</b> <span class="text-red">*</span>
                         </div>
                         <div class="col-md-4">
-                            <b>Quantity Siap Kirim</b>
+                            <b>Quantity Siap Kirim</b> <span class="text-red">*</span>
                         </div>
                         <div class="col-md-3">
                         </div>
@@ -515,13 +524,13 @@
                         <div class="col-md-3">
                         </div>
                         <div class="col-md-3">
-                            <b>Quantity Check</b>
+                            <b>Quantity Check</b> <span class="text-red">*</span>
                         </div>
                         <div class="col-md-3">
-                            <b>Quantity OK</b>
+                            <b>Quantity OK</b> <span class="text-red">*</span>
                         </div>
                         <div class="col-md-3">
-                            <b>Quantity NG</b>
+                            <b>Quantity NG</b> <span class="text-red">*</span>
                         </div>
                         <div class="col-md-3">
                         </div>
@@ -537,7 +546,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-3" align="right">
-                            Handling
+                            Handling <span class="text-red">*</span>
                         </div>
                         <div class="col-md-8">
                             <textarea class="form-control" placeholder="Handling" name="Handling" id="edit_handling" style="width:100%"></textarea>
@@ -545,10 +554,18 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-3" align="right">
-                            Results
+                            Results <span class="text-red">*</span>
                         </div>
                         <div class="col-md-8">
                             <textarea class="form-control" placeholder="Results" name="Results" id="edit_results" style="width:100%"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3" align="right">
+                            Surat Jalan <span class="text-red">*</span>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" placeholder="Surat Jalan (Inputkan lebih dari 1 jika ada)" name="edit_surat_jalan" id="edit_surat_jalan" style="width: 100%; background-color: white; border: 1px solid darkgrey;">
                         </div>
                     </div>
                 </div>
@@ -696,6 +713,7 @@
                     bodyTable += '<td>'+result.trouble_info[i].qty_ok+'</td>';
                     bodyTable += '<td>'+result.trouble_info[i].qty_ng+'</td>';
                     bodyTable += '<td>'+(result.trouble_info[i].results || '')+'</td>';
+                    bodyTable += '<td>'+(result.trouble_info[i].surat_jalan || '')+'</td>';
                     bodyTable += '<td><button class="btn btn-warning btn-sm" onclick="edit(\''+result.trouble_info[i].id+'\')" style="color:white;"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btn-sm" onclick="deleteTrouble(\''+result.trouble_info[i].id+'\')" style="color:white;margin-left:5px;"><i class="fa fa-trash"></i></button></td>';
                     index++;
                 }
@@ -809,6 +827,7 @@
                 $('#edit_qty_check').val(troubles[i].qty_check);                
                 $('#edit_qty_ok').val(troubles[i].qty_ok);
                 $('#edit_qty_ng').val(troubles[i].qty_ng);
+                $('#edit_surat_jalan').val(troubles[i].surat_jalan);
             }
         }
         $('#modalEdit').modal('show');
@@ -831,6 +850,7 @@
         $('#material').val('').trigger('change');
         $('#process').val('');
         $('#machine').val('');
+        $('#surat_jalan').val('');
 
         $('#divEditMaterial').hide();
         $('#divEditProcess').hide();
@@ -860,6 +880,7 @@
         $('#edit_qty_check').val('');
         $('#edit_qty_ok').val('');
         $('#edit_qty_ng').val('');
+        $('#edit_surat_jalan').val('');
     }
 
     function inputTrouble() {
@@ -877,6 +898,7 @@
             var qty_check = $("#qty_check").val();
             var qty_ok = $("#qty_ok").val();
             var qty_ng = $("#qty_ng").val();
+            var surat_jalan = $("#surat_jalan").val();
             var effect = CKEDITOR.instances['effect'].getData();
             var handling = CKEDITOR.instances['handling'].getData();
             var results = CKEDITOR.instances['results'].getData();
@@ -908,6 +930,7 @@
             formData.append('qty_check',qty_check);
             formData.append('qty_ok',qty_ok);
             formData.append('qty_ng',qty_ng);
+            formData.append('surat_jalan',surat_jalan);
 
             var handling_choice = $('input[name="handling_choice"]:checked').val();
             formData.append('handling_choice',handling_choice);
@@ -993,6 +1016,7 @@
             var qty_check = $("#edit_qty_check").val();
             var qty_ok = $("#edit_qty_ok").val();
             var qty_ng = $("#edit_qty_ng").val();
+            var surat_jalan = $("#edit_surat_jalan").val();
             var effect = CKEDITOR.instances['edit_effect'].getData();
             var handling = CKEDITOR.instances['edit_handling'].getData();
             var results = CKEDITOR.instances['edit_results'].getData();
@@ -1025,6 +1049,7 @@
             formData.append('qty_check',qty_check);
             formData.append('qty_ok',qty_ok);
             formData.append('qty_ng',qty_ng);
+            formData.append('surat_jalan',surat_jalan);
 
             var handling_choice = $('input[name="edit_handling_choice"]:checked').val();
             formData.append('handling_choice',handling_choice);
