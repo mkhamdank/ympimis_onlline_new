@@ -135,9 +135,28 @@
                             href="{{ url('/index/stock_control/rk') }}"><i class="fa fa-cubes"></i>
                             <span class="hide-menu">Rahayu Kusuma</span></a>
                         </li>
+                        @if (isset($page) && $page == 'Trouble Info')
+                            <li class="sidebar-item active">
+                            @else
+                            <li class="sidebar-item">
+                        @endif
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                            href="{{ url('/index/trouble/info/rk') }}"><i class="fa fa-refresh"></i> <span
+                                class="hide-menu">Trouble Info</span></a>
+                        </li>
                     @endif
 
                     @if (Auth::user()->role_code == 'TRUE' || Auth::user()->role_code == 'MIS')
+                        @if (isset($page) && $page == 'Stock Control Dashboard')
+                            <li class="sidebar-item active">
+                            @else
+                            <li class="sidebar-item">
+                        @endif
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                            href="{{ url('/index/stock_control/dashboard') }}"><i class="fa fa-tv"></i>
+                            <span class="hide-menu">Dashboard</span></a>
+                        </li>
+
                         @if (isset($page) && $page == 'TRUE Stock Control')
                             <li class="sidebar-item active">
                             @else
@@ -145,8 +164,9 @@
                         @endif
                         <a class="sidebar-link waves-effect waves-dark sidebar-link"
                             href="{{ url('/index/stock_control/true') }}"><i class="fa fa-cubes"></i>
-                            <span class="hide-menu">PT TRUE</span></a>
+                            <span class="hide-menu">TRUE</span></a>
                         </li>
+
                     @endif
                 @endif
 
@@ -172,6 +192,15 @@
                             href="{{ url('/index/outgoing/true') }}"><i class="fa fa-book"></i> <span
                                 class="hide-menu">VFI PT. TRUE</span></a>
                         </li>
+                        @if (isset($page) && $page == 'Trouble Info')
+                            <li class="sidebar-item active">
+                            @else
+                            <li class="sidebar-item">
+                        @endif
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                            href="{{ url('/index/trouble/info/true') }}"><i class="fa fa-refresh"></i> <span
+                                class="hide-menu">Trouble Info</span></a>
+                        </li>
                     @endif
 
                     @if (Auth::user()->role_code == 'KBI' || Auth::user()->role_code == 'MIS')
@@ -184,6 +213,15 @@
                             href="{{ url('/index/outgoing/kbi') }}"><i class="fa fa-book"></i> <span
                                 class="hide-menu">VFI KBI</span></a>
                         </li>
+                        @if (isset($page) && $page == 'Trouble Info')
+                            <li class="sidebar-item active">
+                            @else
+                            <li class="sidebar-item">
+                        @endif
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                            href="{{ url('/index/trouble/info/kbi') }}"><i class="fa fa-refresh"></i> <span
+                                class="hide-menu">Trouble Info</span></a>
+                        </li>
                     @endif
                     @if (Auth::user()->role_code == 'ARISA' || Auth::user()->role_code == 'MIS')
                         @if (isset($page) && $page == 'Outgoing ARISA')
@@ -195,14 +233,23 @@
                             href="{{ url('/index/outgoing/arisa') }}"><i class="fa fa-book"></i> <span
                                 class="hide-menu">VFI ARISA</span></a>
                         </li>
-                        <!-- @if (isset($page) && $page == 'FMEA ARISA')
+                        @if (isset($page) && $page == 'Trouble Info')
                             <li class="sidebar-item active">
                             @else
                             <li class="sidebar-item">
                         @endif
                         <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                            href="{{ url('/index/trouble/info/arisa') }}"><i class="fa fa-refresh"></i> <span
+                                class="hide-menu">Trouble Info</span></a>
+                        </li>
+                        @if (isset($page) && $page == 'FMEA ARISA')
+                        <li class="sidebar-item active">
+                        @else
+                        <li class="sidebar-item">
+                        @endif
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link"
                             href="{{ url('/index/qa/document/arisa') }}"><i class="fa fa-book"></i> <span
-                                class="hide-menu">Document Control</span></a> -->
+                                class="hide-menu">Document Control</span></a>
                         </li>
                     @endif
                     @if (Auth::user()->role_code == 'CRESTEC' || Auth::user()->role_code == 'MIS')
@@ -214,6 +261,15 @@
                         <a class="sidebar-link waves-effect waves-dark sidebar-link"
                             href="{{ url('/index/outgoing/crestec') }}"><i class="fa fa-book"></i> <span
                                 class="hide-menu">VFI PT. CRESTEC INDONESIA</span></a>
+                        </li>
+                        @if (isset($page) && $page == 'Trouble Info')
+                            <li class="sidebar-item active">
+                            @else
+                            <li class="sidebar-item">
+                        @endif
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                            href="{{ url('/index/trouble/info/crestec') }}"><i class="fa fa-refresh"></i> <span
+                                class="hide-menu">Trouble Info</span></a>
                         </li>
                     @endif
                 @endif
@@ -248,14 +304,15 @@
                         <li class="sidebar-item">
                     @endif
                     <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                        href="{{ url('/index/workshop/check_molding_vendor') }}"><i class="fa fa-cubes"></i> <span class="hide-menu"> Molding ARISA</span></a>
+                        href="{{ url('/index/workshop/check_molding_vendor') }}"><i class="fa fa-cubes"></i> <span
+                            class="hide-menu"> Molding ARISA</span></a>
                     </li>
                 @endif
 
 
                 @if (Auth::user()->role_code == 'FA-Check1' ||
-                    Auth::user()->role_code == 'FA-Check2' ||
-                    Auth::user()->role_code == 'MIS')
+                        Auth::user()->role_code == 'FA-Check2' ||
+                        Auth::user()->role_code == 'MIS')
                     @if (isset($page) && $page == 'Fixed Asset')
                         <li class="sidebar-item active">
                         @else

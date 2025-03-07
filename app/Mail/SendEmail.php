@@ -156,5 +156,23 @@ class SendEmail extends Mailable
                 ->view('vendor.mails.mail_bc');
         }
 
+        if ($this->remark == 'trouble_info') {
+            return $this->from('bridgeforvendor@ympi.co.id', 'Bridge For Vendor')
+                ->subject('Trouble Information')
+                ->view('vendor.mails.mail_trouble_info');
+        }
+
+        if ($this->remark == 'trouble_info_change') {
+            return $this->from('bridgeforvendor@ympi.co.id', 'Bridge For Vendor')
+                ->subject('Changing Trouble Information')
+                ->view('vendor.mails.mail_trouble_info_change');
+        }
+
+        if ($this->remark == 'trouble_info_delete') {
+            return $this->from('bridgeforvendor@ympi.co.id', 'Bridge For Vendor')
+                ->subject('Cancellation Trouble Information')
+                ->view('vendor.mails.mail_trouble_info_delete');
+        }
+
     }
 }

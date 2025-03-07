@@ -515,3 +515,10 @@ Route::get('fetch/qa/document', 'QualityAssuranceController@fetchDocumentControl
 Route::post('input/qa/document', 'QualityAssuranceController@inputDocumentControl');
 Route::post('update/qa/document', 'QualityAssuranceController@updateDocumentControl');
 Route::get('delete/qa/document', 'QualityAssuranceController@deleteDocumentControl');
+
+Route::get('index/trouble/info/{vendor}', 'QualityAssuranceController@indexTroubleInfo');
+Route::get('fetch/trouble/info/{vendor}', 'QualityAssuranceController@fetchTroubleInfo');
+
+Route::post('input/trouble/info', 'QualityAssuranceController@inputTroubleInfo');
+Route::post('update/trouble/info', 'QualityAssuranceController@updateTroubleInfo');
+Route::post('delete/trouble/info', 'QualityAssuranceController@deleteTroubleInfo');

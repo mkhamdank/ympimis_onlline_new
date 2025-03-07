@@ -112,7 +112,7 @@
 
                     var series = [];
                     var xSeries = ['0%', '< 30%', '< 70%', '< 100%', '> 100%', '> 200%', '> 300%'];
-                    var color_palette = ['#32bbad', '#ffc3ff', '#ccffff', '#d3b5ac', '#ecff7b', '#8b85f4',
+                    var color_palette = ['#32bbad', '#d3b5ac', '#ecff7b', '#8b85f4',
                         '#808087', '#22cc7d', '#3985e0'
                     ];
 

@@ -212,4 +212,401 @@ class QualityAssuranceController extends Controller
             return Response::json($response);
         }
     }
+
+    public function indexTroubleInfo($vendor)
+    {
+        $mail_to = '';
+        $cc = '';
+        if ($vendor == 'arisa') {
+            $mail_to .= 'anang.zahroni@music.yamaha.com;';
+            $mail_to .= 'rozaki@music.yamaha.com;';
+            $mail_to .= 'eko.prasetyo.wicaksono@music.yamaha.com';
+            $cc .= 'imbang.prasetyo@music.yamaha.com';
+            $title = 'Trouble Info - PT. ARISAMANDIRI PRATAMA';
+            $vendor_name = 'PT. ARISAMANDIRI PRATAMA';
+            $page = 'Trouble Info';
+            $title_jp = '';
+        }
+
+        if ($vendor == 'true') {
+            $mail_to .= 'mukhammad.furqoon@music.yamaha.com;';
+            $mail_to .= 'wachid.hasyim@music.yamaha.com;';
+            $mail_to .= 'nanang.kurniawan@music.yamaha.com;';
+            $mail_to .= 'tofik.nur.hidayat@music.yamaha.com;';
+            $mail_to .= 'ardiyanto@music.yamaha.com';
+            $cc .= 'imbang.prasetyo@music.yamaha.com';
+            $title = 'Trouble Info - PT. TRUE INDONESIA';
+            $vendor_name = 'PT. TRUE INDONESIA';
+            $page = 'Trouble Info';
+            $title_jp = '';
+        }
+
+        if ($vendor == 'crestec') {
+            $mail_to .= 'anang.zahroni@music.yamaha.com;';
+            $mail_to .= 'rozaki@music.yamaha.com;';
+            $mail_to .= 'eko.prasetyo.wicaksono@music.yamaha.com;';
+            $mail_to .= 'mukhammad.furqoon@music.yamaha.com;';
+            $mail_to .= 'wachid.hasyim@music.yamaha.com;';
+            $mail_to .= 'nanang.kurniawan@music.yamaha.com;';
+            $mail_to .= 'tofik.nur.hidayat@music.yamaha.com';
+            $cc .= 'imbang.prasetyo@music.yamaha.com';
+            $title = 'Trouble Info - PT. CRESTEC INDONESIA';
+            $vendor_name = 'PT. CRESTEC INDONESIA';
+            $page = 'Trouble Info';
+            $title_jp = '';
+        }
+
+        if ($vendor == 'rk') {
+            $mail_to .= 'mukhammad.furqoon@music.yamaha.com;';
+            $mail_to .= 'wachid.hasyim@music.yamaha.com;';
+            $mail_to .= 'nanang.kurniawan@music.yamaha.com;';
+            $mail_to .= 'tofik.nur.hidayat@music.yamaha.com;';
+            $mail_to .= 'ardiyanto@music.yamaha.com';
+            $cc .= 'imbang.prasetyo@music.yamaha.com';
+            $title = 'Trouble Info - CV. RAHAYU KUSUMA';
+            $vendor_name = 'CV. RAHAYU KUSUMA';
+            $page = 'Trouble Info';
+            $title_jp = '';
+        }
+
+        $material = DB::SELECT("SELECT
+            a.material_number,
+            a.material_description,
+            LOWER(a.vendor) AS vendor 
+            FROM
+            (
+                (SELECT material_number, material_description, 'rk' AS vendor FROM `vendor_materials` WHERE category = 'FINISH MATERIAL') UNION ALL
+            (SELECT material_number, material_description, vendor_shortname AS vendor FROM qa_materials)) a 
+            WHERE LOWER(a.vendor) = '".$vendor."'
+            GROUP BY
+            a.material_number,
+            a.material_description,
+            a.vendor");
+
+        return view('qa.trouble.index_report', array(
+            'title' => $title,
+            'vendor' => $vendor,
+            'vendor_name' => $vendor_name,
+            'title_jp' => $title_jp,
+            'mail_to' => $mail_to,
+            'cc' => $cc,
+            'material' => $material,
+            'material2' => $material,
+        ))->with('page', $page)->with('head', $page);
+    }
+
+    function fetchTroubleinfo($vendor, Request $request) {
+        try {
+            $trouble_info = DB::table('trouble_infos')->where('vendor_shortname',$vendor);
+
+            if ($request->get('category') != '') {
+                $trouble_info = $trouble_info->where('category',$request->get('category'));
+            }
+            $trouble_info = $trouble_info->get();
+            $response = array(
+                'status' => true,
+                'trouble_info' => $trouble_info
+            );
+            return Response::json($response);
+        } catch (\Exception $e) {
+            $response = array(
+                'status' => false,
+                'message' => $e->getMessage(),
+            );
+            return Response::json($response);
+        }
+    }
+    
+    function inputTroubleInfo(Request $request) {
+        try {
+            $vendor = $request->get('vendor');
+            $vendor_name = $request->get('vendor_name');
+            $category = $request->get('category');
+            $trouble = $request->get('trouble');
+            $date_from = $request->get('date_from');
+            $date_to = $request->get('date_to');
+            $mail_tos = explode(';',$request->get('mail_to'));
+            $ccs = $request->get('cc');
+            $supporting = $request->get('supporting');
+            $material = $request->get('material');
+            if($category == 'Quality' || $category == 'Delivery' || $category == 'Material') {
+                $supporting = str_replace('(Khamdan)',' - ',$supporting);
+            }
+            $material = str_replace('(Khamdan)',' - ',$material);
+            $effect = $request->get('effect');
+            $handling = $request->get('handling');
+            $results = $request->get('results');
+
+            $handling_choice = $request->get('handling_choice');
+            $qty_wip = $request->get('qty_wip');
+            $qty_delivery = $request->get('qty_delivery');
+            $qty_check = $request->get('qty_check');
+            $qty_ng = $request->get('qty_ng');
+            $qty_ok = $request->get('qty_ok');
+
+            $input = DB::table('trouble_infos')->insert([
+                'vendor_shortname' => $vendor,
+                'category' => $category,
+                'trouble' => $trouble,
+                'date_from' => $date_from,
+                'date_to' => $date_to,
+                'supporting' => $supporting,
+                'material' => $material,
+                'handling_choice' => $handling_choice,
+                'qty_wip' => $qty_wip,
+                'qty_delivery' => $qty_delivery,
+                'qty_check' => $qty_check,
+                'qty_ng' => $qty_ng,
+                'qty_ok' => $qty_ok,
+                'effect' => $effect,
+                'handling' => $handling,
+                'results' => $results,
+                'created_by' => Auth::user()->id,
+                'created_at' => $this->timestamp,
+                'updated_at' => $this->timestamp,
+            ]);
+
+            $mail_to = [];
+            $cc = [];
+            $bcc = [];
+            $data = array(
+                'vendor' => $vendor,
+                'vendor_name' => $vendor_name,
+                'category' => $category,
+                'trouble' => $trouble,
+                'date_from' => $date_from,
+                'date_to' => $date_to,
+                'supporting' => $supporting,
+                'effect' => $effect,
+                'material' => $material,
+                'handling_choice' => $handling_choice,
+                'qty_wip' => $qty_wip,
+                'qty_delivery' => $qty_delivery,
+                'qty_check' => $qty_check,
+                'qty_ng' => $qty_ng,
+                'qty_ok' => $qty_ok,
+                'handling' => $handling,
+                'results' => $results,
+            );
+            
+            array_push($cc,'silvy.firliani@music.yamaha.com');
+            array_push($cc,'yusli.erwandi@music.yamaha.com');
+            array_push($cc,'yayuk.wahyuni@music.yamaha.com');
+            array_push($cc,$ccs);
+            array_push($mail_to,'istiqomah@music.yamaha.com');
+            array_push($mail_to,'jihan.rusdi@music.yamaha.com');
+            array_push($mail_to,'hanin.hamidi@music.yamaha.com');
+            array_push($mail_to,'nunik.erwantiningsih@music.yamaha.com');
+            array_push($mail_to,'sulismawati@music.yamaha.com');
+            array_push($mail_to,'amelia.novrinta@music.yamaha.com');
+            array_push($mail_to,'shega.erik.wicaksono@music.yamaha.com');
+            array_push($mail_to,'erlangga.kharisma@music.yamaha.com');
+            array_push($mail_to,'lukmannul.arif@music.yamaha.com');
+            array_push($mail_to,'noviera.prasetyarini@music.yamaha.com');
+            array_push($mail_to,'sutrisno@music.yamaha.com');
+            array_push($mail_to,'rani.nurdiyana.sari@music.yamaha.com');
+            array_push($mail_to,'basyiruddin.muchamad@music.yamaha.com');
+            array_push($mail_to,'abdissalam.saidi@music.yamaha.com');
+            foreach ($mail_tos as $mail_toss) {
+                array_push($mail_to,$mail_toss);
+            }
+            
+            array_push($bcc,'ympi-mis-ML@music.yamaha.com');
+
+            Mail::to($mail_to)
+            ->cc($cc,'CC')
+            ->bcc($bcc,'BCC')
+            ->send(new SendEmail($data, 'trouble_info'));
+
+            $response = array(
+                'status' => true,
+            );
+            return Response::json($response);
+        } catch (\Exception $e) {
+            $response = array(
+                'status' => false,
+                'message' => $e->getMessage(),
+            );
+            return Response::json($response);
+        }
+    }
+
+    function updateTroubleInfo(Request $request) {
+        try {
+            $vendor = $request->get('vendor');
+            $vendor_name = $request->get('vendor_name');
+            $id = $request->get('id');
+            $category = $request->get('category');
+            $trouble = $request->get('trouble');
+            $date_from = $request->get('date_from');
+            $date_to = $request->get('date_to');
+            $mail_tos = explode(';',$request->get('mail_to'));
+            $ccs = $request->get('cc');
+            $supporting = $request->get('supporting');
+            $material = $request->get('material');
+            if($category == 'Quality' || $category == 'Delivery' || $category == 'Material') {
+                $supporting = str_replace('(Khamdan)',' - ',$supporting);
+            }
+            $material = str_replace('(Khamdan)',' - ',$material);
+            $effect = $request->get('effect');
+            $handling = $request->get('handling');
+            $results = $request->get('results');
+
+            $handling_choice = $request->get('handling_choice');
+            $qty_wip = $request->get('qty_wip');
+            $qty_delivery = $request->get('qty_delivery');
+            $qty_check = $request->get('qty_check');
+            $qty_ng = $request->get('qty_ng');
+            $qty_ok = $request->get('qty_ok');
+
+            $data_before = DB::table('trouble_infos')->where('id',$id)->first();
+            
+            $update = DB::table('trouble_infos')->where('id',$id)->update([
+                'category' => $category,
+                'trouble' => $trouble,
+                'date_from' => $date_from,
+                'date_to' => $date_to,
+                'supporting' => $supporting,
+                'effect' => $effect,
+                'material' => $material,
+                'handling_choice' => $handling_choice,
+                'qty_wip' => $qty_wip,
+                'qty_delivery' => $qty_delivery,
+                'qty_check' => $qty_check,
+                'qty_ng' => $qty_ng,
+                'qty_ok' => $qty_ok,
+                'handling' => $handling,
+                'results' => $results,
+                'created_by' => Auth::user()->id,
+                'updated_at' => $this->timestamp,
+            ]);
+
+            $mail_to = [];
+            $cc = [];
+            $bcc = [];
+            $data = array(
+                'vendor' => $vendor,
+                'vendor_name' => $vendor_name,
+                'category' => $category,
+                'trouble' => $trouble,
+                'date_from' => $date_from,
+                'date_to' => $date_to,
+                'supporting' => $supporting,
+                'effect' => $effect,
+                'material' => $material,
+                'handling_choice' => $handling_choice,
+                'qty_wip' => $qty_wip,
+                'qty_delivery' => $qty_delivery,
+                'qty_check' => $qty_check,
+                'qty_ng' => $qty_ng,
+                'qty_ok' => $qty_ok,
+                'handling' => $handling,
+                'results' => $results,
+                'data_before' => $data_before,
+            );
+
+            array_push($cc,'silvy.firliani@music.yamaha.com');
+            array_push($cc,'yusli.erwandi@music.yamaha.com');
+            array_push($cc,'yayuk.wahyuni@music.yamaha.com');
+            array_push($cc,$ccs);
+            array_push($mail_to,'istiqomah@music.yamaha.com');
+            array_push($mail_to,'jihan.rusdi@music.yamaha.com');
+            array_push($mail_to,'hanin.hamidi@music.yamaha.com');
+            array_push($mail_to,'nunik.erwantiningsih@music.yamaha.com');
+            array_push($mail_to,'sulismawati@music.yamaha.com');
+            array_push($mail_to,'amelia.novrinta@music.yamaha.com');
+            array_push($mail_to,'shega.erik.wicaksono@music.yamaha.com');
+            array_push($mail_to,'erlangga.kharisma@music.yamaha.com');
+            array_push($mail_to,'lukmannul.arif@music.yamaha.com');
+            array_push($mail_to,'noviera.prasetyarini@music.yamaha.com');
+            array_push($mail_to,'sutrisno@music.yamaha.com');
+            array_push($mail_to,'rani.nurdiyana.sari@music.yamaha.com');
+            array_push($mail_to,'basyiruddin.muchamad@music.yamaha.com');
+            array_push($mail_to,'abdissalam.saidi@music.yamaha.com');
+            foreach ($mail_tos as $mail_toss) {
+                array_push($mail_to,$mail_toss);
+            }
+            
+            array_push($bcc,'ympi-mis-ML@music.yamaha.com');
+
+            Mail::to($mail_to)
+            ->cc($cc,'CC')
+            ->bcc($bcc,'BCC')
+            ->send(new SendEmail($data, 'trouble_info_change'));
+
+            $response = array(
+                'status' => true,
+            );
+            return Response::json($response);
+        } catch (\Exception $e) {
+            $response = array(
+                'status' => false,
+                'message' => $e->getMessage(),
+            );
+            return Response::json($response);
+        }
+    }
+
+    function deleteTroubleInfo(Request $request) {
+        try {
+            $id = $request->get('id');
+            $vendor = $request->get('vendor');
+            $vendor_name = $request->get('vendor_name');
+            $mail_tos = explode(';',$request->get('mail_to'));
+            $ccs = $request->get('cc');
+
+            $data_before = DB::table('trouble_infos')->where('id',$id)->first();
+
+            $delete = DB::table('trouble_infos')->where('id',$id)->delete();
+
+            $mail_to = [];
+            $cc = [];
+            $bcc = [];
+            $data = array(
+                'vendor' => $vendor,
+                'vendor_name' => $vendor_name,
+                'data_before' => $data_before,
+            );
+
+            array_push($cc,'silvy.firliani@music.yamaha.com');
+            array_push($cc,'yusli.erwandi@music.yamaha.com');
+            array_push($cc,'yayuk.wahyuni@music.yamaha.com');
+            array_push($cc,$ccs);
+            array_push($mail_to,'istiqomah@music.yamaha.com');
+            array_push($mail_to,'jihan.rusdi@music.yamaha.com');
+            array_push($mail_to,'hanin.hamidi@music.yamaha.com');
+            array_push($mail_to,'nunik.erwantiningsih@music.yamaha.com');
+            array_push($mail_to,'sulismawati@music.yamaha.com');
+            array_push($mail_to,'amelia.novrinta@music.yamaha.com');
+            array_push($mail_to,'shega.erik.wicaksono@music.yamaha.com');
+            array_push($mail_to,'erlangga.kharisma@music.yamaha.com');
+            array_push($mail_to,'lukmannul.arif@music.yamaha.com');
+            array_push($mail_to,'noviera.prasetyarini@music.yamaha.com');
+            array_push($mail_to,'sutrisno@music.yamaha.com');
+            array_push($mail_to,'rani.nurdiyana.sari@music.yamaha.com');
+            array_push($mail_to,'basyiruddin.muchamad@music.yamaha.com');
+            array_push($mail_to,'abdissalam.saidi@music.yamaha.com');
+            foreach ($mail_tos as $mail_toss) {
+                array_push($mail_to,$mail_toss);
+            }
+            
+            array_push($bcc,'ympi-mis-ML@music.yamaha.com');
+
+            Mail::to($mail_to)
+            ->cc($cc,'CC')
+            ->bcc($bcc,'BCC')
+            ->send(new SendEmail($data, 'trouble_info_delete'));
+
+            $response = array(
+                'status' => true,
+            );
+            return Response::json($response);
+        } catch (\Exception $e) {
+            $response = array(
+                'status' => false,
+                'message' => $e->getMessage(),
+            );
+            return Response::json($response);
+        }
+    }
 }
