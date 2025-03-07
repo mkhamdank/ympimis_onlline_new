@@ -319,10 +319,10 @@
                                 <input type="radio" checked="checked" name="handling_choice" value="Ya">
                                 <span class="checkmark"></span>
                             </label>
-                            <label class="containers">Tidak
+                            {{-- <label class="containers">Tidak
                                 <input type="radio" name="handling_choice" value="Tidak">
                                 <span class="checkmark"></span>
-                            </label>
+                            </label> --}}
                         </div>
                     </div>
                     <div class="form-group row">
