@@ -31,7 +31,7 @@
 <body>
 	<div>
 		<center>
-			<span style="font-weight: bold; color: purple; font-size: 24px;">Trouble Information From {{$data['vendor_name']}}</span><br>
+			<span style="font-weight: bold; color: purple; font-size: 24px;">Penanganan Trouble Information From {{$data['vendor_name']}}</span><br>
 			<p style="color: black">This is an automatic notification. Please do not reply to this address.</p>
 		</center>
 	</div>
@@ -143,7 +143,27 @@
 						</tr>
 					</thead>
 				</table>
-
+                <br>
+                <br>
+                <table style="border:1px solid black; border-collapse: collapse;" width="60%">
+					<thead style="text-align: center;">
+						<tr>
+							<th colspan="2" style="border:1px solid black;font-weight: bold;background-color: #d4e157;color: black">Penanganan</th>
+						</tr>
+                        <tr>
+                            <th style="border:1px solid black;font-weight: bold;background-color: rgb(126,86,134);text-align: left;color: white; width: 1%;">Penanganan</th>
+                            <td style="border:1px solid black;text-align: left; width: 10%;">
+                                <?php echo $data['handling'] ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="border:1px solid black;font-weight: bold;background-color: rgb(126,86,134);text-align: left;color: white; width: 1%;">Hasil</th>
+                            <td style="border:1px solid black;text-align: left; width: 10%;">
+                                <?php echo $data['results'] ?>
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
                 <br>
 				<br>
 				<p>

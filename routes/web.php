@@ -522,3 +522,4 @@ Route::get('fetch/trouble/info/{vendor}', 'QualityAssuranceController@fetchTroub
 Route::post('input/trouble/info', 'QualityAssuranceController@inputTroubleInfo');
 Route::post('update/trouble/info', 'QualityAssuranceController@updateTroubleInfo');
 Route::post('delete/trouble/info', 'QualityAssuranceController@deleteTroubleInfo');
+Route::post('input/trouble/info/handling', 'QualityAssuranceController@inputTroubleInfoHandling');

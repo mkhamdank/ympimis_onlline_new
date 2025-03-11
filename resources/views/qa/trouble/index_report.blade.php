@@ -186,6 +186,7 @@
                                 <thead>
                                     <tr>
                                         <th style="background-color: #3f50b5;color: white !important;width: 1%">#</th>
+                                        <th style="background-color: #3f50b5;color: white !important;width: 1%">Status</th>
                                         <th style="background-color: #3f50b5;color: white !important;width: 1%">Category</th>
                                         <th style="background-color: #3f50b5;color: white !important;width: 2%">Date From</th>
                                         <th style="background-color: #3f50b5;color: white !important;width: 2%">Date To</th>
@@ -198,13 +199,13 @@
                                             <br>di tengah proses
                                             <br>dan siap kirim?
                                         </th>
-                                        <th style="background-color: #3f50b5;color: white !important;width: 10%">Handling</th>
                                         <th style="background-color: #3f50b5;color: white !important;width: 1%">Qty WIP</th>
                                         <th style="background-color: #3f50b5;color: white !important;width: 1%">Qty Delivery</th>
                                         <th style="background-color: #3f50b5;color: white !important;width: 1%">Qty Check</th>
                                         <th style="background-color: #3f50b5;color: white !important;width: 1%">Qty OK</th>
                                         <th style="background-color: #3f50b5;color: white !important;width: 1%">Qty NG</th>
-                                        <th style="background-color: #3f50b5;color: white !important;width: 10%">Results</th>
+                                        <th style="background-color: #3f50b5;color: white !important;width: 10%">Penanganan</th>
+                                        <th style="background-color: #3f50b5;color: white !important;width: 10%">Hasil</th>
                                         <th style="background-color: #3f50b5;color: white !important;width: 10%">Surat Jalan</th>
                                         <th style="background-color: #3f50b5;color: white !important;width: 2%">Action</th>
                                     </tr>
@@ -285,7 +286,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-3" align="right">
-                            Date To
+                            Date To <span class="text-red">*</span>
                         </div>
                         <div class="col-md-8">
                             <input type="text" class="form-control datepicker" placeholder="Date To" name="date_to" id="date_to" style="width: 100%; background-color: white; border: 1px solid darkgrey;" readonly>
@@ -369,6 +370,14 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-3" align="right">
+                            Surat Jalan Material Siap Kirim
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" placeholder="Input Surat Jalan" name="surat_jalan" id="surat_jalan" style="width: 100%; background-color: white; border: 1px solid darkgrey;">
+                        </div>
+                    </div>
+                    {{-- <div class="form-group row">
+                        <div class="col-md-3" align="right">
                             Handling <span class="text-red">*</span>
                         </div>
                         <div class="col-md-8">
@@ -382,19 +391,128 @@
                         <div class="col-md-8">
                             <textarea class="form-control" placeholder="Results" name="Results" id="results" style="width:100%"></textarea>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-3" align="right">
-                            Surat Jalan <span class="text-red">*</span>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" placeholder="Surat Jalan (Inputkan lebih dari 1 jika ada)" name="surat_jalan" id="surat_jalan" style="width: 100%; background-color: white; border: 1px solid darkgrey;">
-                        </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="modal-footer">
                   <button onclick="$('#modalInput').modal('hide')" style="color: white;" class="btn btn-danger pull-left"><i class="fa fa-close"></i> Close</button>
                   <button  onclick="inputTrouble()" style="color: white;" class="btn btn-success pull-right"><i class="fa fa-save"></i> Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalHandling">
+        <div class="modal-dialog modal-xl" style="width: 1140px">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:lightskyblue;" align="center">
+                    <center><h4 class="modal-title" id="modalDetailTitle">Penanganan Trouble</h4></center>
+                </div>
+                <div class="modal-body" style="min-height: 100px">
+                    <div class="col-md-12" style="margin-bottom: 10px;">
+                        <table style="border:1px solid black; border-collapse: collapse;" width="100%">
+                            <thead style="text-align: center;">
+                                <tr>
+                                    <th colspan="2" style="border:1px solid black;font-weight: bold;background-color: #d4e157;color: black">Details</th>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;font-weight: bold;background-color: rgb(126,86,134);text-align: left;color: white; width: 3%;">Category</th>
+                                    <td style="border:1px solid black;text-align: left; width: 10%; color: black; padding: 5px;" id="handling_category">
+                                    </td>
+                                    <td style="border:1px solid black;text-align: left; width: 10%; color: black; padding: 5px; display: none;" id="handling_id">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;font-weight: bold;background-color: rgb(126,86,134);text-align: left;color: white; width: 3%;">Date From</th>
+                                    <td style="border:1px solid black;text-align: left; width: 10%; color: black; padding: 5px;" id="handling_date_from">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;font-weight: bold;background-color: rgb(126,86,134);text-align: left;color: white; width: 3%;">Date To</th>
+                                    <td style="border:1px solid black;text-align: left; width: 10%; color: black; padding: 5px;" id="handling_date_to">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;font-weight: bold;background-color: rgb(126,86,134);text-align: left;color: white; width: 3%;">Data</th>
+                                    <td style="border:1px solid black;text-align: left; width: 10%; color: black; padding: 5px;" id="handling_supporting">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;font-weight: bold;background-color: rgb(126,86,134);text-align: left;color: white; width: 3%;">Material</th>
+                                    <td style="border:1px solid black;text-align: left; width: 10%; color: black; padding: 5px;" id="handling_material">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;font-weight: bold;background-color: rgb(126,86,134);text-align: left;color: white; width: 3%;">Trouble</th>
+                                    <td style="border:1px solid black;text-align: left; width: 10%; color: black; padding: 5px;" id="handling_trouble">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;font-weight: bold;background-color: rgb(126,86,134);text-align: left;color: white; width: 3%;">Effect</th>
+                                    <td style="border:1px solid black;text-align: left; width: 10%; color: black; padding: 5px;" id="handling_effect">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;font-weight: bold;background-color: rgb(126,86,134);text-align: left;color: white; width: 3%;">Apakah sudah dilakukan<br>
+                                        penanganan ke semua produk<br>
+                                        lain di tengah proses<br>
+                                        dan siap kirim?
+                                    </th>
+                                    <td style="border:1px solid black;text-align: left; width: 10%; color: black; padding: 5px;" id="handling_handling_choice">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;font-weight: bold;background-color: rgb(126,86,134);text-align: left;color: white; width: 3%;">Qty WIP</th>
+                                    <td style="border:1px solid black;text-align: left; width: 10%; color: black; padding: 5px;" id="handling_qty_wip">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;font-weight: bold;background-color: rgb(126,86,134);text-align: left;color: white; width: 3%;">Qty Delivery</th>
+                                    <td style="border:1px solid black;text-align: left; width: 10%; color: black; padding: 5px;" id="handling_qty_delivery">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;font-weight: bold;background-color: rgb(126,86,134);text-align: left;color: white; width: 3%;">Qty Check</th>
+                                    <td style="border:1px solid black;text-align: left; width: 10%; color: black; padding: 5px;" id="handling_qty_check">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;font-weight: bold;background-color: rgb(126,86,134);text-align: left;color: white; width: 3%;">Qty OK</th>
+                                    <td style="border:1px solid black;text-align: left; width: 10%; color: black; padding: 5px;" id="handling_qty_ok">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;font-weight: bold;background-color: rgb(126,86,134);text-align: left;color: white; width: 3%;">Qty NG</th>
+                                    <td style="border:1px solid black;text-align: left; width: 10%; color: black; padding: 5px;" id="handling_qty_ng">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;font-weight: bold;background-color: rgb(126,86,134);text-align: left;color: white; width: 3%;">Surat Jalan</th>
+                                    <td style="border:1px solid black;text-align: left; width: 10%; color: black; padding: 5px;" id="handling_surat_jalan">
+                                    </td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3" align="right">
+                            Penanganan <span class="text-red">*</span>
+                        </div>
+                        <div class="col-md-8">
+                            <textarea class="form-control" placeholder="Penanganan" name="handling" id="handling" style="width:100%"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3" align="right">
+                            Hasil <span class="text-red">*</span>
+                        </div>
+                        <div class="col-md-8">
+                            <textarea class="form-control" placeholder="Hasil" name="results" id="results" style="width:100%"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button onclick="$('#modalHandling').modal('hide')" style="color: white;" class="btn btn-danger pull-left"><i class="fa fa-close"></i> Close</button>
+                  <button  onclick="inputHandling()" style="color: white;" class="btn btn-success pull-right"><i class="fa fa-save"></i> Save</button>
                 </div>
             </div>
         </div>
@@ -698,6 +816,13 @@
                 for(var i = 0; i < result.trouble_info.length;i++){
                     bodyTable += '<tr>';
                     bodyTable += '<td>'+index+'</td>';
+                    if(result.trouble_info[i].handling == null){
+                        bodyTable += '<td style="color: red;"><b><i>Belum Ditangani</i></b><br>';
+                        bodyTable += '<button class="btn btn-success btn-sm" onclick="openModalHandling(\''+result.trouble_info[i].id+'\');cancelAll();" style="color:white;"><i class="fa fa-check"></i>Input Penanganan</button>';
+                        bodyTable += '</td>';
+                    }else{
+                        bodyTable += '<td style="color: green;"><b><i>Sudah Ditangani</i></b></td>';
+                    }
                     bodyTable += '<td>'+result.trouble_info[i].category+'</td>';
                     bodyTable += '<td>'+result.trouble_info[i].date_from+'</td>';
                     bodyTable += '<td>'+result.trouble_info[i].date_to+'</td>';
@@ -706,15 +831,23 @@
                     bodyTable += '<td>'+result.trouble_info[i].trouble+'</td>';
                     bodyTable += '<td>'+(result.trouble_info[i].effect || '')+'</td>';
                     bodyTable += '<td>'+result.trouble_info[i].handling_choice+'</td>';
-                    bodyTable += '<td>'+(result.trouble_info[i].handling || '')+'</td>';
                     bodyTable += '<td>'+result.trouble_info[i].qty_wip+'</td>';
                     bodyTable += '<td>'+result.trouble_info[i].qty_delivery+'</td>';
                     bodyTable += '<td>'+result.trouble_info[i].qty_check+'</td>';
                     bodyTable += '<td>'+result.trouble_info[i].qty_ok+'</td>';
                     bodyTable += '<td>'+result.trouble_info[i].qty_ng+'</td>';
+                    if(result.trouble_info[i].handling == null){
+                        bodyTable += '<td style="color: red;"><b><i>Belum Ditangani</i></b></td>';
+                    }else{
+                        bodyTable += '<td>'+(result.trouble_info[i].handling || '')+'</td>';
+                    }
                     bodyTable += '<td>'+(result.trouble_info[i].results || '')+'</td>';
                     bodyTable += '<td>'+(result.trouble_info[i].surat_jalan || '')+'</td>';
-                    bodyTable += '<td><button class="btn btn-warning btn-sm" onclick="edit(\''+result.trouble_info[i].id+'\')" style="color:white;"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btn-sm" onclick="deleteTrouble(\''+result.trouble_info[i].id+'\')" style="color:white;margin-left:5px;"><i class="fa fa-trash"></i></button></td>';
+                    bodyTable += '<td>';
+                    // bodyTable += '<button class="btn btn-warning btn-sm" onclick="edit(\''+result.trouble_info[i].id+'\')" style="color:white;"><i class="fa fa-pencil"></i></button>';
+                    bodyTable += '<button class="btn btn-danger btn-sm" onclick="deleteTrouble(\''+result.trouble_info[i].id+'\')" style="color:white;margin-left:5px;"><i class="fa fa-trash"></i></button>';
+                    bodyTable += '</td>';
+                    bodyTable += '</tr>';
                     index++;
                 }
 
@@ -833,6 +966,30 @@
         $('#modalEdit').modal('show');
     }
 
+    function openModalHandling(id) {
+        cancelAll();
+        for(var i = 0; i < troubles.length;i++){
+            if (troubles[i].id == id) {
+                $('#handling_id').html(troubles[i].id);
+                $('#handling_category').html(troubles[i].category);
+                $('#handling_date_from').html(troubles[i].date_from);
+                $('#handling_date_to').html(troubles[i].date_to);
+                $('#handling_supporting').html(troubles[i].supporting);
+                $('#handling_material').html(troubles[i].material);
+                $('#handling_trouble').html(troubles[i].trouble);
+                $('#handling_effect').html(troubles[i].effect);
+                $('#handling_handling_choice').html(troubles[i].handling_choice);
+                $('#handling_qty_wip').html(troubles[i].qty_wip);
+                $('#handling_qty_delivery').html(troubles[i].qty_delivery);
+                $('#handling_qty_check').html(troubles[i].qty_check);
+                $('#handling_qty_ok').html(troubles[i].qty_ok);
+                $('#handling_qty_ng').html(troubles[i].qty_ng);
+                $('#handling_surat_jalan').html(troubles[i].surat_jalan);
+            }
+        }
+        $('#modalHandling').modal('show');
+    }
+
     function cancelAll() {
         $('#category').val('').trigger('change');
         $("#trouble").html(CKEDITOR.instances.trouble.setData(''));
@@ -900,8 +1057,15 @@
             var qty_ng = $("#qty_ng").val();
             var surat_jalan = $("#surat_jalan").val();
             var effect = CKEDITOR.instances['effect'].getData();
-            var handling = CKEDITOR.instances['handling'].getData();
-            var results = CKEDITOR.instances['results'].getData();
+            // var handling = CKEDITOR.instances['handling'].getData();
+            // var results = CKEDITOR.instances['results'].getData();
+
+            if (category == '' || trouble == '' || date_from == '' || date_to == '' || material == '' || effect == '' || qty_wip == '' || qty_delivery == '' || qty_check == '' || qty_ok == '' || qty_ng == '') {
+                openErrorGritter('Error!','Semua Harus Diisi');
+                audio_error.play();
+                $('#loading').hide();
+                return false;
+            }
 
             var formData = new FormData();
             formData.append('vendor','{{$vendor}}');
@@ -916,15 +1080,27 @@
                 formData.append('supporting',material);
                 formData.append('material',material);
             }else if (category == 'Man'){
+                if (process == '') {
+                    openErrorGritter('Error!','Semua Harus Diisi');
+                    audio_error.play();
+                    $('#loading').hide();
+                    return false;
+                }
                 formData.append('supporting',process);
                 formData.append('material',material);
             }else if (category == 'Machine'){
+                if (machine == '') {
+                    openErrorGritter('Error!','Semua Harus Diisi');
+                    audio_error.play();
+                    $('#loading').hide();
+                    return false;
+                }
                 formData.append('supporting',machine);
                 formData.append('material',material);
             }
             formData.append('effect',effect);
-            formData.append('handling',handling);
-            formData.append('results',results);
+            // formData.append('handling',handling);
+            // formData.append('results',results);
             formData.append('qty_wip',qty_wip);
             formData.append('qty_delivery',qty_delivery);
             formData.append('qty_check',qty_check);
@@ -950,6 +1126,56 @@
                         openSuccessGritter('Success!',"Input Trouble Succeeded");
                         $('#loading').hide();
                         $('#modalInput').modal('hide');
+                        fetchData();
+                    }else{
+                        openErrorGritter('Error!',data.message);
+                        audio_error.play();
+                        $('#loading').hide();
+                    }
+
+                }
+            });
+        }
+    }
+
+    function inputHandling() {
+        if (confirm('Apakah Anda yakin?')) {
+            $('#loading').show();
+            var id = $("#handling_id").text();
+            var handling = CKEDITOR.instances['handling'].getData();
+            var results = CKEDITOR.instances['results'].getData();
+
+            if (handling == '' || results =='') {
+                openErrorGritter('Error!','Semua Harus Diisi');
+                audio_error.play();
+                $('#loading').hide();
+                return false;
+            }
+
+            var formData = new FormData();
+            formData.append('vendor','{{$vendor}}');
+            formData.append('vendor_name','{{$vendor_name}}');
+            formData.append('mail_to','{{$mail_to}}');
+            formData.append('cc','{{$cc}}');
+            formData.append('id',id);
+            formData.append('handling',handling);
+            formData.append('results',results);
+
+            $.ajax({
+                url:"{{ url('input/trouble/info/handling') }}",
+                method:"POST",
+                data:formData,
+                dataType:'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
+                success:function(data)
+                {
+                    if (data.status) {
+                        $('#loading').hide();
+                        openSuccessGritter('Success!',"Input Handling Succeeded");
+                        $('#loading').hide();
+                        $('#modalHandling').modal('hide');
                         fetchData();
                     }else{
                         openErrorGritter('Error!',data.message);
@@ -1118,6 +1344,7 @@
             });
         }
     }
+    
 
     function onlyUnique(value, index, self) {
       return self.indexOf(value) === index;
