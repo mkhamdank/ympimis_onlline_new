@@ -162,6 +162,12 @@ class SendEmail extends Mailable
                 ->view('vendor.mails.mail_trouble_info');
         }
 
+        if ($this->remark == 'trouble_info_handling') {
+            return $this->from('bridgeforvendor@ympi.co.id', 'Bridge For Vendor')
+                ->subject('Penanganan Trouble Information')
+                ->view('vendor.mails.mail_trouble_info_handling');
+        }
+
         if ($this->remark == 'trouble_info_change') {
             return $this->from('bridgeforvendor@ympi.co.id', 'Bridge For Vendor')
                 ->subject('Changing Trouble Information')
