@@ -1327,15 +1327,24 @@ class OutgoingController extends Controller
 				$serial_number = QaOutgoingSerialNumber::where('vendor_shortname','KYORAKU')->where('serial_number',$id_num5)->first();
 			}
 			if ($serial_number) {
-				$response = array(
-			        'status' => true,
-			        'serial_number' => $serial_number,
-			        'length_id_num' => $length_id_num,
-			        'invent_id' => substr($sernum, 0, $length_id_num),
-			        'tgl' => substr($sernum, $length_id_num, 6),
-			        'sequence' => substr($sernum, ($length_id_num+6), strlen($sernum))
-			    );
-			    return Response::json($response);
+				$check = QaOutgoingVendor::where('serial_number',$sernum)->first();
+				if(!$check){
+					$response = array(
+						'status' => true,
+						'serial_number' => $serial_number,
+						'length_id_num' => $length_id_num,
+						'invent_id' => substr($sernum, 0, $length_id_num),
+						'tgl' => substr($sernum, $length_id_num, 6),
+						'sequence' => substr($sernum, ($length_id_num+6), strlen($sernum))
+					);
+					return Response::json($response);
+				}else{
+					$response = array(
+						'status' => false,
+						'message' => 'Serial Number Already Used',
+					);
+					return Response::json($response);
+				}
 			}else{
 				$response = array(
 			        'status' => false,
