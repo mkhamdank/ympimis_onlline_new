@@ -104,18 +104,7 @@
                                     <input type="text" class="form-control datepicker" id="date_to" name="date_to" placeholder="Select Date To">
                                 </div>
                             </div>
-                            <div class="col-md-4" style="padding-left: 5px;text-align: left;display: inline-block;padding-top: 10px">
-                                <label>Inspection Level</label>
-                                <div class="form-group">
-                                    <select class="form-control select2" multiple="multiple" id='inspectionLevelSelect' onchange="changeInspectionLevel()" data-placeholder="Select Inspection Level" style="width: 100%;color: black !important">
-                                        @foreach($inspection_levels as $inspection_level)
-                                        <option value="{{$inspection_level->inspection_level}}">{{$inspection_level->inspection_level}}</option>
-                                        @endforeach
-                                    </select>
-                                    <input type="text" name="inspection_level" id="inspection_level" style="color: black !important" hidden>
-                                </div>
-                            </div>
-                            <div class="col-md-4" style="padding-left: 5px;text-align: left;display: inline-block;padding-top: 10px">
+                            <div class="col-md-8" style="padding-left: 5px;text-align: left;display: inline-block;padding-top: 10px">
                                 <label>Material</label>
                                 <div class="form-group">
                                     <select class="form-control select2" multiple="multiple" id='materialSelect' onchange="changeMaterial()" data-placeholder="Select Material" style="width: 100%;color: black !important">
@@ -210,7 +199,7 @@
         var data = {
             vendor:'{{$vendor_name}}',
             material:$('#material').val(),
-            inspection_level:$('#inspection_level').val(),
+            
         }
         $.get('{{ url("fetch/incoming/arisa/report") }}',data,  function(result, status, xhr){
             if(result.status){

@@ -2538,14 +2538,11 @@ class OutgoingController extends Controller
 			$materials = DB::connection('ympimis')->table('qa_materials')->where('vendor_shortname','LTI')->get();
 		}
 
-		$inspection_levels = DB::connection('ympimis')->SELECT("SELECT * FROM `qa_inspection_levels`");
-
 		return view($view, array(
 			'title' => $title,
 			'title_jp' => $title_jp,
 			'vendor' => $vendor,
 			'vendor_name' => $vendor_name,
-			'inspection_levels' => $inspection_levels,
 			'materials' => $materials,
 		))->with('page', $page)->with('head', $page);
 	}
@@ -2592,20 +2589,6 @@ class OutgoingController extends Controller
 	          $materialin = "";
 	        }
 
-			$inspection_level = '';
-	        if($request->get('inspection_level') != null){
-	          $inspection_levels =  explode(",", $request->get('inspection_level'));
-	          for ($i=0; $i < count($inspection_levels); $i++) {
-	            $inspection_level = $inspection_level."'".$inspection_levels[$i]."'";
-	            if($i != (count($inspection_levels)-1)){
-	              $inspection_level = $inspection_level.',';
-	            }
-	          }
-	          $inspection_levelin = " and `inspection_level` in (".$inspection_level.") ";
-	        }
-	        else{
-	          $inspection_levelin = "";
-	        }
 			$incoming = DB::select("SELECT
 		          qa_incoming_logs.id as id_log,
 		          qa_incoming_logs.location,
@@ -2634,7 +2617,7 @@ class OutgoingController extends Controller
 		        WHERE
 		          DATE( qa_incoming_logs.created_at ) >= ".$first." 
 		          AND DATE( qa_incoming_logs.created_at ) <= ".$last."
-		          ".$vendor." ".$materialin." ".$inspection_levelin." ");
+		          ".$vendor." ".$materialin."");
 			$response = array(
 				'status' => true,
 				'incoming' => $incoming
