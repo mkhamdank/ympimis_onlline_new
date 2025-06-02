@@ -2766,7 +2766,7 @@ class OutgoingController extends Controller
 	          $materialin = "";
 	        }
 
-			$material_defect = DB::connection('ympimis')->SELECT("SELECT
+			$material_defect = DB::SELECT("SELECT
 				ng_name,
 				SUM( qty_ng ) AS count,
 				SUM( total_ok ) AS count_ok,
@@ -2786,7 +2786,7 @@ class OutgoingController extends Controller
 				count_ok DESC,
 				count_check DESC");
 
-			$material_status = DB::connection('ympimis')->SELECT("SELECT
+			$material_status = DB::SELECT("SELECT
 				SUM( a.total ) AS total,
 				SUM( a.returnes )+SUM( a.scrapes )+SUM( a.repaires) AS `ng` 
 			FROM
@@ -2839,7 +2839,7 @@ class OutgoingController extends Controller
 				AND vendor = '".$vendor_shortname."' ".$materialin." 
 				) a");
 
-			$top_5 = DB::connection('ympimis')->select("SELECT
+			$top_5 = DB::select("SELECT
 				material_number,
 				material_description,
 				sum( qty_check ) AS qty_check,
@@ -2939,7 +2939,7 @@ class OutgoingController extends Controller
 	          $materialin = "";
 	        }
 
-			$details = DB::CONNECTION('ympimis')->SELECT("SELECT
+			$details = DB::SELECT("SELECT
 		            *,
 		          date(created_at) as created
 		          FROM
@@ -3083,7 +3083,7 @@ class OutgoingController extends Controller
 	          $materialin = "";
 	        }
 
-			$outgoing = DB::connection('ympimis')->SELECT("SELECT
+			$outgoing = DB::SELECT("SELECT
 				DATE( created_at ) AS check_date,
 				SUM( qty_check ) AS qty_check,
 				SUM( `return` )+ SUM( `repair` ) AS qty_ng,
@@ -3148,7 +3148,7 @@ class OutgoingController extends Controller
 	          $materialin = "";
 	        }
 
-			$outgoing = DB::connection('ympimis')->SELECT("SELECT
+			$outgoing = DB::SELECT("SELECT
 					qa_incoming_logs.*,
 					qa_incoming_ng_logs.ng_name,
 					qa_incoming_ng_logs.qty_ng,
