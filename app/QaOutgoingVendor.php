@@ -30,6 +30,7 @@ class QaOutgoingVendor extends Model
 		'product_result',
 		'lot_status',
 		'recheck_status',
+		'remark',
 		'created_by',
 	];
 }

@@ -227,6 +227,14 @@ Route::group(['nav' => 'S0', 'middleware' => 'permission'], function () {
     Route::get('fetch/kensa/serial_number/{vendor}', 'OutgoingController@kensaSerialNumber');
     Route::post('index/kensa/kbi/confirm', 'OutgoingController@confirmKensaKbi');
 
+    Route::get('index/production_check/kbi', 'OutgoingController@indexProductionCheckKbi');
+    Route::post('input/production_check/kbi', 'OutgoingController@inputProductionCheckKbi');
+
+    Route::get('index/production_check/kbi/report', 'OutgoingController@indexProductionCheckKbiReport');
+    Route::get('fetch/production_check/kbi/report', 'OutgoingController@fetchProductionCheckKbiReport');
+
+    Route::get('index/working_report/kbi', 'OutgoingController@indexWorkingReportKbi');
+
     Route::get('index/kensa/kbi/report', 'OutgoingController@indexReportKensaKbi');
     Route::get('fetch/kensa/kbi/report', 'OutgoingController@fetchReportKensaKbi');
 

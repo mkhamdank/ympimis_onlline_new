@@ -30,8 +30,12 @@
                                 <a href="{{ url('/index/outgoing/arisa/input') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #0e691e;background-color: white;color: #094a05">QC Final Check ARISA</a>
                             <?php endif ?>
                             <?php if (Auth::user()->role_code == 'KBI' || Auth::user()->role_code == 'MIS'): ?>
+
+                                <a href="{{ url('/index/production_check/kbi') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #0e691e;background-color: white;color: #094a05">Inspection By Production</a>
+                                {{-- <a href="{{ url('/index/working_report/kbi') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #0e691e;background-color: white;color: #094a05">Working Report Finishing</a> --}}
+
                                 <a href="{{ url('/index/serial_number/kbi') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #0e691e;background-color: white;color: #094a05">Inventory ID PT. KBI</a>
-                                <a href="{{ url('/index/kensa/kbi') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #0e691e;background-color: white;color: #094a05">Production Check KBI</a>
+                                <a href="{{ url('/index/kensa/kbi') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #0e691e;background-color: white;color: #094a05">FG Check KBI</a>
                                 <!-- <a href="{{ url('/index/outgoing/arisa/input') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: green;background-color: green">QC Final Check ARISA</a> -->
                             <?php endif ?>
                             <?php if (Auth::user()->role_code == 'CRESTEC' || Auth::user()->role_code == 'MIS'): ?>
@@ -65,8 +69,8 @@
                                 <a href="{{ url('/index/outgoing/pareto/true') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #e61010;background-color: #fff;color: #4a0505 ">Production Pareto PT. TRUE</a>
                             <?php endif ?>
                             <?php if (Auth::user()->role_code == 'KBI' || Auth::user()->role_code == 'MIS' || Auth::user()->role_code == 'E - Purchasing'): ?>
-                                <a href="{{ url('/index/outgoing/ng_rate/kbi') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #e61010;background-color: #fff;color: #4a0505 ">Production NG Rate KBI</a>
-                                <a href="{{ url('/index/outgoing/pareto/kbi') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #e61010;background-color: #fff;color: #4a0505 ">Production Pareto KBI</a>
+                                <a href="{{ url('/index/outgoing/ng_rate/kbi') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #e61010;background-color: #fff;color: #4a0505 ">FG NG Rate KBI</a>
+                                <a href="{{ url('/index/outgoing/pareto/kbi') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #e61010;background-color: #fff;color: #4a0505 ">FG Pareto KBI</a>
                             <?php endif ?>
                             <?php if (Auth::user()->role_code == 'CRESTEC' || Auth::user()->role_code == 'MIS' || Auth::user()->role_code == 'E - Purchasing'): ?>
                                 <a href="{{ url('/index/outgoing/ng_rate/crestec') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #e61010;background-color: #fff;color: #4a0505 ">Prod. NG Rate CRESTEC INDONESIA</a>
@@ -125,8 +129,8 @@
                                 <a href="{{ url('/index/outgoing/arisa/report') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report QC Final ARISA</a>
                             <?php endif ?>
                             <?php if (Auth::user()->role_code == 'KBI' || Auth::user()->role_code == 'MIS' || Auth::user()->role_code == 'E - Purchasing'): ?>
-                                <a href="{{ url('/index/kensa/kbi/report') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report Production Check KBI</a>
-                                <!-- <a href="{{ url('/index/outgoing/arisa/report') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: purple">Report QC Final ARISA</a> -->
+                            <a href="{{ url('/index/production_check/kbi/report') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report Inspection By Production KBI</a>
+                                <a href="{{ url('/index/kensa/kbi/report') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report FG Check KBI</a>
                             <?php endif ?>
                             <?php if (Auth::user()->role_code == 'CRESTEC' || Auth::user()->role_code == 'MIS' || Auth::user()->role_code == 'E - Purchasing'): ?>
                                 <a href="{{ url('/index/kensa/crestec/report') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report Production Check PT. CRESTEC</a>
@@ -142,25 +146,13 @@
                         <br>
                         <br>
 
-                        <!-- <h4 class="card-title"><span style="font-size: 20px;color: purple"><i class="fa fa-angle-double-down"></i> Report Incoming YMPI <i class="fa fa-angle-double-down"></i></span></h4>
+                        <h4 class="card-title"><span style="font-size: 20px;color: purple"><i class="fa fa-angle-double-down"></i> Report Incoming YMPI <i class="fa fa-angle-double-down"></i></span></h4>
                         <div class="text-end">
-                            <?php if (Auth::user()->role_code == 'TRUE' || Auth::user()->role_code == 'MIS' || Auth::user()->role_code == 'E - Purchasing'): ?>
-                                <a href="{{ url('/index/incoming/true/report') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report Incoming Check PT. TRUE</a>
-                            <?php endif ?>
-                            <?php if (Auth::user()->role_code == 'ARISA' || Auth::user()->role_code == 'MIS' || Auth::user()->role_code == 'E - Purchasing'): ?>
-                                <a href="{{ url('/index/incoming/arisa/report') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report Incoming Check ARISA</a>
-                            <?php endif ?>
                             <?php if (Auth::user()->role_code == 'KBI' || Auth::user()->role_code == 'MIS' || Auth::user()->role_code == 'E - Purchasing'): ?>
-                                <a href="{{ url('/index/incoming/kbi/report') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report Incoming Check KBI</a> -->
-                                <!-- <a href="{{ url('/index/outgoing/arisa/report') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: purple">Report QC Final ARISA</a> -->
-                            <!-- <?php endif ?>
-                            <?php if (Auth::user()->role_code == 'CRESTEC' || Auth::user()->role_code == 'MIS' || Auth::user()->role_code == 'E - Purchasing'): ?>
-                                <a href="{{ url('/index/incoming/crestec/report') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report Incoming Check CRESTEC INDONESIA</a>
+                                <a href="{{ url('/index/incoming/kbi/report') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report Incoming Check KBI</a>
                             <?php endif ?>
-                            <?php if (Auth::user()->role_code == 'LTI' || Auth::user()->role_code == 'MIS' || Auth::user()->role_code == 'E - Purchasing'): ?>
-                                <a href="{{ url('/index/incoming/lti/report') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report Incoming Check PT. LTI</a>
-                            <?php endif ?>
-                        </div> -->
+                            
+                        </div>
                     </div>
                 </div>
             </div>

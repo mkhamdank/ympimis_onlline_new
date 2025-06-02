@@ -92,7 +92,7 @@
                           <!-- <input type="text" class="form-control" placeholder="Search for..."> <a
                               class="srh-btn"><i class="ti-search"></i></a> -->
                               <?php if (ISSET($title)): ?>
-                                <h4>{{$title}} (<span class="text-purple">{{$title_jp}}</span>)</h4>
+                                <h4>{{$title}} ({{$title_jp}})</h4>
                               <?php endif ?>
                       </form>
                   </li>

@@ -186,29 +186,29 @@ class OutgoingController extends Controller
   	}
     public function index($vendor){
 		if ($vendor == 'true') {
-			$title = 'Vendor Final Inspection - PT. TRUE';
-			$page = 'Vendor Final Inspection - True';
-			$title_jp = '';
+			$title = 'Vendor Final Inspection - PT. TRUE INDONESIA';
+			$page = 'Vendor Final Inspection - TRUE INDONESIA';
+			$title_jp = 'ベンダー最終検査 - TRUE INDONESIA';
 		}else if ($vendor == 'kbi') {
 			$title = 'Vendor Final Inspection - PT. KBI';
 			$page = 'Vendor Final Inspection - KBI';
-			$title_jp = '';
+			$title_jp = 'ベンダー最終検査 - KBI';
 		}else if ($vendor == 'arisa') {
 			$title = 'Vendor Final Inspection - PT. ARISA';
 			$page = 'Vendor Final Inspection - ARISA';
-			$title_jp = '';
+			$title_jp = 'ベンダー最終検査 - ARISA';
 		}else if ($vendor == 'crestec') {
 			$title = 'Vendor Final Inspection - PT. CRESTEC INDONESIA';
 			$page = 'Vendor Final Inspection - CRESTEC INDONESIA';
-			$title_jp = '';
+			$title_jp = 'ベンダー最終検査 - CRESTEC INDONESIA';
 		}else if ($vendor == 'lti') {
 			$title = 'Vendor Final Inspection - PT. LIMA TEKNO INDONESIA';
 			$page = 'Vendor Final Inspection - LTI';
-			$title_jp = '';
+			$title_jp = 'ベンダー最終検査 - LTI';
 		}else if ($vendor == 'cpp') {
 			$title = 'Vendor Final Inspection - PT. CONTINENTAL PANJIPRATAMA';
 			$page = 'Vendor Final Inspection - CPP';
-			$title_jp = '';
+			$title_jp = 'ベンダー最終検査 - CPP';
 		}
 
 		if (Auth::user()->role_code == strtoupper($vendor) || Auth::user()->role_code == 'MIS' || Auth::user()->role_code == 'E - Purchasing') {
@@ -226,7 +226,7 @@ class OutgoingController extends Controller
 	public function indexInputTrue()
 	{
 		$title = 'Input Final Inspection';
-		$title_jp = '';
+		$title_jp = '最終検査入力';
 
 		$ng_lists = DB::SELECT("select * from ng_lists where ng_lists.location = 'outgoing' and remark = 'true'");
 
@@ -435,7 +435,7 @@ class OutgoingController extends Controller
 	public function indexInputTrueRecheck($serial_number,$check_date)
 	{
 		$title = 'Input Recheck Material PT. TRUE INDONESIA';
-		$title_jp = '';
+		$title_jp = '再検査材料入力 PT. TRUE INDONESIA';
 
 		$ng_lists = DB::SELECT("select * from ng_lists where ng_lists.location = 'outgoing' and remark = 'true'");
 
@@ -635,7 +635,7 @@ class OutgoingController extends Controller
 	public function indexInputArisa()
 	{
 		$title = 'Input Final Inspection';
-		$title_jp = '';
+		$title_jp = '最終検査入力';
 
 		$product = DB::SELECT("SELECT DISTINCT
 			  ( material_number ),
@@ -906,7 +906,7 @@ class OutgoingController extends Controller
 	{
 		$title = 'Production Check PT. ARISA';
 		$page = 'Production Check ARISA';
-		$title_jp = '';
+		$title_jp = '生産検査ARISA';
 
 		$ng_lists = DB::SELECT("select * from ng_lists where ng_lists.location = 'outgoing' and remark = 'arisa'");
 
@@ -1100,7 +1100,7 @@ class OutgoingController extends Controller
 	{
 		$title = 'Report Production Check PT. ARISA';
 		$page = 'Report Production Check ARISA';
-		$title_jp = '';
+		$title_jp = '生産検査報告ARISA';
 		$materials = QaMaterial::where('vendor_shortname','ARISA')->get();
 
 		return view('outgoing.arisa.report_kensa_arisa', array(
@@ -1163,7 +1163,7 @@ class OutgoingController extends Controller
 	{
 		$title = 'Report QC Final Check PT. ARISA';
 		$page = 'Report QC Final Check ARISA';
-		$title_jp = '';
+		$title_jp = 'QC最終検査報告ARISA';
 
 		$materials = QaMaterial::where('vendor_shortname','ARISA')->get();
 
@@ -1296,11 +1296,11 @@ class OutgoingController extends Controller
 
 	public function indexKensaKbi()
 	{
-		$title = 'Production Check PT. KBI';
-		$page = 'Production Check KBI';
-		$title_jp = '';
+		$title = 'FG Check PT. KBI';
+		$page = 'FG Check KBI';
+		$title_jp = 'FGチェックKBI';
 
-		$ng_lists = DB::SELECT("select * from ng_lists where ng_lists.location = 'outgoing' and remark = 'kbi' order by ng_name");
+		$ng_lists = DB::SELECT("select * from ng_lists where ng_lists.location = 'outgoing' and remark = 'kbi_fg' order by ng_name");
 
 		$materials = QaMaterial::where('vendor_shortname','KYORAKU')->get();
 
@@ -1395,6 +1395,7 @@ class OutgoingController extends Controller
 					'total_ng' => $total_ng,
 					'ng_ratio' => $ng_ratio,
 					'qc_sampling_status' => $qa_sampling_status,
+					'remark' => 'FG Check',
 					'ng_name' => '-',
 					'ng_qty' => '0',
 					'lot_status' => 'LOT OK',
@@ -1413,6 +1414,7 @@ class OutgoingController extends Controller
 						'hpl' => $material->hpl,
 						'inspector' => $inspector,
 						'qty_check' => $qty_check,
+						'remark' => 'FG Check',
 						'total_ok' => $total_ok,
 						'total_ng' => $total_ng,
 						'ng_ratio' => $ng_ratio,
@@ -1433,14 +1435,13 @@ class OutgoingController extends Controller
 		            	array_push($mail_to, 'qa.claim@kyoraku.co.id');
 		            	array_push($mail_to, 'ujang@kyoraku.co.id');
 		            	array_push($mail_to, 'ginting@kyoraku.co.id');
-		            	// array_push($mail_to, 'agustina.hayati@music.yamaha.com');
-		            	// array_push($mail_to, 'ratri.sulistyorini@music.yamaha.com');
-		            	// array_push($mail_to, 'abdissalam.saidi@music.yamaha.com');
-		            	// array_push($mail_to, 'noviera.prasetyarini@music.yamaha.com');
+		            	array_push($mail_to, 'agustina.hayati@music.yamaha.com');
+		            	array_push($mail_to, 'ratri.sulistyorini@music.yamaha.com');
+		            	array_push($mail_to, 'abdissalam.saidi@music.yamaha.com');
 
 				        $cc = [];
-				        // $cc[0] = 'yayuk.wahyuni@music.yamaha.com';
-				        // $cc[1] = 'imron.faizal@music.yamaha.com';
+				        $cc[0] = 'yayuk.wahyuni@music.yamaha.com';
+				        $cc[1] = 'imron.faizal@music.yamaha.com';
 
 				        $bcc = [];
 				        $bcc[0] = 'mokhamad.khamdan.khabibi@music.yamaha.com';
@@ -1473,15 +1474,14 @@ class OutgoingController extends Controller
 		            	array_push($mail_to, 'qs@kyoraku.co.id');
 		            	array_push($mail_to, 'qa.claim@kyoraku.co.id');
 		            	array_push($mail_to, 'ujang@kyoraku.co.id');
-		            	// array_push($mail_to, 'ginting@kyoraku.co.id');
-		            	// array_push($mail_to, 'agustina.hayati@music.yamaha.com');
-		            	// array_push($mail_to, 'ratri.sulistyorini@music.yamaha.com');
-		            	// array_push($mail_to, 'abdissalam.saidi@music.yamaha.com');
-		            	// array_push($mail_to, 'noviera.prasetyarini@music.yamaha.com');
+		            	array_push($mail_to, 'ginting@kyoraku.co.id');
+		            	array_push($mail_to, 'agustina.hayati@music.yamaha.com');
+		            	array_push($mail_to, 'ratri.sulistyorini@music.yamaha.com');
+		            	array_push($mail_to, 'abdissalam.saidi@music.yamaha.com');
 
 				        $cc = [];
-				        // $cc[0] = 'yayuk.wahyuni@music.yamaha.com';
-				        // $cc[1] = 'imron.faizal@music.yamaha.com';
+				        $cc[0] = 'yayuk.wahyuni@music.yamaha.com';
+				        $cc[1] = 'imron.faizal@music.yamaha.com';
 
 				        $bcc = [];
 				        $bcc[0] = 'mokhamad.khamdan.khabibi@music.yamaha.com';
@@ -1498,10 +1498,6 @@ class OutgoingController extends Controller
 					}
 				}
 			}
-
-			// $updateSernum = QaOutgoingSerialNumber::where('serial_number',$serial_number)->where('material_number',$material_number)->first();
-			// $updateSernum->status = 'Used';
-			// $updateSernum->save();
 			
 			$response = array(
 		        'status' => true,
@@ -1519,9 +1515,9 @@ class OutgoingController extends Controller
 
 	public function indexReportKensaKbi()
 	{
-		$title = 'Report Production Check PT. KBI';
-		$page = 'Report Production Check KBI';
-		$title_jp = '';
+		$title = 'Report FG Check PT. KBI';
+		$page = 'Report FG Check KBI';
+		$title_jp = 'FGチェック報告KBI';
 
 		$materials = QaMaterial::where('vendor_shortname','KYORAKU')->get();
 
@@ -1565,7 +1561,9 @@ class OutgoingController extends Controller
 	          $outgoing = $outgoing->whereIn('qa_outgoing_vendors.material_number',$materials);
 	        }
 
-	        $outgoing = $outgoing->orderby('qa_outgoing_vendors.created_at','desc')->get();
+	        $outgoing = $outgoing->orderby('qa_outgoing_vendors.created_at','desc')
+			->where('remark','FG Check')
+			->get();
 
 			$response = array(
 		        'status' => true,
@@ -1585,7 +1583,7 @@ class OutgoingController extends Controller
 	{
 		$title = 'Report Production Check PT. TRUE';
 		$page = 'Report Production Check TRUE';
-		$title_jp = '';
+		$title_jp = '生産検査報告TRUE';
 
 		$materials = QaMaterial::where('vendor_shortname','TRUE')->get();
 
@@ -1651,7 +1649,7 @@ class OutgoingController extends Controller
 		if ($vendor == 'true') {
 			$title = 'Production NG Rate PT. TRUE';
 			$page = 'Production NG Rate TRUE';
-			$title_jp = '';
+			$title_jp = '生産NG率TRUE';
 			$vendor_name = 'PT. TRUE';
 			$view = 'outgoing.true.ng_rate';
 			$materials = QaMaterial::where('vendor_shortname','TRUE')->get();
@@ -1660,16 +1658,16 @@ class OutgoingController extends Controller
 		if ($vendor == 'arisa') {
 			$title = 'Production NG Rate PT. ARISA';
 			$page = 'Production NG Rate ARISA';
-			$title_jp = '';
+			$title_jp = '生産NG率ARISA';
 			$vendor_name = 'PT. ARISAMANDIRI PRATAMA';
 			$view = 'outgoing.arisa.ng_rate';
 			$materials = QaMaterial::where('vendor_shortname','ARISA')->get();
 		}
 
 		if ($vendor == 'kbi') {
-			$title = 'Production NG Rate PT. KBI';
-			$page = 'Production NG Rate KBI';
-			$title_jp = '';
+			$title = 'FG Check NG Rate PT. KBI';
+			$page = 'FG Check NG Rate KBI';
+			$title_jp = 'FGチェックNG率KBI';
 			$vendor_name = 'PT. KBI';
 			$view = 'outgoing.kbi.ng_rate';
 			$materials = QaMaterial::where('vendor_shortname','KBI')->get();
@@ -1678,7 +1676,7 @@ class OutgoingController extends Controller
 		if ($vendor == 'crestec') {
 			$title = 'Production NG Rate PT. CRESTEC INDONESIA';
 			$page = 'Production NG Rate CRESTEC';
-			$title_jp = '';
+			$title_jp = '生産NG率CRESTEC INDONESIA';
 			$vendor_name = 'CRESTEC INDONESIA PT';
 			$view = 'outgoing.crestec.ng_rate';
 			$materials = QaMaterial::where('vendor_shortname','CRESTEC')->get();
@@ -1687,7 +1685,7 @@ class OutgoingController extends Controller
 		if ($vendor == 'lti') {
 			$title = 'Production NG Rate PT. LIMA TEKNO INDONESIA';
 			$page = 'Production NG Rate LTI';
-			$title_jp = '';
+			$title_jp = '生産NG率LTI';
 			$vendor_name = 'PT. LIMA TEKNO  INDONESIA';
 			$view = 'outgoing.lti.ng_rate';
 			$materials = QaMaterial::where('vendor_shortname','LTI')->get();
@@ -1696,7 +1694,7 @@ class OutgoingController extends Controller
 		if ($vendor == 'cpp') {
 			$title = 'Production NG Rate PT. CONTINENTAL PANJIPRATAMA';
 			$page = 'Production NG Rate CPP';
-			$title_jp = '';
+			$title_jp = '生産NG率CPP';
 			$vendor_name = 'PT. CONTINENTAL PANJIPRATAMA';
 			$view = 'outgoing.cpp.ng_rate';
 			$materials = QaMaterial::where('vendor_shortname','CONTINENTAL')->get();
@@ -1878,7 +1876,7 @@ class OutgoingController extends Controller
 		if ($vendor == 'true') {
 			$title = 'Production Pareto PT. TRUE';
 			$page = 'Production Pareto TRUE';
-			$title_jp = '';
+			$title_jp = '生産パレートTRUE';
 			$vendor_name = 'PT. TRUE';
 			$view = 'outgoing.true.pareto';
 			$materials = QaMaterial::where('vendor_shortname','TRUE')->get();
@@ -1887,16 +1885,16 @@ class OutgoingController extends Controller
 		if ($vendor == 'arisa') {
 			$title = 'Production Pareto PT. ARISA';
 			$page = 'Production Pareto ARISA';
-			$title_jp = '';
+			$title_jp = '生産パレートARISA';
 			$vendor_name = 'PT. ARISAMANDIRI PRATAMA';
 			$view = 'outgoing.arisa.pareto';
 			$materials = QaMaterial::where('vendor_shortname','ARISA')->get();
 		}
 
 		if ($vendor == 'kbi') {
-			$title = 'Production Pareto PT. KBI';
-			$page = 'Production Pareto KBI';
-			$title_jp = '';
+			$title = 'FG Check Pareto PT. KBI';
+			$page = 'FG Check Pareto KBI';
+			$title_jp = 'FGチェックパレートKBI';
 			$vendor_name = 'PT. KBI';
 			$view = 'outgoing.kbi.pareto';
 			$materials = QaMaterial::where('vendor_shortname','KYORAKU')->get();
@@ -1904,8 +1902,8 @@ class OutgoingController extends Controller
 
 		if ($vendor == 'crestec') {
 			$title = 'Production Pareto PT. CRESTEC INDONESIA';
-			$page = 'Production Pareto CRESTEC';
-			$title_jp = '';
+			$page = 'Production Pareto CRESTEC INDONESIA';
+			$title_jp = '生産パレートCRESTEC INDONESIA';
 			$vendor_name = 'PT. CRESTEC INDONESIA';
 			$view = 'outgoing.crestec.pareto';
 			$materials = QaMaterial::where('vendor_shortname','CRESTEC')->get();
@@ -1914,7 +1912,7 @@ class OutgoingController extends Controller
 		if ($vendor == 'lti') {
 			$title = 'Production Pareto PT. LIMA TEKNO INDONESIA';
 			$page = 'Production Pareto LTI';
-			$title_jp = '';
+			$title_jp = '生産パレートLTI';
 			$vendor_name = 'PT. LIMA TEKNO INDONESIA';
 			$view = 'outgoing.lti.pareto';
 			$materials = QaMaterial::where('vendor_shortname','LTI')->get();
@@ -1923,7 +1921,7 @@ class OutgoingController extends Controller
 		if ($vendor == 'cpp') {
 			$title = 'Production Pareto PT. CONTINENTAL PANJIPRATAMA';
 			$page = 'Production Pareto CPP';
-			$title_jp = '';
+			$title_jp = '生産パレートCPP';
 			$vendor_name = 'PT. CONTINENTAL PANJIPRATAMA';
 			$view = 'outgoing.cpp.pareto';
 			$materials = QaMaterial::where('vendor_shortname','CONTINENTAL')->get();
@@ -2369,7 +2367,7 @@ class OutgoingController extends Controller
 	public function indexUploadSerialNumberKbi()
 	{
 		$title = 'Upload Serial Number KBI';
-		$title_jp = '';
+		$title_jp = 'シリアル番号KBIをアップロード';
 		$page = 'Upload Serial Number KBI';
 		return view('outgoing.kbi.upload', array(
 			'title' => $title,
@@ -2498,7 +2496,7 @@ class OutgoingController extends Controller
 		if ($vendor == 'true') {
 			$title = 'Incoming Check Report PT. TRUE';
 			$page = 'Incoming Check Report TRUE';
-			$title_jp = '';
+			$title_jp = '受入検査報告TRUE';
 			$vendor_name = 'PT. TRUE INDONESIA';
 			$view = 'outgoing.true.report_incoming';
 			$materials = DB::connection('ympimis')->table('qa_materials')->where('vendor_shortname','TRUE')->get();
@@ -2507,7 +2505,7 @@ class OutgoingController extends Controller
 		if ($vendor == 'arisa') {
 			$title = 'Incoming Check Report PT. ARISA';
 			$page = 'Incoming Check Report ARISA';
-			$title_jp = '';
+			$title_jp = '受入検査報告ARISA';
 			$vendor_name = 'ARISAMANDIRI PRATAMA PT.';
 			$view = 'outgoing.arisa.report_incoming';
 			$materials = DB::connection('ympimis')->table('qa_materials')->where('vendor_shortname','ARISA')->get();
@@ -2516,16 +2514,16 @@ class OutgoingController extends Controller
 		if ($vendor == 'kbi') {
 			$title = 'Incoming Check Report PT. KBI';
 			$page = 'Incoming Check Report KBI';
-			$title_jp = '';
+			$title_jp = '受入検査報告KBI';
 			$vendor_name = 'KYORAKU BLOWMOLDING INDONESIA';
 			$view = 'outgoing.kbi.report_incoming';
-			$materials = DB::connection('ympimis')->table('qa_materials')->where('vendor_shortname','KYORAKU')->get();
+			$materials = DB::table('qa_materials')->where('vendor_shortname','KYORAKU')->get();
 		}
 
 		if ($vendor == 'crestec') {
 			$title = 'Incoming Check Report PT. CRESTEC INDONESIA';
-			$page = 'Incoming Check Report CRESTEC';
-			$title_jp = '';
+			$page = 'Incoming Check Report CRESTEC INDONESIA';
+			$title_jp = '受入検査報告CRESTEC INDONESIA';
 			$vendor_name = 'CRESTEC INDONESIA PT';
 			$view = 'outgoing.crestec.report_incoming';
 			$materials = DB::connection('ympimis')->table('qa_materials')->where('vendor_shortname','CRESTEC')->get();
@@ -2534,7 +2532,7 @@ class OutgoingController extends Controller
 		if ($vendor == 'lti') {
 			$title = 'Incoming Check Report PT. LIMA TEKNO INDONESIA';
 			$page = 'Incoming Check Report LTI';
-			$title_jp = '';
+			$title_jp = '受入検査報告LTI';
 			$vendor_name = 'PT. LIMA TEKNO  INDONESIA';
 			$view = 'outgoing.lti.report_incoming';
 			$materials = DB::connection('ympimis')->table('qa_materials')->where('vendor_shortname','LTI')->get();
@@ -2608,12 +2606,9 @@ class OutgoingController extends Controller
 	        else{
 	          $inspection_levelin = "";
 	        }
-			$incoming = DB::connection('ympimis')
-			->select("SELECT
+			$incoming = DB::select("SELECT
 		          qa_incoming_logs.id as id_log,
 		          qa_incoming_logs.location,
-		          employee_syncs.employee_id,
-		          employee_syncs.name,
 		          qa_incoming_logs.lot_number,
 		          qa_incoming_logs.material_number,
 		          qa_incoming_logs.material_description,
@@ -2636,7 +2631,6 @@ class OutgoingController extends Controller
 		          ( SELECT GROUP_CONCAT( note_ng SEPARATOR '_' ) FROM qa_incoming_ng_logs WHERE qa_incoming_ng_logs.incoming_check_code = qa_incoming_logs.incoming_check_code ) AS note_ng 
 		        FROM
 		          qa_incoming_logs
-		          JOIN employee_syncs ON employee_syncs.employee_id = qa_incoming_logs.inspector_id 
 		        WHERE
 		          DATE( qa_incoming_logs.created_at ) >= ".$first." 
 		          AND DATE( qa_incoming_logs.created_at ) <= ".$last."
@@ -2661,7 +2655,7 @@ class OutgoingController extends Controller
 		if ($vendor == 'true') {
 			$title = 'Pareto Incoming Check PT. TRUE';
 			$page = 'Pareto Incoming Check TRUE';
-			$title_jp = '';
+			$title_jp = 'パレート受入検査TRUE';
 			$vendor_name = 'PT. TRUE';
 			$view = 'outgoing.true.incoming_pareto';
 			$materials = QaMaterial::where('vendor_shortname','TRUE')->get();
@@ -2670,7 +2664,7 @@ class OutgoingController extends Controller
 		if ($vendor == 'arisa') {
 			$title = 'Pareto Incoming Check PT. ARISAMANDIRI PRATAMA';
 			$page = 'Pareto Incoming Check ARISAMANDIRI PRATAMA';
-			$title_jp = '';
+			$title_jp = 'パレート受入検査ARISAMANDIRI PRATAMA';
 			$vendor_name = 'PT. ARISAMANDIRI PRATAMA';
 			$view = 'outgoing.arisa.incoming_pareto';
 			$materials = QaMaterial::where('vendor_shortname','ARISA')->get();
@@ -2679,7 +2673,7 @@ class OutgoingController extends Controller
 		if ($vendor == 'kbi') {
 			$title = 'Pareto Incoming Check PT. KBI';
 			$page = 'Pareto Incoming Check KBI';
-			$title_jp = '';
+			$title_jp = 'パレート受入検査KBI';
 			$vendor_name = 'PT. KBI';
 			$view = 'outgoing.kbi.incoming_pareto';
 			$materials = QaMaterial::where('vendor_shortname','KYORAKU')->get();
@@ -2688,7 +2682,7 @@ class OutgoingController extends Controller
 		if ($vendor == 'crestec') {
 			$title = 'Pareto Incoming Check PT. CRESTEC INDONESIA';
 			$page = 'Pareto Incoming Check PT. CRESTEC INDONESIA';
-			$title_jp = '';
+			$title_jp = 'パレート受入検査CRESTEC INDONESIA';
 			$vendor_name = 'PT. CRESTEC INDONESIA';
 			$view = 'outgoing.crestec.incoming_pareto';
 			$materials = QaMaterial::where('vendor_shortname','CRESTEC')->get();
@@ -2697,7 +2691,7 @@ class OutgoingController extends Controller
 		if ($vendor == 'lti') {
 			$title = 'Pareto Incoming Check PT. LIMA TEKNO INDONESIA';
 			$page = 'Pareto Incoming Check PT. LIMA TEKNO INDONESIA';
-			$title_jp = '';
+			$title_jp = 'パレート受入検査LTI';
 			$vendor_name = 'PT. LIMA TEKNO INDONESIA';
 			$view = 'outgoing.lti.incoming_pareto';
 			$materials = QaMaterial::where('vendor_shortname','LTI')->get();
@@ -2993,7 +2987,7 @@ class OutgoingController extends Controller
 		if ($vendor == 'true') {
 			$title = 'Incoming NG Rate PT. TRUE';
 			$page = 'Incoming NG Rate PT. TRUE';
-			$title_jp = '';
+			$title_jp = '受入NG率PT. TRUE';
 			$vendor_name = 'PT. TRUE';
 			$view = 'outgoing.true.incoming_ng_rate';
 			$materials = QaMaterial::where('vendor_shortname','TRUE')->get();
@@ -3002,7 +2996,7 @@ class OutgoingController extends Controller
 		if ($vendor == 'arisa') {
 			$title = 'Incoming NG Rate PT. ARISAMANDIRI PRATAMA';
 			$page = 'Incoming NG Rate  PT. ARISAMANDIRI PRATAMA';
-			$title_jp = '';
+			$title_jp = '受入NG率PT. ARISAMANDIRI PRATAMA';
 			$vendor_name = 'PT. ARISAMANDIRI PRATAMA';
 			$view = 'outgoing.arisa.incoming_ng_rate';
 			$materials = QaMaterial::where('vendor_shortname','ARISA')->get();
@@ -3011,7 +3005,7 @@ class OutgoingController extends Controller
 		if ($vendor == 'kbi') {
 			$title = 'Incoming NG Rate PT. KBI';
 			$page = 'Incoming NG Rate PT. KBI';
-			$title_jp = '';
+			$title_jp = '受入NG率PT. KBI';
 			$vendor_name = 'PT. KBI';
 			$view = 'outgoing.kbi.incoming_ng_rate';
 			$materials = QaMaterial::where('vendor_shortname','KBI')->get();
@@ -3020,7 +3014,7 @@ class OutgoingController extends Controller
 		if ($vendor == 'crestec') {
 			$title = 'Incoming NG Rate PT. CRESTEC INDONESIA';
 			$page = 'Incoming NG Rate PT. CRESTEC INDONESIA';
-			$title_jp = '';
+			$title_jp = '受入NG率PT. CRESTEC INDONESIA';
 			$vendor_name = 'PT. CRESTEC INDONESIA';
 			$view = 'outgoing.crestec.incoming_ng_rate';
 			$materials = QaMaterial::where('vendor_shortname','CRESTEC')->get();
@@ -3029,7 +3023,7 @@ class OutgoingController extends Controller
 		if ($vendor == 'lti') {
 			$title = 'Incoming NG Rate PT. LIMA TEKNO INDONESIA';
 			$page = 'Incoming NG Rate PT. LIMA TEKNO INDONESIA';
-			$title_jp = '';
+			$title_jp = '受入NG率PT. LTI';
 			$vendor_name = 'PT. LIMA TEKNO INDONESIA';
 			$view = 'outgoing.lti.incoming_ng_rate';
 			$materials = QaMaterial::where('vendor_shortname','LTI')->get();
@@ -3201,7 +3195,7 @@ class OutgoingController extends Controller
 	public function indexUploadSerialNumberTrue()
 	{
 		$title = 'Upload Monthly Schedule PT. TRUE';
-		$title_jp = '';
+		$title_jp = '月間スケジュールアップロード PT. TRUE';
 		$page = 'Upload Monthly Schedule PT. TRUE';
 
 		$material = QaMaterial::where('vendor_shortname','TRUE')->get();
@@ -3360,7 +3354,7 @@ class OutgoingController extends Controller
 	public function indexInputArisaRecheck($serial_number,$check_date)
 	{
 		$title = 'Input Recheck Material PT. ARISAMANDIRI PRATAMA';
-		$title_jp = '';
+		$title_jp = '材料再確認入力 PT. ARISAMANDIRI PRATAMA';
 
 		$ng_lists = DB::SELECT("select * from ng_lists where ng_lists.location = 'outgoing' and remark = 'arisa'");
 
@@ -3550,7 +3544,7 @@ class OutgoingController extends Controller
 	public function indexInputTrueSosialisasi($serial_number,$check_date)
 	{
 		$title = 'Input Recheck Material PT. TRUE INDONESIA';
-		$title_jp = '';
+		$title_jp = '材料再確認入力 PT. TRUE INDONESIA';
 
 		$outgoing = QaOutgoingVendor::where('serial_number',$serial_number)->where('check_date',$check_date)->get();
 
@@ -3604,7 +3598,7 @@ class OutgoingController extends Controller
 	public function indexInputCrestec()
 	{
 		$title = 'Sortir Produksi CRESTEC INDONESIA';
-		$title_jp = '';
+		$title_jp = 'CRESTEC INDONESIA 生産選別';
 
 		$ng_lists = DB::SELECT("select * from ng_lists where ng_lists.location = 'outgoing' and remark = 'crestec'");
 
@@ -3793,8 +3787,8 @@ class OutgoingController extends Controller
 	public function indexReportKensaCrestec()
 	{
 		$title = 'Report Production Check PT. CRESTEC INDONESIA';
-		$page = 'Report Production Check CRESTEC';
-		$title_jp = '';
+		$page = 'Report Production Check CRESTEC INDONESIA';
+		$title_jp = 'CRESTEC INDONESIA 生産検査報告';
 
 		$materials = QaMaterial::where('vendor_shortname','CRESTEC')->get();
 
@@ -4367,7 +4361,7 @@ class OutgoingController extends Controller
 	{
 		$title = 'QC Sampling CRESTEC INDONESIA';
 		$page = 'QC Sampling CRESTEC INDONESIA';
-		$title_jp = '';
+		$title_jp = 'QCサンプリングCRESTEC INDONESIA';
 
 		$materials = QaMaterial::where('vendor_shortname','CRESTEC')->get();
 		$production_check = DB::select("SELECT
@@ -5229,8 +5223,8 @@ class OutgoingController extends Controller
 	public function indexReportSamplingCrestec()
 	{
 		$title = 'Report Sampling Check PT. CRESTEC INDONESIA';
-		$page = 'Report Sampling Check CRESTEC';
-		$title_jp = '';
+		$page = 'Report Sampling Check CRESTEC INDONESIA';
+		$title_jp = 'サンプリング検査報告 CRESTEC INDONESIA';
 
 		$materials = QaMaterial::where('vendor_shortname','CRESTEC')->get();
 		$serial_number = DB::SELECT("SELECT DISTINCT(serial_number) from qa_outgoing_vendor_crestecs");
@@ -5343,7 +5337,7 @@ class OutgoingController extends Controller
 	{
 		$title = 'Master Defect PT. CRESTEC INDONESIA';
 		$page = 'Master Defect PT. CRESTEC INDONESIA';
-		$title_jp = '';
+		$title_jp = 'マスターディフェクト PT. CRESTEC INDONESIA';
 
 		$cat = DB::table('ng_lists')->select('category')->where('remark','crestec')->distinct()->get();
 
@@ -5458,7 +5452,7 @@ class OutgoingController extends Controller
 	public function indexInputCrestecRecheck($serial_number,$check_date)
 	{
 		$title = 'Input Recheck Material PT. CRESTEC INDONESIA';
-		$title_jp = '';
+		$title_jp = '材料再確認入力 PT. CRESTEC INDONESIA';
 
 		$ng_lists = DB::SELECT("select * from ng_lists where ng_lists.location = 'outgoing' and remark = 'crestec'");
 
@@ -5777,6 +5771,294 @@ class OutgoingController extends Controller
 			$response = array(
 		        'status' => true,
 		        'message' => 'Success Input Data',
+		    );
+		    return Response::json($response);
+		} catch (\Exception $e) {
+			$response = array(
+		        'status' => false,
+		        'message' => $e->getMessage(),
+		    );
+		    return Response::json($response);
+		}
+	}
+
+	function indexProductionCheckKbi() {
+		$title = 'Inspection By Production PT. KBI';
+		$page = 'Inspection By Production KBI';
+		$title_jp = '生産による検査 KBI';
+
+		$ng_lists = DB::SELECT("(SELECT
+			*
+			FROM
+			ng_lists
+			WHERE
+			ng_lists.location = 'outgoing'
+			AND remark = 'kbi_production_check'
+			ORDER BY
+			ng_name)
+			UNION ALL
+			(SELECT
+			*
+			FROM
+			ng_lists
+			WHERE
+			ng_lists.location = 'outgoing'
+			AND remark = 'kbi_fg'
+			AND ng_name not in ((SELECT
+			ng_name
+			FROM
+			ng_lists
+			WHERE
+			ng_lists.location = 'outgoing'
+			AND remark = 'kbi_production_check'
+			ORDER BY
+			ng_name))
+			ORDER BY
+			ng_name)");
+
+		$materials = QaMaterial::where('vendor_shortname','KYORAKU')->get();
+
+		$inspector = [
+			'Sari N',
+			'Eva H',
+			'Nopitasari',
+			'Eli P',
+			'Monica',
+			'Ganda S',
+			'Fitri A'
+		];
+
+		return view('outgoing.kbi.kensa_production', array(
+			'title' => $title,
+			'title_jp' => $title_jp,
+			'ng_lists' => $ng_lists,
+			'vendor' => 'PT. KBI',
+			'materials' => $materials,
+			'inspector' => $inspector,
+			'vendor' => Auth::user()->name,
+		))->with('page', $page)->with('head', $page);
+	}
+
+	function inputProductionCheckKbi(Request $request) {
+		try {
+			$date = $request->get('date');
+			$type_check = $request->get('type_check');
+			$inspector = $request->get('inspector');
+			$qty_check = $request->get('qty_check');
+			$total_ok = $request->get('total_ok');
+			$total_ng = $request->get('total_ng');
+			$ng_ratio = $request->get('ng_ratio');
+			$ng_name = $request->get('ng_name');
+			$ng_qty = $request->get('ng_qty');
+			$material_number = $request->get('material_number');
+			$material_description = $request->get('material_description');
+
+
+			$code_generator = CodeGenerator::where('note', '=', 'kbi')->first();
+			if ($code_generator->prefix != 'KBI'.date('ym')) {
+                $code_generator->prefix = 'KBI'.date('ym');
+                $code_generator->index = '0';
+                $code_generator->save();
+            }
+			$serial_number = $code_generator->prefix.sprintf("%'.0" . $code_generator->length . "d", $code_generator->index+1);
+			$code_generator->index = $code_generator->index+1;
+			$code_generator->save();
+
+			$material = QaMaterial::where('material_number',$material_number)->first();
+
+			$outgoings = [];
+			$outgoing_id = [];
+			$outgoings_critical = [];
+			$outgoings_non_critical = [];
+
+			if ($total_ng == 0) {
+				$outgoing = new QaOutgoingVendor([
+					'check_date' => $date,
+					'material_number' => $material_number,
+					'material_description' => $material_description,
+					'serial_number' => $serial_number,
+					'vendor' => $material->vendor,
+					'vendor_shortname' => $material->vendor_shortname,
+					'hpl' => $material->hpl,
+					'inspector' => $inspector,
+					'qty_check' => $qty_check,
+					'total_ok' => $total_ok,
+					'total_ng' => $total_ng,
+					'ng_ratio' => $ng_ratio,
+					'remark' => 'Inspection By Production',
+					'qc_sampling_status' => $type_check,
+					'ng_name' => '-',
+					'ng_qty' => '0',
+					'lot_status' => 'LOT OK',
+	                'created_by' => Auth::user()->id
+	            ]);
+	            $outgoing->save();
+			}else{
+				for ($i=0; $i < count($ng_name); $i++) { 
+					$outgoing = new QaOutgoingVendor([
+						'check_date' => $date,
+						'material_number' => $material_number,
+						'material_description' => $material_description,
+						'serial_number' => $serial_number,
+						'vendor' => $material->vendor,
+						'vendor_shortname' => $material->vendor_shortname,
+						'hpl' => $material->hpl,
+						'inspector' => $inspector,
+						'qty_check' => $qty_check,
+						'remark' => 'Inspection By Production',
+						'qc_sampling_status' => $type_check,
+						'total_ok' => $total_ok,
+						'total_ng' => $total_ng,
+						'ng_ratio' => $ng_ratio,
+						'ng_name' => $ng_name[$i],
+						'ng_qty' => $ng_qty[$i],
+		                'created_by' => Auth::user()->id
+		            ]);
+
+		            $outgoing->save();
+
+
+		            if (in_array($ng_name[$i], $this->critical_kbi)) {
+		            	$mail_to = [];
+
+		            	array_push($mail_to, 'h_susanto@kyoraku.co.id');
+		            	array_push($mail_to, 'qs@kyoraku.co.id');
+		            	array_push($mail_to, 'qa.claim@kyoraku.co.id');
+		            	array_push($mail_to, 'ujang@kyoraku.co.id');
+		            	array_push($mail_to, 'ginting@kyoraku.co.id');
+		            	array_push($mail_to, 'agustina.hayati@music.yamaha.com');
+		            	array_push($mail_to, 'ratri.sulistyorini@music.yamaha.com');
+		            	array_push($mail_to, 'abdissalam.saidi@music.yamaha.com');
+
+				        $cc = [];
+				        $cc[0] = 'yayuk.wahyuni@music.yamaha.com';
+				        $cc[1] = 'imron.faizal@music.yamaha.com';
+
+				        $bcc = [];
+				        $bcc[0] = 'mokhamad.khamdan.khabibi@music.yamaha.com';
+				        $bcc[1] = 'rio.irvansyah@music.yamaha.com';
+
+				        // Mail::to($mail_to)
+				        // // ->cc($cc,'CC')
+				        // ->bcc($bcc,'BCC')
+				        // ->send(new SendEmail($outgoing, 'critical_kbi'));
+
+				        array_push($outgoings_critical, $outgoing);
+		            }
+
+		            if (in_array($ng_name[$i], $this->non_critical_kbi)) {
+		            	array_push($outgoings, $outgoing);
+		            }
+				}
+
+				$total_ng_non = 0;
+				for ($i=0; $i < count($outgoings); $i++) { 
+					$total_ng_non = $total_ng_non + $outgoings[$i]->ng_qty;
+				}
+
+				if ($total_ng_non != 0) {
+					$persen = ($total_ng_non/$qty_check)*100;
+					if ($persen > 5) {
+						$mail_to = [];
+
+		            	array_push($mail_to, 'h_susanto@kyoraku.co.id');
+		            	array_push($mail_to, 'qs@kyoraku.co.id');
+		            	array_push($mail_to, 'qa.claim@kyoraku.co.id');
+		            	array_push($mail_to, 'ujang@kyoraku.co.id');
+		            	array_push($mail_to, 'ginting@kyoraku.co.id');
+		            	array_push($mail_to, 'agustina.hayati@music.yamaha.com');
+		            	array_push($mail_to, 'ratri.sulistyorini@music.yamaha.com');
+		            	array_push($mail_to, 'abdissalam.saidi@music.yamaha.com');
+
+				        $cc = [];
+				        $cc[0] = 'yayuk.wahyuni@music.yamaha.com';
+				        $cc[1] = 'imron.faizal@music.yamaha.com';
+
+				        $bcc = [];
+				        $bcc[0] = 'mokhamad.khamdan.khabibi@music.yamaha.com';
+				        $bcc[1] = 'rio.irvansyah@music.yamaha.com';
+
+				        $data = array(
+				        	'outgoing_non' => $outgoings,
+				        	'outgoing_critical' => $outgoings_critical, );
+
+				        // Mail::to($mail_to)
+				        // // ->cc($cc,'CC')
+				        // ->bcc($bcc,'BCC')
+				        // ->send(new SendEmail($data, 'over_limit_ratio_kbi'));
+					}
+				}
+			}
+
+
+			$response = array(
+		        'status' => true,
+		    );
+		    return Response::json($response);
+		} catch (\Exception $e) {
+			$response = array(
+		        'status' => false,
+		        'message' => $e->getMessage(),
+		    );
+		    return Response::json($response);
+		}
+	}
+
+	public function indexProductionCheckKbiReport()
+	{
+		$title = 'Report Inspection By Production PT. KBI';
+		$page = 'Report Inspection By Production KBI';
+		$title_jp = '生産による検査報告 KBI';
+
+		$materials = QaMaterial::where('vendor_shortname','KYORAKU')->get();
+
+		return view('outgoing.kbi.report_prod_kbi', array(
+			'title' => $title,
+			'title_jp' => $title_jp,
+			'materials' => $materials,
+			'vendor' => 'PT. KBI',
+		))->with('page', $page)->with('head', $page);
+	}
+
+	public function fetchProductionCheckKbiReport(Request $request)
+	{
+		try {
+			$date_from = $request->get('date_from');
+	        $date_to = $request->get('date_to');
+	        if ($date_from == "") {
+	             if ($date_to == "") {
+	                  $first = date('Y-m-d',strtotime('-2 months'));
+	                  $last = date('Y-m-d');
+	             }else{
+	                  $first = date('Y-m-d',strtotime('-2 months'));
+	                  $last = $date_to;
+	             }
+	        }else{
+	             if ($date_to == "") {
+	                  $first = $date_from;
+	                  $last = date('Y-m-d');
+	             }else{
+	                  $first = $date_from;
+	                  $last = $date_to;
+	             }
+	        }
+
+			$outgoing = QaOutgoingVendor::select('qa_outgoing_vendors.*','qa_outgoing_vendors.created_at as created')->where('qa_outgoing_vendors.vendor_shortname','KYORAKU')
+			->where(DB::RAW('DATE(qa_outgoing_vendors.created_at)'),'>=',$first)
+			->where(DB::RAW('DATE(qa_outgoing_vendors.created_at)'),'<=',$last);
+
+			if($request->get('material') != null){
+	          $materials =  explode(",", $request->get('material'));
+	          $outgoing = $outgoing->whereIn('qa_outgoing_vendors.material_number',$materials);
+	        }
+
+	        $outgoing = $outgoing->orderby('qa_outgoing_vendors.created_at','desc')
+			->where('remark','Inspection By Production')
+			->get();
+
+			$response = array(
+		        'status' => true,
+		        'outgoing' => $outgoing,
 		    );
 		    return Response::json($response);
 		} catch (\Exception $e) {
