@@ -288,7 +288,7 @@
                             tableData += '<td>';
                             tableData += '</td>';
                         }
-                        tableData += '<td style="vertical-align:middle">'+ value.ng_ratio.toFixed(2) +'</td>';
+                        tableData += '<td style="vertical-align:middle">'+ parseFloat(value.ng_ratio).toFixed(2) +'</td>';
                         tableData += '<td style="vertical-align:middle">'+ value.status_lot +'</td>';
                         tableData += '</tr>';
                     }
