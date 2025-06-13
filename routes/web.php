@@ -230,7 +230,7 @@ Route::group(['nav' => 'S0', 'middleware' => 'permission'], function () {
     Route::get('index/production_check/kbi/{post}', 'OutgoingController@indexProductionCheckKbi');
     Route::post('input/production_check/kbi', 'OutgoingController@inputProductionCheckKbi');
 
-    Route::get('index/production_check/kbi/report', 'OutgoingController@indexProductionCheckKbiReport');
+    Route::get('index/production_check/kbi_report', 'OutgoingController@indexProductionCheckKbiReport');
     Route::get('fetch/production_check/kbi/report', 'OutgoingController@fetchProductionCheckKbiReport');
 
     Route::get('index/working_report/kbi', 'OutgoingController@indexWorkingReportKbi');

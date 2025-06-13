@@ -114,7 +114,7 @@
                                 <a href="{{ url('/index/outgoing/arisa/report') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report QC Final ARISA</a>
                             <?php endif ?>
                             <?php if (Auth::user()->role_code == 'KBI' || Auth::user()->role_code == 'MIS' || Auth::user()->role_code == 'E - Purchasing'): ?>
-                            <a href="{{ url('/index/production_check/kbi/report') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report Inspection By Production KBI</a>
+                            <a href="{{ url('/index/production_check/kbi_report') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report Inspection By Production KBI</a>
                                 <a href="{{ url('/index/kensa/kbi/report') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report FG Check KBI</a>
                             <?php endif ?>
                             <?php if (Auth::user()->role_code == 'CRESTEC' || Auth::user()->role_code == 'MIS' || Auth::user()->role_code == 'E - Purchasing'): ?>
