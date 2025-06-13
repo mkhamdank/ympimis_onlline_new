@@ -6055,4 +6055,65 @@ class OutgoingController extends Controller
 		    return Response::json($response);
 		}
 	}
+
+	function indexCaseNgKbi() {
+		$title = 'Report NG Case KBI';
+		$page = 'Report NG Case KBI';
+		$title_jp = 'KBI不良ケース報告';
+		$vendor_name = 'KYORAKU BLOWMOLDING INDONESIA';
+		$view = 'outgoing.kbi.report_case_ng';
+		
+		return view($view, array(
+			'title' => $title,
+			'title_jp' => $title_jp,
+			'vendor_name' => $vendor_name,
+		))->with('page', $page)->with('head', $page);
+	}
+
+	public function fetchCaseNgKbi(Request $request)
+	{
+		try {
+			$date_from = $request->get('date_from');
+	        $date_to = $request->get('date_to');
+	        if ($date_from == "") {
+	             if ($date_to == "") {
+	                  $first = "DATE_FORMAT( NOW(), '%Y-%m-01' ) ";
+	                  $last = "LAST_DAY(NOW())";
+	             }else{
+	                  $first = "DATE_FORMAT( NOW(), '%Y-%m-01' ) ";
+	                  $last = "'".$date_to."'";
+	             }
+	        }else{
+	             if ($date_to == "") {
+	                  $first = "'".$date_from."'";
+	                  $last = "LAST_DAY(NOW())";
+	             }else{
+	                  $first = "'".$date_from."'";
+	                  $last = "'".$date_to."'";
+	             }
+	        }
+
+
+			$ng_case = DB::select("SELECT
+		          *,
+				  DATE_FORMAT( pn_case_log_ngs.created_at, '%Y-%m-%d' ) AS dates
+		        FROM
+		          pn_case_log_ngs
+		        WHERE
+		          DATE( pn_case_log_ngs.created_at ) >= ".$first." 
+		          AND DATE( pn_case_log_ngs.created_at ) <= ".$last."
+				  AND type != 'P32DSI'");
+			$response = array(
+				'status' => true,
+				'ng_case' => $ng_case
+			);
+			return Response::json($response);
+		} catch (\Exception $e) {
+			$response = array(
+				'status' => false,
+				'message' => $e->getMessage()
+			);
+			return Response::json($response);
+		}
+	}
 }

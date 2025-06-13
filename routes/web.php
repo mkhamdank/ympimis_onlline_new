@@ -194,6 +194,9 @@ Route::group(['nav' => 'S0', 'middleware' => 'permission'], function () {
     Route::get('index/incoming/{vendor}/report', 'OutgoingController@indexReportIncoming');
     Route::get('fetch/incoming/{vendor}/report', 'OutgoingController@fetchReportIncoming');
 
+    Route::get('index/case_ng/kbi', 'OutgoingController@indexCaseNgKbi');
+    Route::get('fetch/case_ng/kbi', 'OutgoingController@fetchCaseNgKbi');
+
     //ARISA
     Route::get('index/outgoing/arisa/input', 'OutgoingController@indexInputArisa');
     Route::get('fetch/outgoing/arisa/point_check', 'OutgoingController@fetchPointCheck');
