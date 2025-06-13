@@ -5765,7 +5765,7 @@ class OutgoingController extends Controller
 		}
 	}
 
-	function indexProductionCheckKbi() {
+	function indexProductionCheckKbi($pos) {
 		$title = 'Inspection By Production PT. KBI';
 		$page = 'Inspection By Production KBI';
 		$title_jp = '生産による検査 KBI';
@@ -5818,6 +5818,7 @@ class OutgoingController extends Controller
 			'vendor' => 'PT. KBI',
 			'materials' => $materials,
 			'inspector' => $inspector,
+			'pos' => $pos,
 			'vendor' => Auth::user()->name,
 		))->with('page', $page)->with('head', $page);
 	}
@@ -5835,7 +5836,7 @@ class OutgoingController extends Controller
 			$ng_qty = $request->get('ng_qty');
 			$material_number = $request->get('material_number');
 			$material_description = $request->get('material_description');
-
+			$pos = $request->get('pos');
 
 			$code_generator = CodeGenerator::where('note', '=', 'kbi')->first();
 			if ($code_generator->prefix != 'KBI'.date('ym')) {
@@ -5868,6 +5869,7 @@ class OutgoingController extends Controller
 					'total_ok' => $total_ok,
 					'total_ng' => $total_ng,
 					'ng_ratio' => $ng_ratio,
+					'qa_final_status' => $pos,
 					'remark' => 'Inspection By Production',
 					'qc_sampling_status' => $type_check,
 					'ng_name' => '-',
@@ -5889,6 +5891,7 @@ class OutgoingController extends Controller
 						'inspector' => $inspector,
 						'qty_check' => $qty_check,
 						'remark' => 'Inspection By Production',
+						'qa_final_status' => $pos,
 						'qc_sampling_status' => $type_check,
 						'total_ok' => $total_ok,
 						'total_ng' => $total_ng,

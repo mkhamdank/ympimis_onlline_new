@@ -148,7 +148,7 @@
                             <table class="table user-table no-wrap" id="tableKensa">
                                 <thead>
                                     <tr>
-                                        <th style="background-color: #3f50b5;color: white !important;color: black">Serial Number</th>
+                                        <th style="background-color: #3f50b5;color: white !important;color: black">Pos</th>
                                         <th style="background-color: #3f50b5;color: white !important;color: black">Date</th>
                                         <th style="background-color: #3f50b5;color: white !important;color: black">Material Number</th>
                                         <th style="background-color: #3f50b5;color: white !important;color: black">Desc</th>
@@ -221,7 +221,7 @@
                 var bodyTable = '';
                 for (var i = 0; i < result.outgoing.length; i++) {
                     bodyTable += '<tr>';
-                    bodyTable += '<td>'+result.outgoing[i].serial_number+'</td>';
+                    bodyTable += '<td>'+result.outgoing[i].qa_final_status+'</td>';
                     bodyTable += '<td>'+getFormattedDateTime(new Date(result.outgoing[i].created_at))+'</td>';
                     bodyTable += '<td>'+result.outgoing[i].material_number+'</td>';
                     bodyTable += '<td>'+result.outgoing[i].material_description+'</td>';

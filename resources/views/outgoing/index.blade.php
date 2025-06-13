@@ -31,7 +31,10 @@
                             <?php endif ?>
                             <?php if (Auth::user()->role_code == 'KBI' || Auth::user()->role_code == 'MIS'): ?>
 
-                                <a href="{{ url('/index/production_check/kbi') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #0e691e;background-color: white;color: #094a05">Inspection By Production</a>
+                                <a href="{{ url('/index/production_check/kbi/1') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #0e691e;background-color: white;color: #094a05">Inspection By Production Post 1</a>
+                                <a href="{{ url('/index/production_check/kbi/2') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #0e691e;background-color: white;color: #094a05">Inspection By Production Post 2</a>
+                                <a href="{{ url('/index/production_check/kbi/3') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #0e691e;background-color: white;color: #094a05">Inspection By Production Post 3</a>
+                                <a href="{{ url('/index/production_check/kbi/4') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #0e691e;background-color: white;color: #094a05">Inspection By Production Post 4</a>
                                 {{-- <a href="{{ url('/index/working_report/kbi') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #0e691e;background-color: white;color: #094a05">Working Report Finishing</a> --}}
 
                                 <a href="{{ url('/index/serial_number/kbi') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #0e691e;background-color: white;color: #094a05">Inventory ID PT. KBI</a>

@@ -96,10 +96,12 @@
 			<table class="table table-bordered" style="width: 100%; margin-bottom: 2px;" border="1">
 				<tbody>
 					<tr>
-						<th colspan="2" style="vertical-align:middle;background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 17px;width: 1%;">Date</th>
+						<th style="vertical-align:middle;background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 17px;width: 1%;">Date</th>
+						<th style="vertical-align:middle;background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 17px;width: 1%;">Pos</th>
 					</tr>
 					<tr>
-						<td colspan="2" style="background-color: #fca311; color: #14213d; text-align: center; font-size: 20px;padding-left: 2px;padding-right: 2px" id="date">{{date("Y-m-d")}}</td>
+						<td style="background-color: #fca311; color: #14213d; text-align: center; font-size: 20px;padding-left: 2px;padding-right: 2px" id="date">{{date("Y-m-d")}}</td>
+						<td style="background-color: #fca311; color: #14213d; text-align: center; font-size: 20px;padding-left: 2px;padding-right: 2px" id="pos">{{$pos}}</td>
 					</tr>
                     <tr>
                         <th style="vertical-align:middle;background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 17px;width: 1%">Tipe Check</th>
@@ -422,6 +424,7 @@
 			total_ok: $('#total_ok').val(),
 			total_ng: $('#total_ng').val(),
 			ng_ratio: $('#ng_ratio').val(),
+			pos: $('#pos').text(),
 			material_number: $('#material').val().split('_')[0],
 			material_description: $('#material').val().split('_')[1],
 			ng_name: ng_name,
