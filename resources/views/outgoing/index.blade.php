@@ -136,6 +136,7 @@
                             <?php if (Auth::user()->role_code == 'KBI' || Auth::user()->role_code == 'MIS' || Auth::user()->role_code == 'E - Purchasing'): ?>
                                 <a href="{{ url('/index/incoming/kbi/report') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report Incoming Check KBI</a>
                                 <a href="{{ url('/index/case_ng/kbi') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report NG Case KBI</a>
+                                <a href="{{ url('/index/return/kbi') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report Return KBI</a>
                             <?php endif ?>
                             
                         </div>

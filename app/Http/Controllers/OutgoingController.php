@@ -6116,4 +6116,64 @@ class OutgoingController extends Controller
 			return Response::json($response);
 		}
 	}
+
+	function indexReturnKbi() {
+		$title = 'Report Return KBI';
+		$page = 'Report Return KBI';
+		$title_jp = 'KBI返品報告';
+		$vendor_name = 'KYORAKU BLOWMOLDING INDONESIA';
+		$view = 'outgoing.kbi.report_return';
+		
+		return view($view, array(
+			'title' => $title,
+			'title_jp' => $title_jp,
+			'vendor_name' => $vendor_name,
+		))->with('page', $page)->with('head', $page);
+	}
+
+	public function fetchReturnKbi(Request $request)
+	{
+		try {
+			$date_from = $request->get('date_from');
+	        $date_to = $request->get('date_to');
+	        if ($date_from == "") {
+	             if ($date_to == "") {
+	                  $first = "DATE_FORMAT( NOW(), '%Y-%m-01' ) ";
+	                  $last = "LAST_DAY(NOW())";
+	             }else{
+	                  $first = "DATE_FORMAT( NOW(), '%Y-%m-01' ) ";
+	                  $last = "'".$date_to."'";
+	             }
+	        }else{
+	             if ($date_to == "") {
+	                  $first = "'".$date_from."'";
+	                  $last = "LAST_DAY(NOW())";
+	             }else{
+	                  $first = "'".$date_from."'";
+	                  $last = "'".$date_to."'";
+	             }
+	        }
+
+
+			$ng_case = DB::select("SELECT
+		          *,
+				  DATE_FORMAT( scrap_logs.created_at, '%Y-%m-%d' ) AS dates
+		        FROM
+		          scrap_logs
+		        WHERE
+		          DATE( scrap_logs.created_at ) >= ".$first." 
+		          AND DATE( scrap_logs.created_at ) <= ".$last."");
+			$response = array(
+				'status' => true,
+				'ng_case' => $ng_case
+			);
+			return Response::json($response);
+		} catch (\Exception $e) {
+			$response = array(
+				'status' => false,
+				'message' => $e->getMessage()
+			);
+			return Response::json($response);
+		}
+	}
 }
