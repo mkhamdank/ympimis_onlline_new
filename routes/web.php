@@ -233,8 +233,19 @@ Route::group(['nav' => 'S0', 'middleware' => 'permission'], function () {
     Route::get('fetch/kensa/serial_number/{vendor}', 'OutgoingController@kensaSerialNumber');
     Route::post('index/kensa/kbi/confirm', 'OutgoingController@confirmKensaKbi');
 
-    Route::get('index/production_check/kbi/{post}', 'OutgoingController@indexProductionCheckKbi');
-    Route::post('input/production_check/kbi', 'OutgoingController@inputProductionCheckKbi');
+    Route::get('index/production_check/kbi_1', 'OutgoingController@indexProductionCheckKbi1');
+    Route::post('input/production_check/kbi_1', 'OutgoingController@inputProductionCheckKbi1');
+
+    Route::get('fetch/production_check/kbi_active', 'OutgoingController@fetchProductionCheckKbiActive');
+
+    Route::get('index/production_check/kbi_2', 'OutgoingController@indexProductionCheckKbi2');
+    Route::post('input/production_check/kbi_2', 'OutgoingController@inputProductionCheckKbi2');
+
+    Route::get('index/production_check/kbi_3', 'OutgoingController@indexProductionCheckKbi3');
+    Route::post('input/production_check/kbi_3', 'OutgoingController@inputProductionCheckKbi3');
+
+    Route::get('index/production_check/kbi_4', 'OutgoingController@indexProductionCheckKbi4');
+    Route::post('input/production_check/kbi_4', 'OutgoingController@inputProductionCheckKbi4');
 
     Route::get('index/production_check/kbi_report', 'OutgoingController@indexProductionCheckKbiReport');
     Route::get('fetch/production_check/kbi/report', 'OutgoingController@fetchProductionCheckKbiReport');

@@ -5765,10 +5765,11 @@ class OutgoingController extends Controller
 		}
 	}
 
-	function indexProductionCheckKbi($pos) {
-		$title = 'Inspection By Production PT. KBI';
+	function indexProductionCheckKbi1() {
+		$pos = '1';
+		$title = 'Inspection By Production PT. KBI Pos 1';
 		$page = 'Inspection By Production KBI';
-		$title_jp = '生産による検査 KBI';
+		$title_jp = '生産による検査 PT. KBI (1番目)';
 
 		$ng_lists = DB::SELECT("(SELECT
 			*
@@ -5801,29 +5802,26 @@ class OutgoingController extends Controller
 
 		$materials = QaMaterial::where('vendor_shortname','KYORAKU')->get();
 
-		$inspector = [
-			'Sari N',
-			'Eva H',
-			'Nopitasari',
-			'Eli P',
-			'Monica',
-			'Ganda S',
-			'Fitri A'
-		];
+		$inspector = DB::table('employees')
+		->where('vendor','KYORAKU BLOWMOLDING INDONESIA')
+		->get();
 
-		return view('outgoing.kbi.kensa_production', array(
+		$serial_number = QaOutgoingSerialNumber::where('vendor_shortname','KYORAKU')->get();
+
+		return view('outgoing.kbi.kensa_production_1', array(
 			'title' => $title,
 			'title_jp' => $title_jp,
 			'ng_lists' => $ng_lists,
 			'vendor' => 'PT. KBI',
 			'materials' => $materials,
 			'inspector' => $inspector,
+			'serial_number' => $serial_number,
 			'pos' => $pos,
 			'vendor' => Auth::user()->name,
 		))->with('page', $page)->with('head', $page);
 	}
 
-	function inputProductionCheckKbi(Request $request) {
+	function inputProductionCheckKbi1(Request $request) {
 		try {
 			$date = $request->get('date');
 			$type_check = $request->get('type_check');
@@ -5837,16 +5835,7 @@ class OutgoingController extends Controller
 			$material_number = $request->get('material_number');
 			$material_description = $request->get('material_description');
 			$pos = $request->get('pos');
-
-			$code_generator = CodeGenerator::where('note', '=', 'kbi')->first();
-			if ($code_generator->prefix != 'KBI'.date('ym')) {
-                $code_generator->prefix = 'KBI'.date('ym');
-                $code_generator->index = '0';
-                $code_generator->save();
-            }
-			$serial_number = $code_generator->prefix.sprintf("%'.0" . $code_generator->length . "d", $code_generator->index+1);
-			$code_generator->index = $code_generator->index+1;
-			$code_generator->save();
+			$label = $request->get('label');
 
 			$material = QaMaterial::where('material_number',$material_number)->first();
 
@@ -5860,7 +5849,7 @@ class OutgoingController extends Controller
 					'check_date' => $date,
 					'material_number' => $material_number,
 					'material_description' => $material_description,
-					'serial_number' => $serial_number,
+					'serial_number' => $label,
 					'vendor' => $material->vendor,
 					'vendor_shortname' => $material->vendor_shortname,
 					'hpl' => $material->hpl,
@@ -5884,7 +5873,7 @@ class OutgoingController extends Controller
 						'check_date' => $date,
 						'material_number' => $material_number,
 						'material_description' => $material_description,
-						'serial_number' => $serial_number,
+						'serial_number' => $label,
 						'vendor' => $material->vendor,
 						'vendor_shortname' => $material->vendor_shortname,
 						'hpl' => $material->hpl,
@@ -5902,80 +5891,521 @@ class OutgoingController extends Controller
 		            ]);
 
 		            $outgoing->save();
-
-
-		            if (in_array($ng_name[$i], $this->critical_kbi)) {
-		            	$mail_to = [];
-
-		            	array_push($mail_to, 'h_susanto@kyoraku.co.id');
-		            	array_push($mail_to, 'qs@kyoraku.co.id');
-		            	array_push($mail_to, 'qa.claim@kyoraku.co.id');
-		            	array_push($mail_to, 'ujang@kyoraku.co.id');
-		            	array_push($mail_to, 'ginting@kyoraku.co.id');
-		            	array_push($mail_to, 'agustina.hayati@music.yamaha.com');
-		            	array_push($mail_to, 'ratri.sulistyorini@music.yamaha.com');
-		            	array_push($mail_to, 'abdissalam.saidi@music.yamaha.com');
-
-				        $cc = [];
-				        $cc[0] = 'yayuk.wahyuni@music.yamaha.com';
-				        $cc[1] = 'imron.faizal@music.yamaha.com';
-
-				        $bcc = [];
-				        $bcc[0] = 'mokhamad.khamdan.khabibi@music.yamaha.com';
-				        $bcc[1] = 'rio.irvansyah@music.yamaha.com';
-
-				        // Mail::to($mail_to)
-				        // // ->cc($cc,'CC')
-				        // ->bcc($bcc,'BCC')
-				        // ->send(new SendEmail($outgoing, 'critical_kbi'));
-
-				        array_push($outgoings_critical, $outgoing);
-		            }
-
-		            if (in_array($ng_name[$i], $this->non_critical_kbi)) {
-		            	array_push($outgoings, $outgoing);
-		            }
-				}
-
-				$total_ng_non = 0;
-				for ($i=0; $i < count($outgoings); $i++) { 
-					$total_ng_non = $total_ng_non + $outgoings[$i]->ng_qty;
-				}
-
-				if ($total_ng_non != 0) {
-					$persen = ($total_ng_non/$qty_check)*100;
-					if ($persen > 5) {
-						$mail_to = [];
-
-		            	array_push($mail_to, 'h_susanto@kyoraku.co.id');
-		            	array_push($mail_to, 'qs@kyoraku.co.id');
-		            	array_push($mail_to, 'qa.claim@kyoraku.co.id');
-		            	array_push($mail_to, 'ujang@kyoraku.co.id');
-		            	array_push($mail_to, 'ginting@kyoraku.co.id');
-		            	array_push($mail_to, 'agustina.hayati@music.yamaha.com');
-		            	array_push($mail_to, 'ratri.sulistyorini@music.yamaha.com');
-		            	array_push($mail_to, 'abdissalam.saidi@music.yamaha.com');
-
-				        $cc = [];
-				        $cc[0] = 'yayuk.wahyuni@music.yamaha.com';
-				        $cc[1] = 'imron.faizal@music.yamaha.com';
-
-				        $bcc = [];
-				        $bcc[0] = 'mokhamad.khamdan.khabibi@music.yamaha.com';
-				        $bcc[1] = 'rio.irvansyah@music.yamaha.com';
-
-				        $data = array(
-				        	'outgoing_non' => $outgoings,
-				        	'outgoing_critical' => $outgoings_critical, );
-
-				        // Mail::to($mail_to)
-				        // // ->cc($cc,'CC')
-				        // ->bcc($bcc,'BCC')
-				        // ->send(new SendEmail($data, 'over_limit_ratio_kbi'));
-					}
 				}
 			}
 
+			$outgoing = DB::table('qa_outgoing_vendor_temps')
+			->insert([
+				'serial_number' => $label,
+				'check_date' => $date,
+				'material_number' => $material_number,
+				'material_description' => $material_description,
+				'vendor' => $material->vendor,
+				'vendor_shortname' => $material->vendor_shortname,
+				'hpl' => $material->hpl,
+				'inspector' => $inspector,
+				'qty_check' => $qty_check,
+				'total_ok' => $total_ok,
+				'total_ng' => $total_ng,
+				'ng_ratio' => $ng_ratio,
+				'position' => $pos,
+				'remark' => 'Inspection By Production',
+				'created_by' => Auth::user()->id,
+				'created_at' => date('Y-m-d H:i:s'),
+				'updated_at' => date('Y-m-d H:i:s'),
+			]);
+
+			$response = array(
+		        'status' => true,
+		    );
+		    return Response::json($response);
+		} catch (\Exception $e) {
+			$response = array(
+		        'status' => false,
+		        'message' => $e->getMessage(),
+		    );
+		    return Response::json($response);
+		}
+	}
+
+	function fetchProductionCheckKbiActive(Request $request) {
+		try {
+			$pos = $request->get('pos');
+			$pos_before = $pos - 1;
+			$active = DB::table('qa_outgoing_vendor_temps')
+			->where('vendor','KYORAKU BLOWMOLDING INDONESIA')
+			->where('position',$pos_before)
+			->first();
+			$response = array(
+				'status' => true,
+				'active' => $active,
+			);
+			return Response::json($response);
+		} catch (\Exception $e) {
+			$response = array(
+		        'status' => false,
+		        'message' => $e->getMessage(),
+		    );
+		    return Response::json($response);
+		}
+	}
+
+	function indexProductionCheckKbi2() {
+		$pos = '2';
+		$title = 'Inspection By Production PT. KBI Pos 2';
+		$page = 'Inspection By Production KBI';
+		$title_jp = '生産による検査 PT. KBI (2番目)';
+
+		$ng_lists = DB::SELECT("(SELECT
+			*
+			FROM
+			ng_lists
+			WHERE
+			ng_lists.location = 'outgoing'
+			AND remark = 'kbi_production_check'
+			ORDER BY
+			ng_name)
+			UNION ALL
+			(SELECT
+			*
+			FROM
+			ng_lists
+			WHERE
+			ng_lists.location = 'outgoing'
+			AND remark = 'kbi_fg'
+			AND ng_name not in ((SELECT
+			ng_name
+			FROM
+			ng_lists
+			WHERE
+			ng_lists.location = 'outgoing'
+			AND remark = 'kbi_production_check'
+			ORDER BY
+			ng_name))
+			ORDER BY
+			ng_name)");
+
+		$materials = QaMaterial::where('vendor_shortname','KYORAKU')->get();
+
+		$inspector = DB::table('employees')
+		->where('vendor','KYORAKU BLOWMOLDING INDONESIA')
+		->get();
+
+		$serial_number = QaOutgoingSerialNumber::where('vendor_shortname','KYORAKU')->get();
+
+		return view('outgoing.kbi.kensa_production_2', array(
+			'title' => $title,
+			'title_jp' => $title_jp,
+			'ng_lists' => $ng_lists,
+			'vendor' => 'PT. KBI',
+			'materials' => $materials,
+			'inspector' => $inspector,
+			'serial_number' => $serial_number,
+			'pos' => $pos,
+			'vendor' => Auth::user()->name,
+		))->with('page', $page)->with('head', $page);
+	}
+
+	function inputProductionCheckKbi2(Request $request) {
+		try {
+			$date = $request->get('date');
+			$type_check = $request->get('type_check');
+			$inspector = $request->get('inspector');
+			$qty_check = $request->get('qty_check');
+			$total_ok = $request->get('total_ok');
+			$total_ng = $request->get('total_ng');
+			$ng_ratio = $request->get('ng_ratio');
+			$ng_name = $request->get('ng_name');
+			$ng_qty = $request->get('ng_qty');
+			$material_number = $request->get('material_number');
+			$material_description = $request->get('material_description');
+			$pos = $request->get('pos');
+			$label = $request->get('label');
+
+			$material = QaMaterial::where('material_number',$material_number)->first();
+
+			$outgoings = [];
+			$outgoing_id = [];
+			$outgoings_critical = [];
+			$outgoings_non_critical = [];
+
+			if ($total_ng == 0) {
+				$outgoing = new QaOutgoingVendor([
+					'check_date' => $date,
+					'material_number' => $material_number,
+					'material_description' => $material_description,
+					'serial_number' => $label,
+					'vendor' => $material->vendor,
+					'vendor_shortname' => $material->vendor_shortname,
+					'hpl' => $material->hpl,
+					'inspector' => $inspector,
+					'qty_check' => $qty_check,
+					'total_ok' => $total_ok,
+					'total_ng' => $total_ng,
+					'ng_ratio' => $ng_ratio,
+					'qa_final_status' => $pos,
+					'remark' => 'Inspection By Production',
+					'qc_sampling_status' => $type_check,
+					'ng_name' => '-',
+					'ng_qty' => '0',
+					'lot_status' => 'LOT OK',
+	                'created_by' => Auth::user()->id
+	            ]);
+	            $outgoing->save();
+			}else{
+				for ($i=0; $i < count($ng_name); $i++) { 
+					$outgoing = new QaOutgoingVendor([
+						'check_date' => $date,
+						'material_number' => $material_number,
+						'material_description' => $material_description,
+						'serial_number' => $label,
+						'vendor' => $material->vendor,
+						'vendor_shortname' => $material->vendor_shortname,
+						'hpl' => $material->hpl,
+						'inspector' => $inspector,
+						'qty_check' => $qty_check,
+						'remark' => 'Inspection By Production',
+						'qa_final_status' => $pos,
+						'qc_sampling_status' => $type_check,
+						'total_ok' => $total_ok,
+						'total_ng' => $total_ng,
+						'ng_ratio' => $ng_ratio,
+						'ng_name' => $ng_name[$i],
+						'ng_qty' => $ng_qty[$i],
+		                'created_by' => Auth::user()->id
+		            ]);
+
+		            $outgoing->save();
+				}
+			}
+
+			$outgoing = DB::table('qa_outgoing_vendor_temps')
+			->where('serial_number',$label)
+			->update([
+				'serial_number' => $label,
+				'check_date' => $date,
+				'material_number' => $material_number,
+				'material_description' => $material_description,
+				'vendor' => $material->vendor,
+				'vendor_shortname' => $material->vendor_shortname,
+				'hpl' => $material->hpl,
+				'inspector' => $inspector,
+				'qty_check' => $qty_check,
+				'total_ok' => $total_ok,
+				'total_ng' => $total_ng,
+				'ng_ratio' => $ng_ratio,
+				'position' => $pos,
+				'created_by' => Auth::user()->id,
+				'updated_at' => date('Y-m-d H:i:s'),
+			]);
+
+			$response = array(
+		        'status' => true,
+		    );
+		    return Response::json($response);
+		} catch (\Exception $e) {
+			$response = array(
+		        'status' => false,
+		        'message' => $e->getMessage(),
+		    );
+		    return Response::json($response);
+		}
+	}
+
+	function indexProductionCheckKbi3() {
+		$pos = '3';
+		$title = 'Inspection By Production PT. KBI Pos 3';
+		$page = 'Inspection By Production KBI';
+		$title_jp = '生産による検査 PT. KBI (3番目)';
+
+		$ng_lists = DB::SELECT("(SELECT
+			*
+			FROM
+			ng_lists
+			WHERE
+			ng_lists.location = 'outgoing'
+			AND remark = 'kbi_production_check'
+			ORDER BY
+			ng_name)
+			UNION ALL
+			(SELECT
+			*
+			FROM
+			ng_lists
+			WHERE
+			ng_lists.location = 'outgoing'
+			AND remark = 'kbi_fg'
+			AND ng_name not in ((SELECT
+			ng_name
+			FROM
+			ng_lists
+			WHERE
+			ng_lists.location = 'outgoing'
+			AND remark = 'kbi_production_check'
+			ORDER BY
+			ng_name))
+			ORDER BY
+			ng_name)");
+
+		$materials = QaMaterial::where('vendor_shortname','KYORAKU')->get();
+
+		$inspector = DB::table('employees')
+		->where('vendor','KYORAKU BLOWMOLDING INDONESIA')
+		->get();
+
+		$serial_number = QaOutgoingSerialNumber::where('vendor_shortname','KYORAKU')->get();
+
+		return view('outgoing.kbi.kensa_production_3', array(
+			'title' => $title,
+			'title_jp' => $title_jp,
+			'ng_lists' => $ng_lists,
+			'vendor' => 'PT. KBI',
+			'materials' => $materials,
+			'inspector' => $inspector,
+			'serial_number' => $serial_number,
+			'pos' => $pos,
+			'vendor' => Auth::user()->name,
+		))->with('page', $page)->with('head', $page);
+	}
+
+	function inputProductionCheckKbi3(Request $request) {
+		try {
+			$date = $request->get('date');
+			$type_check = $request->get('type_check');
+			$inspector = $request->get('inspector');
+			$qty_check = $request->get('qty_check');
+			$total_ok = $request->get('total_ok');
+			$total_ng = $request->get('total_ng');
+			$ng_ratio = $request->get('ng_ratio');
+			$ng_name = $request->get('ng_name');
+			$ng_qty = $request->get('ng_qty');
+			$material_number = $request->get('material_number');
+			$material_description = $request->get('material_description');
+			$pos = $request->get('pos');
+			$label = $request->get('label');
+
+			$material = QaMaterial::where('material_number',$material_number)->first();
+
+			$outgoings = [];
+			$outgoing_id = [];
+			$outgoings_critical = [];
+			$outgoings_non_critical = [];
+
+			if ($total_ng == 0) {
+				$outgoing = new QaOutgoingVendor([
+					'check_date' => $date,
+					'material_number' => $material_number,
+					'material_description' => $material_description,
+					'serial_number' => $label,
+					'vendor' => $material->vendor,
+					'vendor_shortname' => $material->vendor_shortname,
+					'hpl' => $material->hpl,
+					'inspector' => $inspector,
+					'qty_check' => $qty_check,
+					'total_ok' => $total_ok,
+					'total_ng' => $total_ng,
+					'ng_ratio' => $ng_ratio,
+					'qa_final_status' => $pos,
+					'remark' => 'Inspection By Production',
+					'qc_sampling_status' => $type_check,
+					'ng_name' => '-',
+					'ng_qty' => '0',
+					'lot_status' => 'LOT OK',
+	                'created_by' => Auth::user()->id
+	            ]);
+	            $outgoing->save();
+			}else{
+				for ($i=0; $i < count($ng_name); $i++) { 
+					$outgoing = new QaOutgoingVendor([
+						'check_date' => $date,
+						'material_number' => $material_number,
+						'material_description' => $material_description,
+						'serial_number' => $label,
+						'vendor' => $material->vendor,
+						'vendor_shortname' => $material->vendor_shortname,
+						'hpl' => $material->hpl,
+						'inspector' => $inspector,
+						'qty_check' => $qty_check,
+						'remark' => 'Inspection By Production',
+						'qa_final_status' => $pos,
+						'qc_sampling_status' => $type_check,
+						'total_ok' => $total_ok,
+						'total_ng' => $total_ng,
+						'ng_ratio' => $ng_ratio,
+						'ng_name' => $ng_name[$i],
+						'ng_qty' => $ng_qty[$i],
+		                'created_by' => Auth::user()->id
+		            ]);
+
+		            $outgoing->save();
+				}
+			}
+
+			$outgoing = DB::table('qa_outgoing_vendor_temps')
+			->where('serial_number',$label)
+			->update([
+				'serial_number' => $label,
+				'check_date' => $date,
+				'material_number' => $material_number,
+				'material_description' => $material_description,
+				'vendor' => $material->vendor,
+				'vendor_shortname' => $material->vendor_shortname,
+				'hpl' => $material->hpl,
+				'inspector' => $inspector,
+				'qty_check' => $qty_check,
+				'total_ok' => $total_ok,
+				'total_ng' => $total_ng,
+				'ng_ratio' => $ng_ratio,
+				'position' => $pos,
+				'created_by' => Auth::user()->id,
+				'updated_at' => date('Y-m-d H:i:s'),
+			]);
+
+			$response = array(
+		        'status' => true,
+		    );
+		    return Response::json($response);
+		} catch (\Exception $e) {
+			$response = array(
+		        'status' => false,
+		        'message' => $e->getMessage(),
+		    );
+		    return Response::json($response);
+		}
+	}
+
+	function indexProductionCheckKbi4() {
+		$pos = '4';
+		$title = 'Inspection By Production PT. KBI Pos 4';
+		$page = 'Inspection By Production KBI';
+		$title_jp = '生産による検査 PT. KBI (4番目)';
+
+		$ng_lists = DB::SELECT("(SELECT
+			*
+			FROM
+			ng_lists
+			WHERE
+			ng_lists.location = 'outgoing'
+			AND remark = 'kbi_production_check'
+			ORDER BY
+			ng_name)
+			UNION ALL
+			(SELECT
+			*
+			FROM
+			ng_lists
+			WHERE
+			ng_lists.location = 'outgoing'
+			AND remark = 'kbi_fg'
+			AND ng_name not in ((SELECT
+			ng_name
+			FROM
+			ng_lists
+			WHERE
+			ng_lists.location = 'outgoing'
+			AND remark = 'kbi_production_check'
+			ORDER BY
+			ng_name))
+			ORDER BY
+			ng_name)");
+
+		$materials = QaMaterial::where('vendor_shortname','KYORAKU')->get();
+
+		$inspector = DB::table('employees')
+		->where('vendor','KYORAKU BLOWMOLDING INDONESIA')
+		->get();
+
+		$serial_number = QaOutgoingSerialNumber::where('vendor_shortname','KYORAKU')->get();
+
+		return view('outgoing.kbi.kensa_production_4', array(
+			'title' => $title,
+			'title_jp' => $title_jp,
+			'ng_lists' => $ng_lists,
+			'vendor' => 'PT. KBI',
+			'materials' => $materials,
+			'inspector' => $inspector,
+			'serial_number' => $serial_number,
+			'pos' => $pos,
+			'vendor' => Auth::user()->name,
+		))->with('page', $page)->with('head', $page);
+	}
+
+	function inputProductionCheckKbi4(Request $request) {
+		try {
+			$date = $request->get('date');
+			$type_check = $request->get('type_check');
+			$inspector = $request->get('inspector');
+			$qty_check = $request->get('qty_check');
+			$total_ok = $request->get('total_ok');
+			$total_ng = $request->get('total_ng');
+			$ng_ratio = $request->get('ng_ratio');
+			$ng_name = $request->get('ng_name');
+			$ng_qty = $request->get('ng_qty');
+			$material_number = $request->get('material_number');
+			$material_description = $request->get('material_description');
+			$pos = $request->get('pos');
+			$label = $request->get('label');
+
+			$material = QaMaterial::where('material_number',$material_number)->first();
+
+			$outgoings = [];
+			$outgoing_id = [];
+			$outgoings_critical = [];
+			$outgoings_non_critical = [];
+
+			if ($total_ng == 0) {
+				$outgoing = new QaOutgoingVendor([
+					'check_date' => $date,
+					'material_number' => $material_number,
+					'material_description' => $material_description,
+					'serial_number' => $label,
+					'vendor' => $material->vendor,
+					'vendor_shortname' => $material->vendor_shortname,
+					'hpl' => $material->hpl,
+					'inspector' => $inspector,
+					'qty_check' => $qty_check,
+					'total_ok' => $total_ok,
+					'total_ng' => $total_ng,
+					'ng_ratio' => $ng_ratio,
+					'qa_final_status' => $pos,
+					'remark' => 'Inspection By Production',
+					'qc_sampling_status' => $type_check,
+					'ng_name' => '-',
+					'ng_qty' => '0',
+					'lot_status' => 'LOT OK',
+	                'created_by' => Auth::user()->id
+	            ]);
+	            $outgoing->save();
+			}else{
+				for ($i=0; $i < count($ng_name); $i++) { 
+					$outgoing = new QaOutgoingVendor([
+						'check_date' => $date,
+						'material_number' => $material_number,
+						'material_description' => $material_description,
+						'serial_number' => $label,
+						'vendor' => $material->vendor,
+						'vendor_shortname' => $material->vendor_shortname,
+						'hpl' => $material->hpl,
+						'inspector' => $inspector,
+						'qty_check' => $qty_check,
+						'remark' => 'Inspection By Production',
+						'qa_final_status' => $pos,
+						'qc_sampling_status' => $type_check,
+						'total_ok' => $total_ok,
+						'total_ng' => $total_ng,
+						'ng_ratio' => $ng_ratio,
+						'ng_name' => $ng_name[$i],
+						'ng_qty' => $ng_qty[$i],
+		                'created_by' => Auth::user()->id
+		            ]);
+
+		            $outgoing->save();
+				}
+			}
+
+			$outgoing = DB::table('qa_outgoing_vendor_temps')
+			->where('serial_number',$label)
+			->delete();
 
 			$response = array(
 		        'status' => true,

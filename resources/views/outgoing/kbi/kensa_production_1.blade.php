@@ -104,37 +104,35 @@
 						<td style="background-color: #fca311; color: #14213d; text-align: center; font-size: 20px;padding-left: 2px;padding-right: 2px" id="pos">{{$pos}}</td>
 					</tr>
                     <tr>
-                        <th style="vertical-align:middle;background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 17px;width: 1%">Tipe Check</th>
-                        <th style="vertical-align:middle;background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 17px;width: 1%">Inspector</th>
+                        <th colspan="2" style="vertical-align:middle;background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 17px;width: 1%">Inspector</th>
                     </tr>
                     <tr>
-                        <td style="background-color: #14213d; color: #fff; text-align: center; font-size: 20px;">
-                            <select class="form-control select2" id="type_check" name="type_check" style="width: 100%; font-size: 30px; color: #14213d; background-color: #fca311; font-weight: bold;">
-                                <option value="">Pilih Tipe Check</option>
-                                <option value="Check 1">Check 1</option>
-                                <option value="Check 2">Check 2</option>
-                            </select>
-                        </td>
-                        <td style="background-color: #14213d; color: #fff; text-align: center; font-size: 20px;">
-                            <select class="form-control select2" id="inspector" name="inspector" style="width: 100%; font-size: 30px; color: #14213d; background-color: #fca311; font-weight: bold;">
-                                <option value="">Pilih Inspector</option>
-                                @foreach($inspector as $inspector)
-                                    <option value="{{$inspector}}">{{$inspector}}</option>
-                                @endforeach
-                            </select>
+                        <td colspan="2" style="background-color: #14213d; color: #fff; text-align: center; font-size: 20px;">
+							<input type="text" class="pull-right" name="inspector" style="padding: 5px; font-size: 18px; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="inspector" placeholder="Scan ID Card">
                         </td>
                     </tr>
 					<tr>
-                        <th style="vertical-align:middle;background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 17px;width: 1%" colspan="2">Material</th>
+                        <th style="vertical-align:middle;background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 17px;width: 1%" colspan="2">Scan Label</th>
                     </tr>
 					<tr>
 						<td colspan="2" style="color: #14213d; text-align: center; font-size: 20px;padding-left: 2px;padding-right: 2px">
-							<select class="form-control select2" id="material" name="material" style="width: 100%; font-size: 30px; color: #14213d; background-color: #fca311; font-weight: bold;">
-                                <option value="">Pilih Material</option>
-                                @foreach($materials as $materials)
-                                    <option value="{{$materials->material_number}}_{{$materials->material_description}}">{{$materials->material_number}} - {{$materials->material_description}}</option>
-                                @endforeach
-                            </select>
+							<input type="text" class="pull-right" name="label" style="padding: 5px; font-size: 18px; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="label" placeholder="Scan Label">
+						</td>
+					</tr>
+					<tr>
+						<td style="background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 14px;font-weight: bold;width: 1%">
+							Part No.
+						</td>
+						<td style="background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 14px;font-weight: bold;width: 5%">
+							Part Name
+						</td>
+					</tr>
+					<tr>
+						<td style="color: #14213d; text-align: center; font-size: 20px;padding-left: 2px;padding-right: 2px">
+							<input type="text" class="pull-right" name="material_number" style="padding: 5px; font-size: 18px; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="material_number" placeholder="Part No." readonly>
+						</td>
+						<td style="color: #14213d; text-align: center; font-size: 20px;padding-left: 2px;padding-right: 2px">
+							<input type="text" class="pull-right" name="material_description" style="padding: 5px; font-size: 18px; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="material_description" placeholder="Part Name" readonly>
 						</td>
 					</tr>
 				</tbody>
@@ -151,10 +149,10 @@
 					</tr>
 					<tr>
 						<td>
-							<input type="number" class="pull-right numpad" name="qty_check" style="padding: 5px; font-size: 1.7vw; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="qty_check" placeholder="Quantity Check" onchange="checkQty(this.value);" readonly="">
+							<input type="number" class="pull-right" name="qty_check" style="padding: 5px; font-size: 18px; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="qty_check" placeholder="Quantity Check" readonly="">
 						</td>
 						<td>
-							<input type="text" class="pull-right" name="total_ok" style="padding: 5px; font-size: 1.7vw; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="total_ok" placeholder="Qty OK" readonly value="0">
+							<input type="text" class="pull-right" name="total_ok" style="padding: 5px; font-size: 18px; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="total_ok" placeholder="Qty OK" readonly value="0">
 						</td>
 					</tr>
                     <tr>
@@ -167,10 +165,10 @@
                     </tr>
                     <tr>
                         <td>
-							<input type="text" class="pull-right" name="total_ng" style="padding: 5px; font-size: 1.7vw; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="total_ng" placeholder="Qty NG" readonly value="0">
+							<input type="text" class="pull-right" name="total_ng" style="padding: 5px; font-size: 18px; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="total_ng" placeholder="Qty NG" readonly value="0">
 						</td>
 						<td>
-							<input type="text" class="pull-right" name="ng_ratio" style="padding: 5px; font-size: 1.7vw; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="ng_ratio" placeholder="NG Ratio (%)" readonly value="0">
+							<input type="text" class="pull-right" name="ng_ratio" style="padding: 5px; font-size: 18px; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="ng_ratio" placeholder="NG Ratio (%)" readonly value="0">
 						</td>
                     </tr>
                     <tr>
@@ -355,9 +353,69 @@
         });
 	});
 
+	var inspector = <?php echo json_encode($inspector); ?>;
+	var serial_number = <?php echo json_encode($serial_number); ?>;
+
+	$('#inspector').keydown(function(event) {
+		if (event.keyCode == 13 || event.keyCode == 9) {
+			var tag = $(this).val().toUpperCase();
+
+			if (tag != "") {
+				var found = false;
+				for (var i = 0; i < inspector.length; i++) {
+					if (inspector[i].employee_id.toUpperCase() == tag || inspector[i].name.toUpperCase() == tag) {
+						$('#inspector').val(inspector[i].employee_id + ' - ' + inspector[i].name);
+						found = true;
+						break;
+					}
+				}
+				if (!found) {
+					openErrorGritter('Error!', 'ID Karyawan tidak ditemukan!');
+					$('#inspector').val('');
+					return false;
+				}
+				openSuccessGritter('Success!', 'ID Karyawan ditemukan!');
+				$('#label').val('');
+				$('#label').focus();
+			} else {
+				openErrorGritter('Error!', 'ID Karyawan tidak boleh kosong!');
+				return false;
+			}
+		}
+	});
+
+	$('#label').keydown(function(event) {
+		if (event.keyCode == 13 || event.keyCode == 9) {
+			var label = $(this).val().toUpperCase();
+
+			if (label != "") {
+				var found = false;
+				for (var i = 0; i < serial_number.length; i++) {
+					if (serial_number[i].serial_number.toUpperCase() == label.substr(0, 6)) {
+						$('#material_number').val(serial_number[i].material_number);
+						$('#material_description').val(serial_number[i].part_name);
+						$('#qty_check').val(serial_number[i].qty);
+						$('#total_ok').val(serial_number[i].qty);
+						found = true;
+						break;
+					}
+				}
+				if (!found) {
+					openErrorGritter('Error!', 'Label tidak ditemukan!');
+					$('#label').val('');
+					return false;
+				}
+				openSuccessGritter('Success!', 'Label ditemukan!');
+			} else {
+				openErrorGritter('Error!', 'Label tidak boleh kosong!');
+				return false;
+			}
+		}
+	});
+
     function plus(id){
 		var count = $('#count'+id).text();
-		if ($('#type_check').val() == "" || $('#qty_check').val() == "" || $('#inspector').val() == "") {
+		if ($('#qty_check').val() == "" || $('#inspector').val() == "") {
 			openErrorGritter('Error!','Isi semua data!');
             return false;
 		}
@@ -375,7 +433,7 @@
 
 	function minus(id){
 		var count = $('#count'+id).text();
-		if ($('#type_check').val() == "" || $('#qty_check').val() == "" || $('#inspector').val() == "") {
+		if ($('#qty_check').val() == "" || $('#inspector').val() == "") {
 			openErrorGritter('Error!','Isi semua data!');
             return false;
 		}
@@ -390,18 +448,16 @@
 	}
 
     function cancelAll() {
-        $('#qty_check').val('');
+        $('#qty_check').val('0');
         $('#total_ok').val('0');
         $('#total_ng').val('0');
         $('#ng_ratio').val('0');
-        $('#type_check').val('').trigger('change');
-        $('#inspector').val('').trigger('change');
-		$('#material').val('').trigger('change');
+        $('#inspector').val('');
+		$('#inspector').focus();
+		$('#label').val('');
+		$('#material_number').val('');
+		$('#material_description').val('');
     }
-
-    function checkQty(value) {
-		$('#total_ok').val(value);
-	}
 
 	function confirmAll() {
 		var ng_name = [];
@@ -418,25 +474,25 @@
 		}
 		var data = {
 			date: $('#date').text(),
-			type_check: $('#type_check').val(),
 			inspector: $('#inspector').val(),
 			qty_check: $('#qty_check').val(),
 			total_ok: $('#total_ok').val(),
 			total_ng: $('#total_ng').val(),
 			ng_ratio: $('#ng_ratio').val(),
+			label: $('#label').val(),
 			pos: $('#pos').text(),
-			material_number: $('#material').val().split('_')[0],
-			material_description: $('#material').val().split('_')[1],
+			material_number: $('#material_number').val(),
+			material_description: $('#material_description').val(),
 			ng_name: ng_name,
 			ng_qty: ng_qty,
 		}
 
-		if (data.type_check == "" || data.inspector == "" || data.qty_check == "" || data.total_ok == "" || data.total_ng == "" || data.ng_ratio == "") {
+		if (data.type_check == "" || data.inspector == "" || data.qty_check == "" || data.total_ok == "" || data.total_ng == "" || data.ng_ratio == "" || data.label == "" || data.material_number == "" || data.material_description == "") {
 			openErrorGritter('Error!','Isi semua data!');
 			return false;
 		}
 
-		$.post('{{ url("input/production_check/kbi") }}', data, function(result, status, xhr){
+		$.post('{{ url("input/production_check/kbi_1") }}', data, function(result, status, xhr){
 			if (result.status) {
 				openSuccessGritter('Success!', result.message);
 				cancelAll();
