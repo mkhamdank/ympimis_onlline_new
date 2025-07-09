@@ -1327,7 +1327,7 @@ class OutgoingController extends Controller
 				$serial_number = QaOutgoingSerialNumber::where('vendor_shortname','KYORAKU')->where('serial_number',$id_num5)->first();
 			}
 			if ($serial_number) {
-				$check = QaOutgoingVendor::where('serial_number',$sernum)->first();
+				$check = QaOutgoingVendor::where('serial_number',$sernum)->where('remark','FG Check')->first();
 				if(!$check){
 					$response = array(
 						'status' => true,
@@ -1352,6 +1352,32 @@ class OutgoingController extends Controller
 			    );
 			    return Response::json($response);
 			}
+		} catch (\Exception $e) {
+			$response = array(
+		        'status' => false,
+		        'message' => $e->getMessage(),
+		    );
+		    return Response::json($response);
+		}
+	}
+
+	function scanProductionCheckKbi1(Request $request){
+		try {
+			$label = $request->get('label');
+			$check = QaOutgoingVendor::where('serial_number',$label)->where('remark','Inspection By Production')->first();
+
+			if (!$check) {
+				$response = array(
+					'status' => true,
+				);
+				return Response::json($response);
+			}else{
+				$response = array(
+					'status' => false,
+					'message' => 'Label Pernah Discan',
+				);
+				return Response::json($response);
+			}			
 		} catch (\Exception $e) {
 			$response = array(
 		        'status' => false,

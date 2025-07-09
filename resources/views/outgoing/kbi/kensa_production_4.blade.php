@@ -390,15 +390,15 @@
 	var inspector = <?php echo json_encode($inspector); ?>;
 	var serial_number = <?php echo json_encode($serial_number); ?>;
 
-	$('#inspector').keydown(function(event) {
-		if (event.keyCode == 13 || event.keyCode == 9) {
-			var tag = $(this).val().toUpperCase();
+	$('#inspector').on('input', function() {
+		var tag = $(this).val().toUpperCase();
 
+		if (tag.length === 6) {
 			if (tag != "") {
 				var found = false;
 				for (var i = 0; i < inspector.length; i++) {
 					if (inspector[i].employee_id.toUpperCase() == tag || inspector[i].name.toUpperCase() == tag) {
-                        $('#inspector').val(inspector[i].employee_id + ' - ' + inspector[i].name);
+						$('#inspector').val(inspector[i].employee_id + ' - ' + inspector[i].name);
 						found = true;
 						break;
 					}
@@ -408,7 +408,7 @@
 					$('#inspector').val('');
 					return false;
 				}
-                confirmAll();
+				confirmAll();
 				openSuccessGritter('Success!', 'ID Karyawan ditemukan!');
 			} else {
 				openErrorGritter('Error!', 'ID Karyawan tidak boleh kosong!');
@@ -417,27 +417,27 @@
 		}
 	});
 
-    $('#label_confirm').keydown(function(event) {
-		if (event.keyCode == 13 || event.keyCode == 9) {
-			var tag = $(this).val().toUpperCase();
+	$('#label_confirm').on('input', function() {
+		var tag = $(this).val().toUpperCase();
 
+		if (tag.length === 17) {
 			if (tag != "") {
-                var found = false;
-                if(tag == $('#label').val().toUpperCase()){
-                    found = true;
-                }
-                if (!found) {
-                    openErrorGritter('Error!', 'Label tidak sama!');
-                    $('#label_confirm').val('');
-                    return false;
-                }
-                openSuccessGritter('Success!', 'Label sama!');
-                $('#inspector').val('');
-                $('#inspector').focus();
-            } else {
-                openErrorGritter('Error!', 'Label tidak boleh kosong!');
-                return false;
-            }
+				var found = false;
+				if(tag == $('#label').val().toUpperCase()){
+					found = true;
+				}
+				if (!found) {
+					openErrorGritter('Error!', 'Label tidak sama!');
+					$('#label_confirm').val('');
+					return false;
+				}
+				openSuccessGritter('Success!', 'Label sama!');
+				$('#inspector').val('');
+				$('#inspector').focus();
+			} else {
+				openErrorGritter('Error!', 'Label tidak boleh kosong!');
+				return false;
+			}
 		}
 	});
 

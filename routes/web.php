@@ -235,6 +235,7 @@ Route::group(['nav' => 'S0', 'middleware' => 'permission'], function () {
 
     Route::get('index/production_check/kbi_1', 'OutgoingController@indexProductionCheckKbi1');
     Route::post('input/production_check/kbi_1', 'OutgoingController@inputProductionCheckKbi1');
+    Route::get('scan/production_check/kbi_1', 'OutgoingController@scanProductionCheckKbi1');
 
     Route::get('fetch/production_check/kbi_active', 'OutgoingController@fetchProductionCheckKbiActive');
 

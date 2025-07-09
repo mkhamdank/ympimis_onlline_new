@@ -356,10 +356,10 @@
 	var inspector = <?php echo json_encode($inspector); ?>;
 	var serial_number = <?php echo json_encode($serial_number); ?>;
 
-	$('#inspector').keydown(function(event) {
-		if (event.keyCode == 13 || event.keyCode == 9) {
-			var tag = $(this).val().toUpperCase();
+	$('#inspector').on('input', function() {
+		var tag = $(this).val().toUpperCase();
 
+		if (tag.length === 6) {
 			if (tag != "") {
 				var found = false;
 				for (var i = 0; i < inspector.length; i++) {
@@ -384,11 +384,26 @@
 		}
 	});
 
-	$('#label').keydown(function(event) {
-		if (event.keyCode == 13 || event.keyCode == 9) {
-			var label = $(this).val().toUpperCase();
+	$('#label').on('input', function() {
+		var label = $(this).val().toUpperCase();
 
+		if (label.length === 17) {
 			if (label != "") {
+				checkLabel(label);
+			} else {
+				$('#label').val('');
+				openErrorGritter('Error!', 'Label tidak boleh kosong!');
+				return false;
+			}
+		}
+	});
+
+	function checkLabel(label){
+		var data = {
+			label: label,
+		}
+		$.get('{{ url("scan/production_check/kbi_1") }}', data, function(result, status, xhr){
+			if (result.status) {
 				var found = false;
 				for (var i = 0; i < serial_number.length; i++) {
 					if (serial_number[i].serial_number.toUpperCase() == label.substr(0, 6)) {
@@ -405,13 +420,13 @@
 					$('#label').val('');
 					return false;
 				}
-				openSuccessGritter('Success!', 'Label ditemukan!');
+				openSuccessGritter('Success!', 'Label Berhasil Discan');
 			} else {
-				openErrorGritter('Error!', 'Label tidak boleh kosong!');
-				return false;
+				$('#label').val('');
+				openErrorGritter('Error!', result.message);
 			}
-		}
-	});
+		});
+	}
 
     function plus(id){
 		var count = $('#count'+id).text();

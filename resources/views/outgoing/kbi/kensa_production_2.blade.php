@@ -384,15 +384,15 @@
 	var inspector = <?php echo json_encode($inspector); ?>;
 	var serial_number = <?php echo json_encode($serial_number); ?>;
 
-	$('#inspector').keydown(function(event) {
-		if (event.keyCode == 13 || event.keyCode == 9) {
-			var tag = $(this).val().toUpperCase();
+	$('#inspector').on('input', function() {
+		var tag = $(this).val().toUpperCase();
 
+		if (tag.length === 6) {
 			if (tag != "") {
 				var found = false;
 				for (var i = 0; i < inspector.length; i++) {
 					if (inspector[i].employee_id.toUpperCase() == tag || inspector[i].name.toUpperCase() == tag) {
-                        $('#inspector').val(inspector[i].employee_id + ' - ' + inspector[i].name);
+						$('#inspector').val(inspector[i].employee_id + ' - ' + inspector[i].name);
 						found = true;
 						break;
 					}
@@ -402,7 +402,7 @@
 					$('#inspector').val('');
 					return false;
 				}
-                confirmAll();
+				confirmAll();
 				openSuccessGritter('Success!', 'ID Karyawan ditemukan!');
 				$('#label').val('');
 				$('#label').focus();
