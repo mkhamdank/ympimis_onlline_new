@@ -140,19 +140,29 @@
 			<table class="table table-bordered" style="width: 100%; margin-bottom: 5px;border: 0">
 				<tbody>
 					<tr>
+						<td colspan="2" style="background-color: lightgreen; text-align: center; color: #14213d; padding:0;font-size: 18px;font-weight: bold;width: 1%">
+							QTY CHECK AWAL
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<input type="text" class="pull-right" name="qty_check_awal" style="padding: 5px; font-size: 18px; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="qty_check_awal" placeholder="Qty OK" readonly value="0">
+						</td>
+					</tr>
+					<tr>
 						<td style="background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 18px;font-weight: bold;width: 1%">
-							QTY CHECK
+							QTY OK
 						</td>
 						<td style="background-color: #da96ff; text-align: center; color: #14213d; padding:0;font-size: 18px;font-weight: bold;width: 1%">
-							QTY OK
+							QTY TOTAL
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<input type="number" class="pull-right" name="qty_check" style="padding: 5px; font-size: 18px; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="qty_check" placeholder="Quantity Check" readonly="">
+							<input type="number" class="pull-right" name="total_ok" style="padding: 5px; font-size: 18px; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="total_ok" placeholder="Quantity Check" readonly="">
 						</td>
 						<td>
-							<input type="text" class="pull-right" name="total_ok" style="padding: 5px; font-size: 18px; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="total_ok" placeholder="Qty OK" readonly value="0">
+							<input type="text" class="pull-right" name="qty_check" style="padding: 5px; font-size: 18px; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="qty_check" placeholder="Qty OK" readonly value="0">
 						</td>
 					</tr>
                     <tr>
@@ -410,6 +420,7 @@
 						$('#material_number').val(serial_number[i].material_number);
 						$('#material_description').val(serial_number[i].part_name);
 						$('#qty_check').val(serial_number[i].qty);
+						$('#qty_check_awal').val(serial_number[i].qty);
 						$('#total_ok').val(serial_number[i].qty);
 						found = true;
 						break;
@@ -440,8 +451,8 @@
             return false;
         }
 
-        $('#total_ok').val(parseInt($('#total_ok').val())-1);
         $('#total_ng').val(parseInt($('#total_ng').val())+1);
+		$('#qty_check').val(parseInt($('#qty_check').val())+1);
         $('#ng_ratio').val(((parseInt($('#total_ng').val())/parseInt($('#qty_check').val()))*100).toFixed(1));
         $('#count'+id).text(parseInt(count)+1);
 	}
@@ -455,8 +466,8 @@
 
         if(count > 0)
         {
-            $('#total_ok').val(parseInt($('#total_ok').val())+1);
             $('#total_ng').val(parseInt($('#total_ng').val())-1);
+			$('#qty_check').val(parseInt($('#qty_check').val())-1);
             $('#ng_ratio').val(((parseInt($('#total_ng').val())/parseInt($('#qty_check').val()))*100).toFixed(1));
             $('#count'+id).text(parseInt(count)-1);
         }
@@ -464,6 +475,7 @@
 
     function cancelAll() {
         $('#qty_check').val('0');
+		$('#qty_check_awal').val('0');
         $('#total_ok').val('0');
         $('#total_ng').val('0');
         $('#ng_ratio').val('0');

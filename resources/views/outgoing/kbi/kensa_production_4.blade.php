@@ -134,19 +134,29 @@
 			<table class="table table-bordered" style="width: 100%; margin-bottom: 5px;border: 0">
 				<tbody>
 					<tr>
+						<td colspan="2" style="background-color: lightgreen; text-align: center; color: #14213d; padding:0;font-size: 18px;font-weight: bold;width: 1%">
+							QTY CHECK AWAL
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<input type="text" class="pull-right" name="qty_check_awal" style="padding: 5px; font-size: 18px; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="qty_check_awal" placeholder="Qty OK" readonly value="0">
+						</td>
+					</tr>
+					<tr>
 						<td style="background-color: #d1d1d1; text-align: center; color: #14213d; padding:0;font-size: 18px;font-weight: bold;width: 1%">
-							QTY CHECK
+							QTY OK
 						</td>
 						<td style="background-color: #da96ff; text-align: center; color: #14213d; padding:0;font-size: 18px;font-weight: bold;width: 1%">
-							QTY OK
+							QTY TOTAL
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<input type="number" class="pull-right" name="qty_check" style="padding: 5px; font-size: 18px; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="qty_check" placeholder="Quantity Check" readonly="">
+							<input type="number" class="pull-right" name="total_ok" style="padding: 5px; font-size: 18px; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="total_ok" placeholder="Quantity Check" readonly="">
 						</td>
 						<td>
-							<input type="text" class="pull-right" name="total_ok" style="padding: 5px; font-size: 18px; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="total_ok" placeholder="Qty OK" readonly value="0">
+							<input type="text" class="pull-right" name="qty_check" style="padding: 5px; font-size: 18px; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="qty_check" placeholder="Qty OK" readonly value="0">
 						</td>
 					</tr>
                     <tr>
@@ -176,10 +186,10 @@
                         <th colspan="2" style="vertical-align:middle;background-color: #0aff47; text-align: center; color: #14213d; padding:0;font-size: 17px;width: 1%;">CONFIRM</th>
                     </tr>
                     <tr>
-                        <td style="background-color: #14213d; color: #fff; text-align: center; font-size: 20px;">
+                        {{-- <td style="background-color: #14213d; color: #fff; text-align: center; font-size: 20px;">
 							<input type="text" class="pull-right" name="label_confirm" style="padding: 5px; font-size: 18px; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="label_confirm" placeholder="Scan Label">
-                        </td>
-                        <td style="background-color: #14213d; color: #fff; text-align: center; font-size: 20px;">
+                        </td> --}}
+                        <td colspan="2" style="background-color: #14213d; color: #fff; text-align: center; font-size: 20px;">
 							<input type="text" class="pull-right" name="inspector" style="padding: 5px; font-size: 18px; width: 100%;text-align: center;vertical-align: middle;color: #14213d" id="inspector" placeholder="Scan ID Card">
                         </td>
                     </tr>
@@ -372,13 +382,14 @@
                     $('#label').val(result.active.serial_number);
                     $('#material_number').val(result.active.material_number);
                     $('#material_description').val(result.active.material_description);
-                    $('#qty_check').val(result.active.qty_check);
+                    $('#qty_check').val(result.active.total_ok);
+					$('#qty_check_awal').val(result.active.total_ok);
                     $('#total_ok').val(result.active.total_ok);
 
                     clearInterval(intervalUpdate);
 
-                    $('#label_confirm').val('');
-				    $('#label_confirm').focus();
+                    $('#inspector').val('');
+				    $('#inspector').focus();
                 }
             }else{
                 openErrorGritter('Error!', result.message);
@@ -417,29 +428,29 @@
 		}
 	});
 
-	$('#label_confirm').on('input', function() {
-		var tag = $(this).val().toUpperCase();
+	// $('#label_confirm').on('input', function() {
+	// 	var tag = $(this).val().toUpperCase();
 
-		if (tag.length === 17) {
-			if (tag != "") {
-				var found = false;
-				if(tag == $('#label').val().toUpperCase()){
-					found = true;
-				}
-				if (!found) {
-					openErrorGritter('Error!', 'Label tidak sama!');
-					$('#label_confirm').val('');
-					return false;
-				}
-				openSuccessGritter('Success!', 'Label sama!');
-				$('#inspector').val('');
-				$('#inspector').focus();
-			} else {
-				openErrorGritter('Error!', 'Label tidak boleh kosong!');
-				return false;
-			}
-		}
-	});
+	// 	if (tag.length === 17) {
+	// 		if (tag != "") {
+	// 			var found = false;
+	// 			if(tag == $('#label').val().toUpperCase()){
+	// 				found = true;
+	// 			}
+	// 			if (!found) {
+	// 				openErrorGritter('Error!', 'Label tidak sama!');
+	// 				$('#label_confirm').val('');
+	// 				return false;
+	// 			}
+	// 			openSuccessGritter('Success!', 'Label sama!');
+	// 			$('#inspector').val('');
+	// 			$('#inspector').focus();
+	// 		} else {
+	// 			openErrorGritter('Error!', 'Label tidak boleh kosong!');
+	// 			return false;
+	// 		}
+	// 	}
+	// });
 
     function plus(id){
 		var count = $('#count'+id).text();
@@ -453,8 +464,8 @@
             return false;
         }
 
-        $('#total_ok').val(parseInt($('#total_ok').val())-1);
         $('#total_ng').val(parseInt($('#total_ng').val())+1);
+		$('#qty_check').val(parseInt($('#qty_check').val())+1);
         $('#ng_ratio').val(((parseInt($('#total_ng').val())/parseInt($('#qty_check').val()))*100).toFixed(1));
         $('#count'+id).text(parseInt(count)+1);
 	}
@@ -468,8 +479,8 @@
 
         if(count > 0)
         {
-            $('#total_ok').val(parseInt($('#total_ok').val())+1);
             $('#total_ng').val(parseInt($('#total_ng').val())-1);
+			$('#qty_check').val(parseInt($('#qty_check').val())-1);
             $('#ng_ratio').val(((parseInt($('#total_ng').val())/parseInt($('#qty_check').val()))*100).toFixed(1));
             $('#count'+id).text(parseInt(count)-1);
         }
@@ -477,7 +488,8 @@
 
     function cancelAll() {
         clearInterval(intervalUpdate);
-        $('#label_confirm').val('');
+		$('#qty_check_awal').val('0');
+        // $('#label_confirm').val('');
         $('#qty_check').val('0');
         $('#total_ok').val('0');
         $('#total_ng').val('0');

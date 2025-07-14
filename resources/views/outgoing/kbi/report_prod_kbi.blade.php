@@ -150,6 +150,7 @@
                                     <tr>
                                         <th style="background-color: #3f50b5;color: white !important;color: black">Pos</th>
                                         <th style="background-color: #3f50b5;color: white !important;color: black">Date</th>
+                                        <th style="background-color: #3f50b5;color: white !important;color: black">Timestamp</th>
                                         <th style="background-color: #3f50b5;color: white !important;color: black">Material Number</th>
                                         <th style="background-color: #3f50b5;color: white !important;color: black">Desc</th>
                                         <th style="background-color: #3f50b5;color: white !important;color: black">Inspector</th>
@@ -223,6 +224,7 @@
                     bodyTable += '<tr>';
                     bodyTable += '<td>'+result.outgoing[i].qa_final_status+'</td>';
                     bodyTable += '<td>'+getFormattedDateTime(new Date(result.outgoing[i].created_at))+'</td>';
+                    bodyTable += '<td>'+result.outgoing[i].created_at+'</td>';
                     bodyTable += '<td>'+result.outgoing[i].material_number+'</td>';
                     bodyTable += '<td>'+result.outgoing[i].material_description+'</td>';
                     bodyTable += '<td>'+result.outgoing[i].inspector+'</td>';
