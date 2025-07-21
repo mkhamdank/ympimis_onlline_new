@@ -382,8 +382,8 @@
                     $('#label').val(result.active.serial_number);
                     $('#material_number').val(result.active.material_number);
                     $('#material_description').val(result.active.material_description);
-                    $('#qty_check').val(result.active.total_ok);
-					$('#qty_check_awal').val(result.active.total_ok);
+                    $('#qty_check').val(result.active.qty_check);
+					$('#qty_check_awal').val(result.active.qty_check);
                     $('#total_ok').val(result.active.total_ok);
 
                     clearInterval(intervalUpdate);
