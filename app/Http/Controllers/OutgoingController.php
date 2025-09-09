@@ -333,16 +333,19 @@ class OutgoingController extends Controller
 
 		            	array_push($mail_to, 'true.indonesia@yahoo.com');
 		            	array_push($mail_to, 'truejhbyun@naver.com');
-		            	array_push($mail_to, 'agustina.hayati@music.yamaha.com');
-		            	// array_push($mail_to, 'ratri.sulistyorini@music.yamaha.com');
-		            	array_push($mail_to, 'abdissalam.saidi@music.yamaha.com');
-		            	array_push($mail_to, 'noviera.prasetyarini@music.yamaha.com');
-		            	array_push($mail_to, 'imbang.prasetyo@music.yamaha.com');
-		            	array_push($mail_to, 'ardianto@music.yamaha.com');
+
+		            	array_push($mail_to, 'darmawan@music.yamaha.com');
+						array_push($mail_to, 'sutrisno@music.yamaha.com');
+						array_push($mail_to, 'agustina.hayati@music.yamaha.com');
+						array_push($mail_to, 'tofik.nur.hidayat@music.yamaha.com');
+						array_push($mail_to, 'jihan.rusdi@music.yamaha.com');
+						array_push($mail_to, 'nunik.erwantiningsih@music.yamaha.com');
 
 				        $cc = [];
-				        $cc[0] = 'yayuk.wahyuni@music.yamaha.com';
-				        // $cc[1] = 'imron.faizal@music.yamaha.com';
+
+						array_push($cc, 'yayuk.wahyuni@music.yamaha.com');
+						array_push($cc, 'fattatul.mufidah@music.yamaha.com');
+						array_push($cc, 'ratri.sulistyorini@music.yamaha.com');
 
 				        $bcc = [];
 				        $bcc[0] = 'mokhamad.khamdan.khabibi@music.yamaha.com';
@@ -378,16 +381,19 @@ class OutgoingController extends Controller
 
 		            	array_push($mail_to, 'true.indonesia@yahoo.com');
 		            	array_push($mail_to, 'truejhbyun@naver.com');
-		            	array_push($mail_to, 'agustina.hayati@music.yamaha.com');
-		            	// array_push($mail_to, 'ratri.sulistyorini@music.yamaha.com');
-		            	array_push($mail_to, 'abdissalam.saidi@music.yamaha.com');
-		            	array_push($mail_to, 'noviera.prasetyarini@music.yamaha.com');
-		            	array_push($mail_to, 'imbang.prasetyo@music.yamaha.com');
-		            	array_push($mail_to, 'ardianto@music.yamaha.com');
+
+		            	array_push($mail_to, 'darmawan@music.yamaha.com');
+						array_push($mail_to, 'sutrisno@music.yamaha.com');
+						array_push($mail_to, 'agustina.hayati@music.yamaha.com');
+						array_push($mail_to, 'tofik.nur.hidayat@music.yamaha.com');
+						array_push($mail_to, 'jihan.rusdi@music.yamaha.com');
+						array_push($mail_to, 'nunik.erwantiningsih@music.yamaha.com');
 
 				        $cc = [];
-				        $cc[0] = 'yayuk.wahyuni@music.yamaha.com';
-				        // $cc[1] = 'imron.faizal@music.yamaha.com';
+
+						array_push($cc, 'yayuk.wahyuni@music.yamaha.com');
+						array_push($cc, 'fattatul.mufidah@music.yamaha.com');
+						array_push($cc, 'ratri.sulistyorini@music.yamaha.com');
 
 				        $bcc = [];
 				        $bcc[0] = 'mokhamad.khamdan.khabibi@music.yamaha.com';
