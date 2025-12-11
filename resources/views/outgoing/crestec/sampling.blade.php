@@ -293,11 +293,11 @@
 				CONFIRM
 			</button>
 		</div>
-		<div class="col-md-12" style="padding: 0px;padding-top: 30px;padding-left: 0px;padding-right: 0px">
+		{{-- <div class="col-md-12" style="padding: 0px;padding-top: 30px;padding-left: 0px;padding-right: 0px">
 			<button class="btn btn-primary" id="btn_confirm_all" onclick="confirmAll()" style="font-size: 25px;font-weight: bold;width: 100%">
 				CLOSE SAMPLING
 			</button>
-		</div>
+		</div> --}}
 	</div>
 </div>
 
@@ -1376,6 +1376,7 @@
 
 			$.post('{{ url("input/outgoing/crestec/sampling") }}', data, function(result, status, xhr){
 				if(result.status){
+					confirmAll();
 					cancelAll();
 					openSuccessGritter('Success!',result.message);
 					$('#loading').hide();
