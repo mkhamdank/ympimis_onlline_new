@@ -203,6 +203,18 @@
                         </li>
                     @endif
 
+                    @if (Auth::user()->role_code == 'RK' || Auth::user()->role_code == 'MIS')
+                        @if (isset($page) && $page == 'Outgoing RK')
+                            <li class="sidebar-item active">
+                            @else
+                            <li class="sidebar-item">
+                        @endif
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                            href="{{ url('/index/outgoing/rk') }}"><i class="fa fa-book"></i> <span
+                                class="hide-menu">VFI UD. RK</span></a>
+                        </li>
+                    @endif
+
                     @if (Auth::user()->role_code == 'KBI' || Auth::user()->role_code == 'MIS')
                         @if (isset($page) && $page == 'Outgoing KBI')
                             <li class="sidebar-item active">

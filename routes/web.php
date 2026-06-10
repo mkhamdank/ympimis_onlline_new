@@ -321,6 +321,14 @@ Route::group(['nav' => 'S0', 'middleware' => 'permission'], function () {
 
     Route::get('index/outgoing/cpp/input/lot_out/{serial_number}/{check_date}', 'OutgoingController@indexInputCppRecheck');
     Route::post('index/outgoing/cpp/confirm/recheck', 'OutgoingController@confirmInputCppRecheck');
+
+    //RK
+    Route::get('index/outgoing/rk/input', 'OutgoingController@indexInputRk');
+    Route::post('index/outgoing/rk/confirm', 'OutgoingController@confirmInputRk');
+    Route::get('fetch/outgoing/rk/material', 'OutgoingController@fetchMaterialRk');
+
+    Route::get('index/kensa/rk/report', 'OutgoingController@indexReportKensaRk');
+    Route::get('fetch/kensa/rk/report', 'OutgoingController@fetchReportKensaRk');
 });
 
 Route::get('sync/stock_control/plan_delivery', 'InventoryController@fetchPlanDelivery');

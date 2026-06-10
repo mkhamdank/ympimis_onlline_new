@@ -189,6 +189,10 @@ class OutgoingController extends Controller
 			$title = 'Vendor Final Inspection - PT. TRUE INDONESIA';
 			$page = 'Vendor Final Inspection - TRUE INDONESIA';
 			$title_jp = 'ベンダー最終検査 - TRUE INDONESIA';
+		}else if ($vendor == 'rk') {
+			$title = 'Vendor Final Inspection - UD. RK';
+			$page = 'Vendor Final Inspection - RK';
+			$title_jp = 'ベンダー最終検査 - RK';
 		}else if ($vendor == 'kbi') {
 			$title = 'Vendor Final Inspection - PT. KBI';
 			$page = 'Vendor Final Inspection - KBI';
@@ -1732,6 +1736,15 @@ class OutgoingController extends Controller
 			$materials = QaMaterial::where('vendor_shortname','CONTINENTAL')->get();
 		}
 
+		if ($vendor == 'rk') {
+			$title = 'Production NG Rate UD. RAHAYU KUSUMA';
+			$page = 'Production NG Rate RK';
+			$title_jp = '生産NG率RK';
+			$vendor_name = 'UD. RAHAYU KUSUMA';
+			$view = 'outgoing.rk.ng_rate';
+			$materials = QaMaterial::where('vendor_shortname','RK')->get();
+		}
+
 		return view($view, array(
 			'title' => $title,
 			'title_jp' => $title_jp,
@@ -1760,6 +1773,9 @@ class OutgoingController extends Controller
 			}
 			if ($vendor == 'cpp') {
 				$vendor_shortname = 'CONTINENTAL';
+			}
+			if ($vendor == 'rk') {
+				$vendor_shortname = 'RK';
 			}
 
 			$date_from = $request->get('date_from');
@@ -1864,6 +1880,9 @@ class OutgoingController extends Controller
 			if ($vendor == 'cpp') {
 				$vendor_shortname = 'CONTINENTAL';
 			}
+			if ($vendor == 'rk') {
+				$vendor_shortname = 'RK';
+			}
 
 	        $material = '';
 	        if($request->get('material') != null){
@@ -1958,6 +1977,15 @@ class OutgoingController extends Controller
 			$view = 'outgoing.cpp.pareto';
 			$materials = QaMaterial::where('vendor_shortname','CONTINENTAL')->get();
 		}
+		
+		if ($vendor == 'rk') {
+			$title = 'Production Pareto UD. RAHAYU KUSUMA';
+			$page = 'Production Pareto RK';
+			$title_jp = '生産パレートRK';
+			$vendor_name = 'PT. RK';
+			$view = 'outgoing.rk.pareto';
+			$materials = QaMaterial::where('vendor_shortname','RK')->get();
+		}
 
 		return view($view, array(
 			'title' => $title,
@@ -1987,6 +2015,9 @@ class OutgoingController extends Controller
 			}
 			if ($vendor == 'cpp') {
 				$vendor_shortname = 'CONTINENTAL';
+			}
+			if ($vendor == 'rk') {
+				$vendor_shortname = 'RK';
 			}
 
 			$first_month_ng = DB::SELECT("SELECT
@@ -2153,6 +2184,9 @@ class OutgoingController extends Controller
 			}
 			if ($vendor == 'cpp') {
 				$vendor_shortname = 'CONTINENTAL';
+			}
+			if ($vendor == 'rk') {
+				$vendor_shortname = 'RK';
 			}
 
 			$month_from = $request->get('month_from');
@@ -6636,6 +6670,286 @@ class OutgoingController extends Controller
 				'message' => $e->getMessage()
 			);
 			return Response::json($response);
+		}
+	}
+
+	//RK
+	public function indexInputRk()
+	{
+		$title = 'Input Final Inspection';
+		$title_jp = '最終検査入力';
+
+		$ng_lists = DB::SELECT("select * from ng_lists where ng_lists.location = 'outgoing' and remark = 'true'");
+
+		$materials = QaMaterial::where('vendor_shortname','RK')->get();
+
+		return view('outgoing.rk.index', array(
+			'title' => $title,
+			'title_jp' => $title_jp,
+			'ng_lists' => $ng_lists,
+			'vendor' => 'UD. RAHAYU KUSUMA',
+			'inspector' => Auth::user()->name,
+			'materials' => $materials,
+		))->with('page', 'Input Final Inspection RK')->with('head', 'Input Final Inspection RK');
+	}
+
+	public function fetchMaterialRk(Request $request)
+	{
+		try {
+			$target = QaOutgoingSerialNumber::where(DB::RAW('DATE_FORMAT(date,"%Y-%m")'),date('Y-m',strtotime($request->get('periode'))))->where('material_number',$request->get('material_number'))->first();
+
+			if (count($target) > 0) {
+				$response = array(
+			        'status' => true,
+			        'target' => $target,
+			    );
+			    return Response::json($response);
+			}
+		} catch (\Exception $e) {
+			$response = array(
+		        'status' => false,
+		        'message' => $e->getMessage(),
+		    );
+		    return Response::json($response);
+		}
+	}
+
+	public function confirmInputRk(Request $request)
+	{
+		try {
+
+			$material_number = $request->get('material_number');
+			$material_description = $request->get('material_description');
+			$qty_check = $request->get('qty_check');
+			$total_ok = $request->get('total_ok');
+			$total_ng = $request->get('total_ng');
+			$ng_ratio = $request->get('ng_ratio');
+			$inspector = $request->get('inspector');
+			$ng_name = $request->get('ng_name');
+			$ng_qty = $request->get('ng_qty');
+			$jumlah_ng = $request->get('jumlah_ng');
+			$check_date = date('Y-m-d');
+			$serial_number = $request->get('serial_number');
+			$material = QaMaterial::where('material_number',$material_number)->first();
+			$outgoings = [];
+			$outgoing_id = [];
+			$outgoings_critical = [];
+			$outgoings_non_critical = [];
+			if ($total_ng == 0) {
+				$outgoing = new QaOutgoingVendor([
+					'check_date' => $check_date,
+					'material_number' => $material_number,
+					'material_description' => $material_description,
+					'serial_number' => $serial_number,
+					'vendor' => $material->vendor,
+					'vendor_shortname' => $material->vendor_shortname,
+					'hpl' => $material->hpl,
+					'inspector' => $inspector,
+					'qty_check' => $qty_check,
+					'total_ok' => $total_ok,
+					'total_ng' => $total_ng,
+					'ng_ratio' => $ng_ratio,
+					'ng_name' => '-',
+					'ng_qty' => '0',
+					'lot_status' => 'LOT OK',
+	                'created_by' => Auth::user()->id
+	            ]);
+	            $outgoing->save();
+			}else{
+				for ($i=0; $i < count($ng_name); $i++) { 
+					$outgoing = new QaOutgoingVendor([
+						'check_date' => $check_date,
+						'material_number' => $material_number,
+						'material_description' => $material_description,
+						'vendor' => $material->vendor,
+						'vendor_shortname' => $material->vendor_shortname,
+						'hpl' => $material->hpl,
+						'inspector' => $inspector,
+						'serial_number' => $serial_number,
+						'qty_check' => $qty_check,
+						'total_ok' => $total_ok,
+						'total_ng' => $total_ng,
+						'ng_ratio' => $ng_ratio,
+						'ng_name' => $ng_name[$i],
+						'ng_qty' => $ng_qty[$i],
+		                'created_by' => Auth::user()->id,
+		            ]);
+
+		            $outgoing->save();
+
+		            // array_push($outgoing_id, $outgoing->id);
+		            // if (in_array($ng_name[$i], $this->critical_true)) {
+		            // 	$mail_to = [];
+
+		            // 	array_push($mail_to, 'true.indonesia@yahoo.com');
+		            // 	array_push($mail_to, 'truejhbyun@naver.com');
+
+		            // 	array_push($mail_to, 'darmawan@music.yamaha.com');
+					// 	array_push($mail_to, 'sutrisno@music.yamaha.com');
+					// 	array_push($mail_to, 'agustina.hayati@music.yamaha.com');
+					// 	array_push($mail_to, 'tofik.nur.hidayat@music.yamaha.com');
+					// 	array_push($mail_to, 'jihan.rusdi@music.yamaha.com');
+					// 	array_push($mail_to, 'nunik.erwantiningsih@music.yamaha.com');
+
+				    //     $cc = [];
+
+					// 	array_push($cc, 'yayuk.wahyuni@music.yamaha.com');
+					// 	array_push($cc, 'fattatul.mufidah@music.yamaha.com');
+					// 	array_push($cc, 'ratri.sulistyorini@music.yamaha.com');
+
+				    //     $bcc = [];
+				    //     $bcc[0] = 'mokhamad.khamdan.khabibi@music.yamaha.com';
+				    //     $bcc[1] = 'rio.irvansyah@music.yamaha.com';
+
+				    //     $outgoing_update = QaOutgoingVendor::where('id',$outgoing->id)->first();
+				    //     $outgoing_update->lot_status = 'LOT OUT';
+				    //     $outgoing_update->save();
+
+				    //     $outgoing_criticals = QaOutgoingVendor::where('id',$outgoing->id)->first();
+				    //     array_push($outgoings_critical, $outgoing_criticals);
+
+				    //     Mail::to($mail_to)
+				    //     ->cc($cc,'CC')
+				    //     ->bcc($bcc,'BCC')
+				    //     ->send(new SendEmail($outgoing_criticals, 'critical_true'));
+		            // }
+
+		            // if (in_array($ng_name[$i], $this->non_critical_true)) {
+		            // 	array_push($outgoings, $outgoing);
+		            // }
+				}
+
+				// $total_ng_non = 0;
+				// for ($i=0; $i < count($outgoings); $i++) { 
+				// 	$total_ng_non = $total_ng_non + $outgoings[$i]->ng_qty;
+				// }
+
+				// if ($total_ng_non != 0) {
+				// 	$persen = ($total_ng_non/$qty_check)*100;
+				// 	if ($persen > 5) {
+				// 		$mail_to = [];
+
+		        //     	array_push($mail_to, 'true.indonesia@yahoo.com');
+		        //     	array_push($mail_to, 'truejhbyun@naver.com');
+
+		        //     	array_push($mail_to, 'darmawan@music.yamaha.com');
+				// 		array_push($mail_to, 'sutrisno@music.yamaha.com');
+				// 		array_push($mail_to, 'agustina.hayati@music.yamaha.com');
+				// 		array_push($mail_to, 'tofik.nur.hidayat@music.yamaha.com');
+				// 		array_push($mail_to, 'jihan.rusdi@music.yamaha.com');
+				// 		array_push($mail_to, 'nunik.erwantiningsih@music.yamaha.com');
+
+				//         $cc = [];
+
+				// 		array_push($cc, 'yayuk.wahyuni@music.yamaha.com');
+				// 		array_push($cc, 'fattatul.mufidah@music.yamaha.com');
+				// 		array_push($cc, 'ratri.sulistyorini@music.yamaha.com');
+
+				//         $bcc = [];
+				//         $bcc[0] = 'mokhamad.khamdan.khabibi@music.yamaha.com';
+				//         $bcc[1] = 'rio.irvansyah@music.yamaha.com';
+
+				//         for ($i=0; $i < count($outgoing_id); $i++) { 
+				//         	$outgoing_update = QaOutgoingVendor::where('id',$outgoing_id[$i])->first();
+				// 	        $outgoing_update->lot_status = 'LOT OUT';
+				// 	        $outgoing_update->save();
+
+				// 	        $outgoing_non_critical = QaOutgoingVendor::where('id',$outgoing_id[$i])->first();
+				// 	        array_push($outgoings_non_critical, $outgoing_non_critical);
+				//         }
+
+				//         $data = array(
+				//         	'outgoing_non' => $outgoings_non_critical,
+				//         	'outgoing_critical' => $outgoings_critical, );
+
+				//         Mail::to($mail_to)
+				//         ->cc($cc,'CC')
+				//         ->bcc($bcc,'BCC')
+				//         ->send(new SendEmail($data, 'over_limit_ratio_true'));
+				// 	}
+				// }
+			}
+
+			// $updateSchedule = QaOutgoingSerialNumber::where(DB::RAW('DATE_FORMAT(date,"%Y-%m")'),date('Y-m',strtotime($check_date)))->where('material_number',$material_number)->first();
+			// $updateSchedule->qty_actual = $updateSchedule->qty_actual+$qty_check;
+			// $updateSchedule->save();
+			
+			$response = array(
+		        'status' => true,
+		        'message' => 'Success Input Data',
+		    );
+		    return Response::json($response);
+		} catch (\Exception $e) {
+			$response = array(
+		        'status' => false,
+		        'message' => $e->getMessage(),
+		    );
+		    return Response::json($response);
+		}
+	}
+
+	public function indexReportKensaRk()
+	{
+		$title = 'Report Production Check UD. RAHAYU KUSUMA';
+		$page = 'Report Production Check UD. RAHAYU KUSUMA';
+		$title_jp = '生産検査報告UD. RAHAYU KUSUMA';
+
+		$materials = QaMaterial::where('vendor_shortname','RK')->get();
+
+		return view('outgoing.rk.report_kensa_rk', array(
+			'title' => $title,
+			'title_jp' => $title_jp,
+			'materials' => $materials,
+			'vendor' => 'UD. RAHAYU KUSUMA',
+		))->with('page', $page)->with('head', $page);
+	}
+
+	public function fetchReportKensaRk(Request $request)
+	{
+		try {
+
+			$date_from = $request->get('date_from');
+	        $date_to = $request->get('date_to');
+	        if ($date_from == "") {
+	             if ($date_to == "") {
+	                  $first = date('Y-m-d',strtotime('-2 months'));
+	                  $last = date('Y-m-d');
+	             }else{
+	                  $first = date('Y-m-d',strtotime('-2 months'));
+	                  $last = $date_to;
+	             }
+	        }else{
+	             if ($date_to == "") {
+	                  $first = $date_from;
+	                  $last = date('Y-m-d');
+	             }else{
+	                  $first = $date_from;
+	                  $last = $date_to;
+	             }
+	        }
+
+			$outgoing = QaOutgoingVendor::select('qa_outgoing_vendors.*','qa_outgoing_vendors.created_at as created')->where('qa_outgoing_vendors.vendor_shortname','RK')
+			->where(DB::RAW('DATE(qa_outgoing_vendors.created_at)'),'>=',$first)
+			->where(DB::RAW('DATE(qa_outgoing_vendors.created_at)'),'<=',$last);
+
+			if($request->get('material') != null){
+	          $materials =  explode(",", $request->get('material'));
+	          $outgoing = $outgoing->whereIn('qa_outgoing_vendors.material_number',$materials);
+	        }
+
+	        $outgoing = $outgoing->orderby('qa_outgoing_vendors.created_at','desc')->get();
+
+			$response = array(
+		        'status' => true,
+		        'outgoing' => $outgoing,
+		    );
+		    return Response::json($response);
+		} catch (\Exception $e) {
+			$response = array(
+		        'status' => false,
+		        'message' => $e->getMessage(),
+		    );
+		    return Response::json($response);
 		}
 	}
 }
