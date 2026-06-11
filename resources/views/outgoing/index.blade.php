@@ -103,6 +103,18 @@
                                 <a href="{{ url('/index/incoming/pareto/kbi') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: red;background-color: white;color: #4a0505">Pareto Incoming Check PT. KBI</a>
                                 <a href="{{ url('/index/incoming/ng_rate/kbi') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: red;background-color: white;color: #4a0505">NG Rate Incoming Check PT. KBI</a>
                             <?php endif ?>
+                            <?php if (Auth::user()->role_code == 'ARISA' || Auth::user()->role_code == 'MIS' || Auth::user()->role_code == 'E - Purchasing'): ?>
+                                <a href="{{ url('/index/incoming/pareto/arisa') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: red;background-color: white;color: #4a0505">Pareto Incoming Check PT. ARISA</a>
+                                <a href="{{ url('/index/incoming/ng_rate/arisa') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: red;background-color: white;color: #4a0505">NG Rate Incoming Check PT. ARISA</a>
+                            <?php endif ?>
+                            <?php if (Auth::user()->role_code == 'RK' || Auth::user()->role_code == 'MIS' || Auth::user()->role_code == 'E - Purchasing'): ?>
+                                <a href="{{ url('/index/incoming/pareto/rk') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: red;background-color: white;color: #4a0505">Pareto Incoming Check UD. RK</a>
+                                <a href="{{ url('/index/incoming/ng_rate/rk') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: red;background-color: white;color: #4a0505">NG Rate Incoming Check UD. RK</a>
+                            <?php endif ?>
+                            <?php if (Auth::user()->role_code == 'TRUE' || Auth::user()->role_code == 'MIS' || Auth::user()->role_code == 'E - Purchasing'): ?>
+                                <a href="{{ url('/index/incoming/pareto/true') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: red;background-color: white;color: #4a0505">Pareto Incoming Check PT. TRUE</a>
+                                <a href="{{ url('/index/incoming/ng_rate/true') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: red;background-color: white;color: #4a0505">NG Rate Incoming Check PT. TRUE</a>
+                            <?php endif ?>
                         </div>
                     </div>
                 </div>
@@ -147,6 +159,15 @@
                                 <a href="{{ url('/index/incoming/kbi/report') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report Incoming Check KBI</a>
                                 <a href="{{ url('/index/case_ng/kbi') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report NG Case KBI</a>
                                 <a href="{{ url('/index/return/kbi') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report Return KBI</a>
+                            <?php endif ?>
+                            <?php if (Auth::user()->role_code == 'ARISA' || Auth::user()->role_code == 'MIS' || Auth::user()->role_code == 'E - Purchasing'): ?>
+                                <a href="{{ url('/index/incoming/arisa/report') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report Incoming Check ARISA</a>
+                            <?php endif ?>
+                            <?php if (Auth::user()->role_code == 'TRUE' || Auth::user()->role_code == 'MIS' || Auth::user()->role_code == 'E - Purchasing'): ?>
+                                <a href="{{ url('/index/incoming/true/report') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report Incoming Check TRUE</a>
+                            <?php endif ?>
+                            <?php if (Auth::user()->role_code == 'RK' || Auth::user()->role_code == 'MIS' || Auth::user()->role_code == 'E - Purchasing'): ?>
+                                <a href="{{ url('/index/incoming/rk/report') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: purple;background-color: white;color: #4a085e">Report Incoming Check RK</a>
                             <?php endif ?>
                             
                         </div>

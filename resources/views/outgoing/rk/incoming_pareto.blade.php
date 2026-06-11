@@ -236,7 +236,7 @@
 			vendor:$('#vendor').val(),
 			material:$('#material').val(),
 		}
-		$.get('{{ url("fetch/incoming/pareto/arisa") }}',data, function(result, status, xhr) {
+		$.get('{{ url("fetch/incoming/pareto/rk") }}',data, function(result, status, xhr) {
 			if(xhr.status == 200){
 				if(result.status){
 					// $('#last_update').html('<span><i class="fa fa-fw fa-clock-o"></i> Last Updated: '+ getActualFullDate() +'</span>');
@@ -259,7 +259,7 @@
 					        type: 'column'
 					    },
 					    title: {
-					        text: 'PARETO DEFECT PT. ARISAMANDIRI PRATAMA<br>'+result.firstMonthTitle+' - '+result.lastMonthTitle
+					        text: 'PARETO DEFECT UD. RAHAYU KUSUMA<br>'+result.firstMonthTitle+' - '+result.lastMonthTitle
 					    },
 					    tooltip: {
 					        shared: true
@@ -482,7 +482,7 @@
 			categories:categories
 		}
 
-		$.get('{{ url("fetch/incoming/pareto/detail/arisa") }}',data, function(result, status, xhr) {
+		$.get('{{ url("fetch/incoming/pareto/detail/rk") }}',data, function(result, status, xhr) {
 			if(xhr.status == 200){
 				if(result.status){
 					$('#judul_detail').html("Detail Pareto of "+categories);

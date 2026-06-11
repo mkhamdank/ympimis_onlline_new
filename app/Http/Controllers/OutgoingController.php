@@ -2604,6 +2604,15 @@ class OutgoingController extends Controller
 			$materials = DB::connection('ympimis')->table('qa_materials')->where('vendor_shortname','LTI')->get();
 		}
 
+		if ($vendor == 'rk') {
+			$title = 'Incoming Check Report UD. RAHAYU KUSUMA';
+			$page = 'Incoming Check Report RK';
+			$title_jp = '受入検査報告RK';
+			$vendor_name = 'RAHAYU KUSUMA UD';
+			$view = 'outgoing.rk.report_incoming';
+			$materials = DB::connection('ympimis')->table('qa_materials')->where('vendor_shortname','RK')->get();
+		}
+
 		return view($view, array(
 			'title' => $title,
 			'title_jp' => $title_jp,
@@ -2746,6 +2755,15 @@ class OutgoingController extends Controller
 			$materials = QaMaterial::where('vendor_shortname','LTI')->get();
 		}
 
+		if ($vendor == 'rk') {
+			$title = 'Pareto Incoming Check UD. RAHAYU KUSUMA';
+			$page = 'Pareto Incoming Check UD. RAHAYU KUSUMA';
+			$title_jp = 'パレート受入検査RK';
+			$vendor_name = 'UD. RAHAYU KUSUMA';
+			$view = 'outgoing.rk.incoming_pareto';
+			$materials = QaMaterial::where('vendor_shortname','RK')->get();
+		}
+
 		return view($view, array(
 			'title' => $title,
 			'title_jp' => $title_jp,
@@ -2771,6 +2789,9 @@ class OutgoingController extends Controller
 			}
 			if ($vendor == 'lti') {
 				$vendor_shortname = 'PT. LIMA TEKNO  INDONESIA';
+			}
+			if ($vendor == 'rk') {
+				$vendor_shortname = 'RAHAYU KUSUMA UD';
 			}
 
 			$first_month_ng = DB::SELECT("SELECT
@@ -2961,6 +2982,9 @@ class OutgoingController extends Controller
 			if ($vendor == 'lti') {
 				$vendor_shortname = 'PT. LIMA TEKNO  INDONESIA';
 			}
+			if ($vendor == 'rk') {
+				$vendor_shortname = 'RAHAYU KUSUMA UD';
+			}
 
 			$month_from = $request->get('month_from');
 	        $month_to = $request->get('month_to');
@@ -3078,6 +3102,15 @@ class OutgoingController extends Controller
 			$materials = QaMaterial::where('vendor_shortname','LTI')->get();
 		}
 
+		if ($vendor == 'rk') {
+			$title = 'Incoming NG Rate UD. RAHAYU KUSUMA';
+			$page = 'Incoming NG Rate UD. RAHAYU KUSUMA';
+			$title_jp = '受入NG率UD. RAHAYU KUSUMA';
+			$vendor_name = 'UD. RAHAYU KUSUMA';
+			$view = 'outgoing.rk.incoming_ng_rate';
+			$materials = QaMaterial::where('vendor_shortname','RK')->get();
+		}
+
 		return view($view, array(
 			'title' => $title,
 			'title_jp' => $title_jp,
@@ -3104,6 +3137,9 @@ class OutgoingController extends Controller
 			}
 			if ($vendor == 'lti') {
 				$vendor_shortname = 'PT. LIMA TEKNO  INDONESIA';
+			}
+			if ($vendor == 'rk') {
+				$vendor_shortname = 'RAHAYU KUSUMA UD';
 			}
 
 			$date_from = $request->get('date_from');
@@ -3197,6 +3233,9 @@ class OutgoingController extends Controller
 			}
 			if ($vendor == 'lti') {
 				$vendor_shortname = 'PT. LIMA TEKNO  INDONESIA';
+			}
+			if ($vendor == 'rk') {
+				$vendor_shortname = 'RAHAYU KUSUMA UD';
 			}
 
 	        $material = '';

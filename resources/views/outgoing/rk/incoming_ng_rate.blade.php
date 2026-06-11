@@ -262,7 +262,7 @@
 			date_to:$('#date_to').val(),
 			material:$('#material').val(),
 		}
-		$.get('{{ url("fetch/incoming/ng_rate/arisa") }}',data, function(result, status, xhr) {
+		$.get('{{ url("fetch/incoming/ng_rate/rk") }}',data, function(result, status, xhr) {
 			if(xhr.status == 200){
 				if(result.status){
 					var categories = [];
@@ -282,7 +282,7 @@
 					        zoomType: 'xy'
 					    },
 					    title: {
-					        text: 'Incoming Check NG Rate PT. ARISAMANDIRI PRATAMA'
+					        text: 'Incoming Check NG Rate UD. RAHAYU KUSUMA'
 					    },
 					    subtitle: {
 					        text: result.firstDateTitle+' - '+result.lastDateTitle
@@ -411,7 +411,7 @@
 			categories:categories
 		}
 
-		$.get('{{ url("fetch/incoming/ng_rate/detail/arisa") }}',data, function(result, status, xhr) {
+		$.get('{{ url("fetch/incoming/ng_rate/detail/rk") }}',data, function(result, status, xhr) {
 			if(xhr.status == 200){
 				if(result.status){
 					$('#judul_detail').html("Detail NG Rate Production Check on "+categories);
