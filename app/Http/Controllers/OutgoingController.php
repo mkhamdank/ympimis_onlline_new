@@ -2565,7 +2565,7 @@ class OutgoingController extends Controller
 			$title_jp = '受入検査報告TRUE';
 			$vendor_name = 'PT. TRUE INDONESIA';
 			$view = 'outgoing.true.report_incoming';
-			$materials = DB::connection('ympimis')->table('qa_materials')->where('vendor_shortname','TRUE')->get();
+			$materials = DB::table('qa_materials')->where('vendor_shortname','TRUE')->get();
 		}
 
 		if ($vendor == 'arisa') {
@@ -2574,7 +2574,7 @@ class OutgoingController extends Controller
 			$title_jp = '受入検査報告ARISA';
 			$vendor_name = 'ARISAMANDIRI PRATAMA PT.';
 			$view = 'outgoing.arisa.report_incoming';
-			$materials = DB::connection('ympimis')->table('qa_materials')->where('vendor_shortname','ARISA')->get();
+			$materials = DB::table('qa_materials')->where('vendor_shortname','ARISA')->get();
 		}
 
 		if ($vendor == 'kbi') {
@@ -2592,7 +2592,7 @@ class OutgoingController extends Controller
 			$title_jp = '受入検査報告CRESTEC INDONESIA';
 			$vendor_name = 'CRESTEC INDONESIA PT';
 			$view = 'outgoing.crestec.report_incoming';
-			$materials = DB::connection('ympimis')->table('qa_materials')->where('vendor_shortname','CRESTEC')->get();
+			$materials = DB::table('qa_materials')->where('vendor_shortname','CRESTEC')->get();
 		}
 
 		if ($vendor == 'lti') {
@@ -2601,7 +2601,7 @@ class OutgoingController extends Controller
 			$title_jp = '受入検査報告LTI';
 			$vendor_name = 'PT. LIMA TEKNO  INDONESIA';
 			$view = 'outgoing.lti.report_incoming';
-			$materials = DB::connection('ympimis')->table('qa_materials')->where('vendor_shortname','LTI')->get();
+			$materials = DB::table('qa_materials')->where('vendor_shortname','LTI')->get();
 		}
 
 		if ($vendor == 'rk') {
@@ -2610,7 +2610,7 @@ class OutgoingController extends Controller
 			$title_jp = '受入検査報告RK';
 			$vendor_name = 'RAHAYU KUSUMA UD';
 			$view = 'outgoing.rk.report_incoming';
-			$materials = DB::connection('ympimis')->table('qa_materials')->where('vendor_shortname','RK')->get();
+			$materials = DB::table('qa_materials')->where('vendor_shortname','RK')->get();
 		}
 
 		return view($view, array(
