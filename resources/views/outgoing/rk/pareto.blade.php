@@ -187,13 +187,13 @@
 @section('scripts')
 <script src="<?php echo e(url("js/jquery.numpad.js")); ?>"></script>
 <script src="{{ url("js/jquery.gritter.min.js") }}"></script>
-{{-- <script src="https://code.highcharts.com/highcharts.js"></script> --}}
-<script src="{{ url("js/highcharts.js") }}"></script>
-<script src="{{ url("js/pareto.js") }}"></script>
-{{-- <script src="https://code.highcharts.com/modules/pareto.js"></script> --}}
-{{-- <script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+{{-- <script src="{{ url("js/highcharts.js") }}"></script> --}}
+{{-- <script src="{{ url("js/pareto.js") }}"></script> --}}
+<script src="https://code.highcharts.com/modules/pareto.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script> --}}
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 <script src="{{ url("js/jquery.dataTables.min.js") }}"></script>
 <script src="{{ url("js/dataTables.bootstrap4.min.js") }}"></script>
 <script src="{{ url("js/jquery.flot.min.js") }}"></script>
