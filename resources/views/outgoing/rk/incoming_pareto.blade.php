@@ -259,7 +259,7 @@
 					        type: 'column'
 					    },
 					    title: {
-					        text: 'PARETO DEFECT UD. RAHAYU KUSUMA<br>'+result.firstMonthTitle+' - '+result.lastMonthTitle
+					        text: 'PARETO DEFECT CV. RAHAYU KUSUMA<br>'+result.firstMonthTitle+' - '+result.lastMonthTitle
 					    },
 					    tooltip: {
 					        shared: true

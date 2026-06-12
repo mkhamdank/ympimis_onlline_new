@@ -190,7 +190,7 @@ class OutgoingController extends Controller
 			$page = 'Vendor Final Inspection - TRUE INDONESIA';
 			$title_jp = 'ベンダー最終検査 - TRUE INDONESIA';
 		}else if ($vendor == 'rk') {
-			$title = 'Vendor Final Inspection - UD. RK';
+			$title = 'Vendor Final Inspection - CV. RK';
 			$page = 'Vendor Final Inspection - RK';
 			$title_jp = 'ベンダー最終検査 - RK';
 		}else if ($vendor == 'kbi') {
@@ -1737,10 +1737,10 @@ class OutgoingController extends Controller
 		}
 
 		if ($vendor == 'rk') {
-			$title = 'Production NG Rate UD. RAHAYU KUSUMA';
+			$title = 'Production NG Rate CV. RAHAYU KUSUMA';
 			$page = 'Production NG Rate RK';
 			$title_jp = '生産NG率RK';
-			$vendor_name = 'UD. RAHAYU KUSUMA';
+			$vendor_name = 'CV. RAHAYU KUSUMA';
 			$view = 'outgoing.rk.ng_rate';
 			$materials = QaMaterial::where('vendor_shortname','RK')->get();
 		}
@@ -1979,7 +1979,7 @@ class OutgoingController extends Controller
 		}
 		
 		if ($vendor == 'rk') {
-			$title = 'Production Pareto UD. RAHAYU KUSUMA';
+			$title = 'Production Pareto CV. RAHAYU KUSUMA';
 			$page = 'Production Pareto RK';
 			$title_jp = '生産パレートRK';
 			$vendor_name = 'PT. RK';
@@ -2605,7 +2605,7 @@ class OutgoingController extends Controller
 		}
 
 		if ($vendor == 'rk') {
-			$title = 'Incoming Check Report UD. RAHAYU KUSUMA';
+			$title = 'Incoming Check Report CV. RAHAYU KUSUMA';
 			$page = 'Incoming Check Report RK';
 			$title_jp = '受入検査報告RK';
 			$vendor_name = 'RAHAYU KUSUMA UD';
@@ -2756,10 +2756,10 @@ class OutgoingController extends Controller
 		}
 
 		if ($vendor == 'rk') {
-			$title = 'Pareto Incoming Check UD. RAHAYU KUSUMA';
-			$page = 'Pareto Incoming Check UD. RAHAYU KUSUMA';
+			$title = 'Pareto Incoming Check CV. RAHAYU KUSUMA';
+			$page = 'Pareto Incoming Check CV. RAHAYU KUSUMA';
 			$title_jp = 'パレート受入検査RK';
-			$vendor_name = 'UD. RAHAYU KUSUMA';
+			$vendor_name = 'CV. RAHAYU KUSUMA';
 			$view = 'outgoing.rk.incoming_pareto';
 			$materials = QaMaterial::where('vendor_shortname','RK')->get();
 		}
@@ -3103,10 +3103,10 @@ class OutgoingController extends Controller
 		}
 
 		if ($vendor == 'rk') {
-			$title = 'Incoming NG Rate UD. RAHAYU KUSUMA';
-			$page = 'Incoming NG Rate UD. RAHAYU KUSUMA';
-			$title_jp = '受入NG率UD. RAHAYU KUSUMA';
-			$vendor_name = 'UD. RAHAYU KUSUMA';
+			$title = 'Incoming NG Rate CV. RAHAYU KUSUMA';
+			$page = 'Incoming NG Rate CV. RAHAYU KUSUMA';
+			$title_jp = '受入NG率CV. RAHAYU KUSUMA';
+			$vendor_name = 'CV. RAHAYU KUSUMA';
 			$view = 'outgoing.rk.incoming_ng_rate';
 			$materials = QaMaterial::where('vendor_shortname','RK')->get();
 		}
@@ -6726,7 +6726,7 @@ class OutgoingController extends Controller
 			'title' => $title,
 			'title_jp' => $title_jp,
 			'ng_lists' => $ng_lists,
-			'vendor' => 'UD. RAHAYU KUSUMA',
+			'vendor' => 'CV. RAHAYU KUSUMA',
 			'inspector' => Auth::user()->name,
 			'materials' => $materials,
 		))->with('page', 'Input Final Inspection RK')->with('head', 'Input Final Inspection RK');
@@ -6929,9 +6929,9 @@ class OutgoingController extends Controller
 
 	public function indexReportKensaRk()
 	{
-		$title = 'Report Production Check UD. RAHAYU KUSUMA';
-		$page = 'Report Production Check UD. RAHAYU KUSUMA';
-		$title_jp = '生産検査報告UD. RAHAYU KUSUMA';
+		$title = 'Report Production Check CV. RAHAYU KUSUMA';
+		$page = 'Report Production Check CV. RAHAYU KUSUMA';
+		$title_jp = '生産検査報告CV. RAHAYU KUSUMA';
 
 		$materials = QaMaterial::where('vendor_shortname','RK')->get();
 
@@ -6939,7 +6939,7 @@ class OutgoingController extends Controller
 			'title' => $title,
 			'title_jp' => $title_jp,
 			'materials' => $materials,
-			'vendor' => 'UD. RAHAYU KUSUMA',
+			'vendor' => 'CV. RAHAYU KUSUMA',
 		))->with('page', $page)->with('head', $page);
 	}
 

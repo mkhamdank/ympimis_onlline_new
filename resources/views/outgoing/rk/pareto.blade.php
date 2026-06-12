@@ -265,7 +265,7 @@
 					        type: 'column'
 					    },
 					    title: {
-					        text: 'PARETO DEFECT UD. RAHAYU KUSUMA',
+					        text: 'PARETO DEFECT CV. RAHAYU KUSUMA',
 					        style:{
 					        	fontWeight:'bold'
 					        }
@@ -401,7 +401,7 @@
 							}
 						},
 						title: {
-							text: 'Top 5 Worst Material - UD. RAHAYU KUSUMA',
+							text: 'Top 5 Worst Material - CV. RAHAYU KUSUMA',
 							        style:{
 					        	fontWeight:'bold'
 					        }

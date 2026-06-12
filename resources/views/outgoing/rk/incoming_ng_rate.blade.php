@@ -282,7 +282,7 @@
 					        zoomType: 'xy'
 					    },
 					    title: {
-					        text: 'Incoming Check NG Rate UD. RAHAYU KUSUMA'
+					        text: 'Incoming Check NG Rate CV. RAHAYU KUSUMA'
 					    },
 					    subtitle: {
 					        text: result.firstDateTitle+' - '+result.lastDateTitle
