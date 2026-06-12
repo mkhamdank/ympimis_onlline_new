@@ -23,7 +23,7 @@
                                 <a href="{{ url('/index/outgoing/true/input') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #0e691e;background-color: white;color: #094a05">Input VFI PT. TRUE</a>
                             <?php endif ?>
                             <?php if (Auth::user()->role_code == 'RK' || Auth::user()->role_code == 'MIS'): ?>
-                                <a href="{{ url('/index/outgoing/rk/input') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #0e691e;background-color: white;color: #094a05">Input VFI UD. RK</a>
+                                {{-- <a href="{{ url('/index/outgoing/rk/input') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #0e691e;background-color: white;color: #094a05">Input VFI UD. RK</a> --}}
                             <?php endif ?>
                             <?php if (Auth::user()->role_code == 'MIS' || Auth::user()->role_code == 'E - Purchasing'): ?>
                                 <a href="{{ url('/index/serial_number/true') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #0e691e;background-color: white;color: #094a05">Upload Serial Number PT. TRUE</a>
@@ -75,8 +75,8 @@
                                 <a href="{{ url('/index/outgoing/pareto/true') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #e61010;background-color: #fff;color: #4a0505 ">Production Pareto PT. TRUE</a>
                             <?php endif ?>
                             <?php if (Auth::user()->role_code == 'RK' || Auth::user()->role_code == 'MIS' || Auth::user()->role_code == 'E - Purchasing'): ?>
-                                <a href="{{ url('/index/outgoing/ng_rate/rk') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #e61010;background-color: #fff;color: #4a0505 ">Production NG Rate UD. RK</a>
-                                <a href="{{ url('/index/outgoing/pareto/rk') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #e61010;background-color: #fff;color: #4a0505 ">Production Pareto UD. RK</a>
+                                {{-- <a href="{{ url('/index/outgoing/ng_rate/rk') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #e61010;background-color: #fff;color: #4a0505 ">Production NG Rate UD. RK</a>
+                                <a href="{{ url('/index/outgoing/pareto/rk') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #e61010;background-color: #fff;color: #4a0505 ">Production Pareto UD. RK</a> --}}
                             <?php endif ?>
                             <?php if (Auth::user()->role_code == 'KBI' || Auth::user()->role_code == 'MIS' || Auth::user()->role_code == 'E - Purchasing'): ?>
                                 <a href="{{ url('/index/outgoing/ng_rate/kbi') }}" class="btn btn-default btn-block" style="font-size: 17px; border-color: #e61010;background-color: #fff;color: #4a0505 ">FG NG Rate KBI</a>
